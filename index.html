@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INNOSTORE - Innovation Hub</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-brand">
+                <div class="logo">
+                    <div class="logo-icon">💡</div>
+                    <span class="logo-text">INNOSTORE</span>
+                </div>
+            </div>
+            <div class="nav-links">
+                <a href="#home" class="nav-link">HOME</a>
+                <a href="#who-we-are" class="nav-link">WHO WE ARE</a>
+                <a href="#views" class="nav-link">VIEWS</a>
+                <a href="#contact" class="nav-link">CONTACT</a>
+            </div>
+            <div class="nav-buttons">
+                <button class="btn-login">LOGIN</button>
+                <button class="btn-register">REGISTER</button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-icons">
+                <div class="icon-lightbulb">💡</div>
+                <div class="icon-brain">🧠</div>
+                <div class="icon-star">✨</div>
+                <div class="icon-question">❓</div>
+                <div class="icon-exclamation">❗</div>
+                <div class="icon-refresh">🔄</div>
+                <div class="icon-envelope">✉️</div>
+                <div class="icon-arrow">➡️</div>
+                <div class="icon-link">🔗</div>
+                <div class="icon-paper-plane">✈️</div>
+            </div>
+            
+            <div class="hero-content">
+                <div class="hero-title-box">
+                    <h1>Our Way of working</h1>
+                </div>
+            </div>
+        </section>
+
+        <section class="services">
+            <div class="service-section inventors">
+                <div class="service-icon">💡</div>
+                <h2>For Inventors</h2>
+                <button class="btn-cta btn-inventors" onclick="openIdeaForm()">
+                    Let your idea become reality →
+                </button>
+            </div>
+            
+            <div class="service-section innovators">
+                <div class="service-icon">🤝</div>
+                <h2>For Innovators</h2>
+                <button class="btn-cta btn-innovators">
+                    Be inspired →
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Idea Registration Modal -->
+    <div id="ideaModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeIdeaForm()">&times;</span>
+            <h2>Register Your Idea</h2>
+            <form id="ideaForm" onsubmit="submitIdea(event)">
+                <div class="form-group">
+                    <label for="ideaTitle">Idea Title</label>
+                    <input type="text" id="ideaTitle" name="ideaTitle" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" name="category" required>
+                        <option value="">Select a category</option>
+                        <option value="technology">Technology</option>
+                        <option value="healthcare">Healthcare</option>
+                        <option value="education">Education</option>
+                        <option value="environment">Environment</option>
+                        <option value="business">Business</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" rows="5" required placeholder="Describe your idea in detail..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="targetAudience">Target Audience</label>
+                    <input type="text" id="targetAudience" name="targetAudience" placeholder="Who would benefit from this idea?">
+                </div>
+                
+                <div class="form-group">
+                    <label for="stage">Development Stage</label>
+                    <select id="stage" name="stage" required>
+                        <option value="">Select current stage</option>
+                        <option value="concept">Just an idea/concept</option>
+                        <option value="planning">In planning phase</option>
+                        <option value="prototype">Have a prototype</option>
+                        <option value="testing">In testing phase</option>
+                        <option value="ready">Ready for market</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="investment">Investment Needed</label>
+                    <input type="text" id="investment" name="investment" placeholder="Estimated budget needed (optional)">
+                </div>
+                
+                <div class="form-group">
+                    <label for="timeline">Expected Timeline</label>
+                    <input type="text" id="timeline" name="timeline" placeholder="How long to develop? (optional)">
+                </div>
+                
+                <div class="form-group">
+                    <label for="contactInfo">Contact Information</label>
+                    <input type="email" id="contactInfo" name="contactInfo" required placeholder="your.email@example.com">
+                </div>
+                
+                <div class="form-buttons">
+                    <button type="button" class="btn-cancel" onclick="closeIdeaForm()">Cancel</button>
+                    <button type="submit" class="btn-submit">Register Idea</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
