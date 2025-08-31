@@ -248,7 +248,7 @@ body {
   text-align: center;
   position: relative;
   clip-path: polygon(15% 25%, 100% 0, 100% 100%, 0 100%);
-  margin-left: -160px;
+  margin-left: -12vw;
   
   h2 {
     font-size: 36px;
@@ -278,6 +278,18 @@ body {
 }
 
 /* Responsive Design */
+@media (max-width: 1600px) {
+  .service-right {
+    margin-left: -10vw;
+  }
+}
+
+@media (max-width: 1200px) {
+  .service-right {
+    margin-left: -8vw;
+  }
+}
+
 @media (max-width: 1024px) {
   .navbar {
     padding: 12px 24px;
@@ -301,6 +313,10 @@ body {
     h2 {
       font-size: 28px;
     }
+  }
+  
+  .service-right {
+    margin-left: -6vw;
   }
 }
 
