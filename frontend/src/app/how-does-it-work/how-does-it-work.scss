@@ -1,0 +1,482 @@
+/* How Does It Work Component Styles */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 40px;
+  background: #f8f9fa;
+  position: relative;
+  z-index: 100;
+}
+
+.nav-left {
+  flex: 1;
+  
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 18px;
+    color: #333;
+    
+    svg {
+      color: #333;
+    }
+  }
+}
+
+.nav-center {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    
+    .nav-link {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      font-size: 14px;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+      transition: color 0.3s ease;
+      
+      &:hover {
+        color: #007bff;
+      }
+    }
+  }
+}
+
+.nav-buttons {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  
+  .btn-login {
+    padding: 12px 32px;
+    background: transparent;
+    border: 2px solid #28a745;
+    border-radius: 25px;
+    color: #28a745;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    
+    &:hover {
+      background: #28a745;
+      color: white;
+      transform: translateY(-1px);
+    }
+  }
+  
+  .btn-register {
+    padding: 12px 32px;
+    background: #ffc107;
+    border: none;
+    border-radius: 25px;
+    color: #333;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    
+    &:hover {
+      background: #e0a800;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 193, 7, 0.4);
+    }
+  }
+}
+
+/* Main Content */
+.main-content {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Hero Section */
+.hero-section {
+  position: relative;
+  padding: 80px 40px;
+  background: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+  overflow: hidden;
+}
+
+.floating-icons {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  
+  .icon {
+    position: absolute;
+    opacity: 0.3;
+    color: #666;
+    animation: float 10s ease-in-out infinite;
+    transform-origin: center;
+    
+    &.icon-1 { top: 20%; left: 8%; animation-delay: 0s; }
+    &.icon-2 { top: 15%; left: 25%; animation-delay: 2s; }
+    &.icon-3 { top: 8%; right: 15%; animation-delay: 1s; }
+    &.icon-4 { top: 25%; right: 8%; animation-delay: 3s; }
+    &.icon-5 { bottom: 20%; right: 25%; animation-delay: 1.5s; }
+    &.icon-6 { bottom: 15%; left: 15%; animation-delay: 2.5s; }
+  }
+}
+
+@keyframes float {
+  0%, 100% { 
+    transform: translate(0px, 0px) rotate(-2deg); 
+    opacity: 0.3; 
+  }
+  25% { 
+    transform: translate(5px, -10px) rotate(1deg); 
+    opacity: 0.5; 
+  }
+  50% { 
+    transform: translate(-3px, -18px) rotate(2deg); 
+    opacity: 0.6; 
+  }
+  75% { 
+    transform: translate(8px, -12px) rotate(-1deg); 
+    opacity: 0.4; 
+  }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.hero-title-box {
+  background: white;
+  padding: 40px 60px;
+  border: 3px solid #333;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  
+  h1 {
+    font-size: 42px;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 16px 0;
+    letter-spacing: -0.5px;
+  }
+  
+  .hero-subtitle {
+    font-size: 18px;
+    color: #666;
+    margin: 0;
+    font-weight: 400;
+  }
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  
+  .btn-inventors {
+    padding: 16px 40px;
+    background: #ffc107;
+    border: none;
+    border-radius: 12px;
+    color: #333;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 193, 7, 0.4);
+    
+    &:hover {
+      background: #e0a800;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(255, 193, 7, 0.6);
+    }
+  }
+  
+  .btn-innovators {
+    padding: 16px 40px;
+    background: #28a745;
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+    
+    &:hover {
+      background: #20c997;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(40, 167, 69, 0.6);
+    }
+  }
+}
+
+/* INVENTORS Section */
+.inventors-section {
+  background: white;
+  padding: 80px 40px;
+  position: relative;
+}
+
+.section-header {
+  margin-bottom: 80px;
+  
+  .section-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    
+    .title-decoration {
+      width: 120px;
+      height: 3px;
+      background: #ffc107;
+      border-radius: 2px;
+    }
+    
+    h2 {
+      font-size: 36px;
+      font-weight: 700;
+      color: #333;
+      margin: 0;
+      letter-spacing: 2px;
+    }
+  }
+}
+
+.step-container {
+  display: flex;
+  align-items: center;
+  gap: 80px;
+  max-width: 1200px;
+  margin: 0 auto;
+  
+  &.reverse {
+    flex-direction: row-reverse;
+  }
+}
+
+.step-content {
+  flex: 1;
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+  
+  .step-number {
+    font-size: 120px;
+    font-weight: 300;
+    color: #e9ecef;
+    line-height: 1;
+    margin-top: -20px;
+  }
+  
+  .step-text {
+    flex: 1;
+    
+    h3 {
+      font-size: 32px;
+      font-weight: 600;
+      color: #333;
+      margin: 0 0 16px 0;
+    }
+    
+    h4 {
+      font-size: 20px;
+      font-weight: 500;
+      color: #666;
+      margin: 0 0 24px 0;
+    }
+    
+    p {
+      font-size: 16px;
+      color: #666;
+      line-height: 1.6;
+      margin: 0 0 16px 0;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+.step-visual {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  
+  .visual-container {
+    position: relative;
+    width: 400px;
+    height: 300px;
+    background: #ffc107;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    
+    &.evaluation-visual {
+      background: #28a745;
+    }
+  }
+}
+
+.lightbulb-illustration {
+  position: relative;
+  z-index: 2;
+  color: #333;
+}
+
+.people-icons {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  
+  .person {
+    position: absolute;
+    font-size: 24px;
+    opacity: 0.6;
+    animation: peopleFloat 6s ease-in-out infinite;
+    
+    &.person-1 { top: 20%; left: 15%; animation-delay: 0s; }
+    &.person-2 { top: 15%; right: 20%; animation-delay: 1s; }
+    &.person-3 { bottom: 25%; left: 10%; animation-delay: 2s; }
+    &.person-4 { bottom: 20%; right: 15%; animation-delay: 0.5s; }
+    &.person-5 { top: 50%; left: 5%; animation-delay: 1.5s; }
+    &.person-6 { top: 60%; right: 8%; animation-delay: 2.5s; }
+  }
+}
+
+@keyframes peopleFloat {
+  0%, 100% { 
+    transform: translateY(0px); 
+  }
+  50% { 
+    transform: translateY(-8px); 
+  }
+}
+
+/* Evaluation Section */
+.evaluation-section {
+  background: #f8f9fa;
+  padding: 80px 40px;
+}
+
+.evaluation-illustration {
+  color: #333;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .navbar {
+    padding: 12px 24px;
+  }
+  
+  .step-container {
+    flex-direction: column;
+    gap: 60px;
+    text-align: center;
+    
+    &.reverse {
+      flex-direction: column;
+    }
+  }
+  
+  .step-content {
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .visual-container {
+    width: 320px;
+    height: 240px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+  }
+  
+  .nav-center,
+  .nav-buttons {
+    justify-content: center;
+  }
+  
+  .hero-title-box {
+    padding: 32px 40px;
+    
+    h1 {
+      font-size: 32px;
+    }
+    
+    .hero-subtitle {
+      font-size: 16px;
+    }
+  }
+  
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
+    
+    .btn-inventors,
+    .btn-innovators {
+      width: 200px;
+    }
+  }
+  
+  .section-title {
+    flex-direction: column;
+    gap: 16px;
+    
+    .title-decoration {
+      width: 80px;
+    }
+  }
+  
+  .step-content {
+    .step-number {
+      font-size: 80px;
+    }
+    
+    .step-text h3 {
+      font-size: 24px;
+    }
+  }
+  
+  .visual-container {
+    width: 280px;
+    height: 200px;
+  }
+}
