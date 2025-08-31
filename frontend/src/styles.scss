@@ -248,7 +248,7 @@ body {
   text-align: center;
   position: relative;
   clip-path: polygon(15% 25%, 100% 0, 100% 100%, 0 100%);
-  margin-left: -12vw;
+  margin-left: -8.33vw;
   
   h2 {
     font-size: 36px;
@@ -278,15 +278,33 @@ body {
 }
 
 /* Responsive Design */
+@media (min-width: 2560px) {
+  .service-right {
+    margin-left: -8.5vw;
+  }
+}
+
 @media (max-width: 1600px) {
   .service-right {
-    margin-left: -10vw;
+    margin-left: -8.2vw;
+  }
+}
+
+@media (max-width: 1440px) {
+  .service-right {
+    margin-left: -8.1vw;
+  }
+}
+
+@media (max-width: 1366px) {
+  .service-right {
+    margin-left: -7.9vw;
   }
 }
 
 @media (max-width: 1200px) {
   .service-right {
-    margin-left: -8vw;
+    margin-left: -7.5vw;
   }
 }
 
@@ -316,7 +334,7 @@ body {
   }
   
   .service-right {
-    margin-left: -6vw;
+    margin-left: -6.5vw;
   }
 }
 
