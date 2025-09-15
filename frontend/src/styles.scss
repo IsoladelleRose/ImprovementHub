@@ -200,21 +200,22 @@ body {
 
 .btn-how-it-works {
   padding: 16px 40px;
-  background: #007bff;
-  border: none;
+  background: transparent;
+  border: 2px solid #333;
   border-radius: 12px;
-  color: white;
+  color: #333;
   font-weight: 600;
   font-size: 16px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.4);
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.2);
   text-transform: none;
   
   &:hover {
-    background: #0056b3;
+    background: #007bff;
+    color: white;
     transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(0, 123, 255, 0.6);
+    box-shadow: 0 8px 25px rgba(0, 123, 255, 0.4);
   }
 }
 
