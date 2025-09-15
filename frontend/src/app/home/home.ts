@@ -13,4 +13,8 @@ export class Home {
   navigateToHowItWorks() {
     this.router.navigate(['/how-does-it-work']);
   }
+
+  navigateToPartnerRegistration() {
+    this.router.navigate(['/partner-registration']);
+  }
 }

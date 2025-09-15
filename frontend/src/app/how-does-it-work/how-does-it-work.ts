@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-how-does-it-work',
@@ -7,5 +8,9 @@ import { Component } from '@angular/core';
   styleUrl: './how-does-it-work.scss'
 })
 export class HowDoesItWork {
+  constructor(private router: Router) {}
 
+  navigateToPartnerRegistration() {
+    this.router.navigate(['/partner-registration']);
+  }
 }
