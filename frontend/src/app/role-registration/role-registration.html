@@ -121,21 +121,24 @@
           </textarea>
         </div>
 
-        <!-- Question 2 -->
+        <!-- Email Question -->
         <div class="form-group">
           <label class="question-label">
-            What Problem or opportunity does the idea address?
+            E-mail address
           </label>
-          <textarea
-            class="form-textarea"
-            placeholder="Explain your idea in detail."
-            rows="6">
-          </textarea>
+          <input
+            type="email"
+            class="form-input"
+            placeholder="your.email@example.com"
+            [(ngModel)]="email"
+            (blur)="validateEmail()"
+            [class.error]="emailError">
+          <div class="error-message" *ngIf="emailError">{{ emailError }}</div>
         </div>
 
         <!-- Continue Button -->
         <div class="form-actions">
-          <button type="submit" class="btn-continue">Continue</button>
+          <button type="submit" class="btn-continue">Analyze!</button>
         </div>
       </form>
     </div>
