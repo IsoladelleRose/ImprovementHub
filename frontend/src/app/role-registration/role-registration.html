@@ -30,7 +30,7 @@
     <div class="sidebar">
       <div class="sidebar-content">
         <div class="step-indicator">
-          <span class="step-number">1 of 2</span>
+          <span class="step-number">2 of 2</span>
         </div>
 
         <div class="sidebar-illustration">
@@ -78,8 +78,8 @@
         </div>
 
         <div class="sidebar-text">
-          <h3>Idea Overview</h3>
-          <p>This information helps us get to know your thought process.</p>
+          <h3>Analysis and feedback</h3>
+          <p>Want our help? Just let us know!</p>
         </div>
       </div>
     </div>
@@ -95,11 +95,28 @@
         <!-- Question 1 -->
         <div class="form-group">
           <label class="question-label">
-            What is the core concept of the idea ?
+            Do you want us to help?
+          </label>
+          <div class="form-radio-group">
+            <label class="radio-option">
+              <input type="radio" name="helpRequest" value="yes" class="radio-input" (change)="onHelpRequestChange('yes')">
+              <span class="radio-text">Yes</span>
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="helpRequest" value="no" class="radio-input" (change)="onHelpRequestChange('no')">
+              <span class="radio-text">No</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Conditional Question - Only show when Yes is selected -->
+        <div class="form-group" *ngIf="showRoleQuestion">
+          <label class="question-label">
+            Which role do you want to take up yourself? (Just put 'none' if you want us to do everything)
           </label>
           <textarea
             class="form-textarea"
-            placeholder="Write down about your idea in a sentence."
+            placeholder="Describe the role you'd like to take..."
             rows="4">
           </textarea>
         </div>
@@ -118,7 +135,7 @@
 
         <!-- Continue Button -->
         <div class="form-actions">
-          <button type="button" class="btn-continue" (click)="navigateToRoleRegistration()">Continue</button>
+          <button type="submit" class="btn-continue">Continue</button>
         </div>
       </form>
     </div>
