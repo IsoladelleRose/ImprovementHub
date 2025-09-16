@@ -403,7 +403,14 @@
   padding: 80px 40px;
 }
 
-.evaluation-illustration {
+/* Inventors Matching Section */
+.inventors-matching-section {
+  background: white;
+  padding: 80px 40px;
+}
+
+.evaluation-illustration,
+.matching-illustration {
   color: #333;
 }
 
@@ -491,4 +498,64 @@
     width: 280px;
     height: 200px;
   }
+}
+
+/* INNOVATORS Section */
+.innovators-section {
+  background: white;
+  padding: 80px 40px;
+  position: relative;
+
+  .section-header {
+    margin-bottom: 80px;
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+
+      .title-decoration {
+        width: 120px;
+        height: 3px;
+        background: #ffc107;
+        border-radius: 2px;
+
+        &.green {
+          background: #28a745;
+        }
+      }
+
+      h2 {
+        font-size: 36px;
+        font-weight: 700;
+        color: #333;
+        margin: 0;
+        letter-spacing: 2px;
+      }
+    }
+  }
+}
+
+/* Match Section */
+.match-section {
+  background: #f8f9fa;
+  padding: 80px 40px;
+}
+
+/* Proposal Section */
+.proposal-section {
+  background: white;
+  padding: 80px 40px;
+}
+
+/* Green Visual Container */
+.green-visual {
+  background: #28a745 !important;
+}
+
+.register-illustration,
+.match-illustration,
+.proposal-illustration {
+  color: #333;
 }
