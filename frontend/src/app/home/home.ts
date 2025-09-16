@@ -17,4 +17,8 @@ export class Home {
   navigateToPartnerRegistration() {
     this.router.navigate(['/partner-registration']);
   }
+
+  navigateToIdeaRegistration() {
+    this.router.navigate(['/idea-registration']);
+  }
 }
