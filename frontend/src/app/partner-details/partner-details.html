@@ -30,7 +30,7 @@
     <div class="sidebar">
       <div class="sidebar-content">
         <div class="step-indicator">
-          <span class="step-number">1 of 2</span>
+          <span class="step-number">2 of 2</span>
         </div>
 
         <div class="sidebar-illustration">
@@ -73,8 +73,8 @@
         </div>
 
         <div class="sidebar-text">
-          <h3>Understanding your interests and skills</h3>
-          <p>This information helps us to find a match.</p>
+          <h3>Getting your details</h3>
+          <p>How else can we contact you? ;-)</p>
         </div>
       </div>
     </div>
@@ -87,61 +87,114 @@
       </div>
 
       <form class="registration-form">
-        <!-- Question 1 -->
-        <div class="form-group">
-          <label class="question-label">
-            <span class="question-number">1.</span>
-            Which areas of innovation or improvement are you most interested in?
-          </label>
-          <textarea
-            class="form-textarea"
-            placeholder="Write down about your area of innovation"
-            rows="4">
-          </textarea>
+        <!-- Company Name and VAT Number -->
+        <div class="form-row">
+          <div class="form-group half-width">
+            <label class="question-label">
+              Company Name
+            </label>
+            <input
+              type="text"
+              class="form-input"
+              placeholder="Enter your company name"
+              [(ngModel)]="company"
+              name="company">
+          </div>
+          <div class="form-group half-width">
+            <label class="question-label">
+              VAT Number
+            </label>
+            <input
+              type="text"
+              class="form-input"
+              placeholder="Enter VAT number"
+              [(ngModel)]="vatNumber"
+              name="vatNumber">
+          </div>
         </div>
 
-        <!-- Question 2 -->
+        <!-- Contact Person -->
         <div class="form-group">
           <label class="question-label">
-            <span class="question-number">2.</span>
-            Are there any specific industries or markets you are looking to expand into or strengthen your presence in?
+            Contact Person
           </label>
-          <textarea
-            class="form-textarea"
-            placeholder="Write down about your expertise"
-            rows="4">
-          </textarea>
+          <input
+            type="text"
+            class="form-input"
+            placeholder="Enter contact person name"
+            [(ngModel)]="contactPerson"
+            name="contactPerson">
         </div>
 
-        <!-- Question 3 -->
+        <!-- Address Fields -->
         <div class="form-group">
           <label class="question-label">
-            <span class="question-number">3.</span>
-            What is your long-term vision for innovation and growth, and how can we contribute to it?
+            Street Address
           </label>
-          <textarea
-            class="form-textarea"
-            placeholder="Write down about your vision"
-            rows="4">
-          </textarea>
+          <input
+            type="text"
+            class="form-input"
+            placeholder="Enter street address"
+            [(ngModel)]="street"
+            name="street">
         </div>
 
-        <!-- Question 4 -->
+        <div class="form-row">
+          <div class="form-group half-width">
+            <label class="question-label">
+              City
+            </label>
+            <input
+              type="text"
+              class="form-input"
+              placeholder="Enter city"
+              [(ngModel)]="city"
+              name="city">
+          </div>
+          <div class="form-group half-width">
+            <label class="question-label">
+              Postal Code
+            </label>
+            <input
+              type="text"
+              class="form-input"
+              placeholder="Enter postal code"
+              [(ngModel)]="postalCode"
+              name="postalCode">
+          </div>
+        </div>
+
         <div class="form-group">
           <label class="question-label">
-            <span class="question-number">4.</span>
-            What do you bring to the table by means of competences, experience, resources (financial or otherwise)?
+            Country
           </label>
-          <textarea
-            class="form-textarea"
-            placeholder="Describe what you can contribute"
-            rows="4">
-          </textarea>
+          <input
+            type="text"
+            class="form-input"
+            placeholder="Enter country"
+            [(ngModel)]="country"
+            name="country">
+        </div>
+
+        <!-- Email Address -->
+        <div class="form-group">
+          <label class="question-label">
+            Email Address
+          </label>
+          <input
+            type="email"
+            class="form-input"
+            placeholder="your.email@example.com"
+            [(ngModel)]="email"
+            (blur)="validateEmail()"
+            [class.error]="emailError"
+            name="email">
+          <div class="error-message" *ngIf="emailError">{{ emailError }}</div>
         </div>
 
         <!-- Continue Button -->
         <div class="form-actions">
-          <button type="button" class="btn-continue" (click)="navigateToPartnerDetails()">Continue</button>
+          <button type="submit" class="btn-continue">Let's go!</button>
         </div>
       </form>
     </div>
