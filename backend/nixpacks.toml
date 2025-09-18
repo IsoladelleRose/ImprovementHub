@@ -1,0 +1,9 @@
+[phases.build]
+cmd = "./mvnw clean package -DskipTests"
+
+[phases.start]
+cmd = "java -Dserver.port=$PORT -jar target/*.jar"
+
+[variables]
+JAVA_VERSION = "17"
+MAVEN_VERSION = "3.9.6"
