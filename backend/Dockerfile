@@ -13,14 +13,21 @@ COPY pom.xml ./
 # Download dependencies (this will be cached if pom.xml doesn't change)
 RUN mvn dependency:go-offline -B
 
-# Copy source code
+# Copy source code and startup script
 COPY src src
+COPY start.sh ./
+
+# Make startup script executable
+RUN chmod +x start.sh
 
 # Build the application
 RUN mvn clean package -DskipTests
 
+# List files to verify JAR was created
+RUN ls -la target/
+
 # Expose port
 EXPOSE 8080
 
-# Run the application
-CMD ["java", "-jar", "target/improvement-hub-backend-1.0.0.jar"]
+# Run the application using startup script
+CMD ["./start.sh"]
