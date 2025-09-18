@@ -2,10 +2,10 @@
 cmd = "apt-get update && apt-get install -y maven"
 
 [phases.build]
-cmd = "mvn clean package -DskipTests"
+cmd = "mvn clean package -DskipTests && ls -la target/"
 
 [phases.start]
-cmd = "java -Dserver.port=$PORT -jar target/improvement-hub-backend-1.0.0.jar"
+cmd = "bash -c 'JAR_FILE=$(find target -name \"*.jar\" -type f | head -1); echo \"Starting with JAR: $JAR_FILE\"; java -Dserver.port=$PORT -jar \"$JAR_FILE\"'"
 
 [variables]
 JAVA_VERSION = "17"
