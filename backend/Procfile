@@ -1,0 +1,1 @@
+web: bash -c 'JAR_FILE=$(find target -name "*.jar" -type f | head -1); echo "Starting with JAR: $JAR_FILE"; java -Dserver.port=$PORT -jar "$JAR_FILE"'
