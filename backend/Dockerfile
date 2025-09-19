@@ -35,7 +35,7 @@ RUN echo '#!/bin/bash' > /app/start.sh && \
     echo 'echo "PORT: $PORT"' >> /app/start.sh && \
     echo 'echo "DATABASE_URL: $DATABASE_URL"' >> /app/start.sh && \
     echo 'echo "=========================="' >> /app/start.sh && \
-    echo 'exec java -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -Dserver.port=${PORT:-8080} -jar app.jar' >> /app/start.sh
+    echo 'exec java -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -XX:+EnableDynamicAgentLoading -XX:+UnlockExperimentalVMOptions -XX:+UseZGC -Dserver.port=${PORT:-8080} -jar app.jar' >> /app/start.sh
 
 RUN chmod +x /app/start.sh
 
