@@ -5,7 +5,7 @@ cmd = "apt-get update && apt-get install -y maven"
 cmd = "mvn clean package -DskipTests && ls -la target/"
 
 [phases.start]
-cmd = "bash -c 'JAR_FILE=$(find target -name \"*.jar\" -type f | head -1); echo \"Starting with JAR: $JAR_FILE\"; java -Dserver.port=$PORT -jar \"$JAR_FILE\"'"
+cmd = "bash -c 'JAR_FILE=$(find target -name \"*.jar\" -type f | head -1); echo \"Starting with JAR: $JAR_FILE\"; java -Dserver.port=$PORT -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -jar \"$JAR_FILE\"'"
 
 [variables]
 JAVA_VERSION = "17"

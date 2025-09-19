@@ -30,4 +30,4 @@ RUN ls -la target/
 EXPOSE 8080
 
 # Run the application using startup script
-CMD ["./start.sh"]
+CMD ["bash", "-c", "JAR_FILE=$(find target -name '*.jar' -type f | head -1); echo 'Starting with JAR: $JAR_FILE'; java -Dserver.port=${PORT:-8080} -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -jar \"$JAR_FILE\""]
