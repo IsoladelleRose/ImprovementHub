@@ -21,13 +21,16 @@ RUN mvn clean package -DskipTests
 # Debug: Show built files
 RUN echo "Built JAR files:" && ls -la target/
 
+# Copy and rename JAR to a predictable name in build stage
+RUN cp target/*.jar target/app.jar && ls -la target/app.jar
+
 # Production stage
 FROM eclipse-temurin:21-jre-alpine
 
 WORKDIR /app
 
-# Copy JAR from build stage
-COPY --from=build /app/target/*.jar app.jar
+# Copy JAR from build stage - use the renamed predictable filename
+COPY --from=build /app/target/app.jar app.jar
 
 # Create startup script
 RUN echo '#!/bin/bash' > /app/start.sh && \
