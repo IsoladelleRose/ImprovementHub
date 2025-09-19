@@ -17,7 +17,11 @@ public class DatabaseConfig {
     public DataSource dataSource() {
         String databaseUrl = System.getenv("DATABASE_URL");
 
-        if (databaseUrl != null && databaseUrl.startsWith("postgres://")) {
+        System.out.println("=== DATABASE CONFIG DEBUG ===");
+        System.out.println("DATABASE_URL environment variable: " + databaseUrl);
+        System.out.println("============================");
+
+        if (databaseUrl != null && (databaseUrl.startsWith("postgres://") || databaseUrl.startsWith("postgresql://"))) {
             // Railway provides postgres:// but Spring Boot needs postgresql://
             databaseUrl = databaseUrl.replace("postgres://", "postgresql://");
 
