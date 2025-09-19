@@ -1,10 +1,10 @@
 # Backend Dockerfile - Spring Boot
-FROM openjdk:17-jdk-slim AS build
+FROM eclipse-temurin:21-jdk-alpine AS build
 
 WORKDIR /app
 
-# Install Maven
-RUN apt-get update && apt-get install -y maven && rm -rf /var/lib/apt/lists/*
+# Install Maven (Alpine uses apk instead of apt-get)
+RUN apk add --no-cache maven
 
 # Copy pom.xml first for better caching
 COPY pom.xml .
@@ -22,7 +22,7 @@ RUN mvn clean package -DskipTests
 RUN echo "Built JAR files:" && ls -la target/
 
 # Production stage
-FROM openjdk:17-jre-slim
+FROM eclipse-temurin:21-jre-alpine
 
 WORKDIR /app
 
@@ -46,7 +46,7 @@ EXPOSE 8080
 HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
     CMD curl -f http://localhost:${PORT:-8080}/health || exit 1
 
-# Install curl for health checks
-RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+# Install curl for health checks (Alpine uses apk)
+RUN apk add --no-cache curl
 
 CMD ["/app/start.sh"]
