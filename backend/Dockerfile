@@ -30,22 +30,12 @@ WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 
 # Create startup script
-RUN cat > /app/start.sh << 'EOF'
-#!/bin/bash
-
-# Show environment for debugging
-echo "=== Environment Variables ==="
-echo "PORT: $PORT"
-echo "DATABASE_URL: $DATABASE_URL"
-echo "=========================="
-
-# Start Spring Boot application
-exec java \
-    -XX:+UseContainerSupport \
-    -XX:MaxRAMPercentage=75.0 \
-    -Dserver.port=${PORT:-8080} \
-    -jar app.jar
-EOF
+RUN echo '#!/bin/bash' > /app/start.sh && \
+    echo 'echo "=== Environment Variables ==="' >> /app/start.sh && \
+    echo 'echo "PORT: $PORT"' >> /app/start.sh && \
+    echo 'echo "DATABASE_URL: $DATABASE_URL"' >> /app/start.sh && \
+    echo 'echo "=========================="' >> /app/start.sh && \
+    echo 'exec java -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -Dserver.port=${PORT:-8080} -jar app.jar' >> /app/start.sh
 
 RUN chmod +x /app/start.sh
 
