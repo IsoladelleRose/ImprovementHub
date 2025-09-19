@@ -40,8 +40,8 @@ RUN mvn clean package -DskipTests
 # Stage 3: Runtime image with nginx + Java
 FROM nginx:alpine
 
-# Install OpenJDK 17
-RUN apk add --no-cache openjdk17-jre
+# Install OpenJDK 17 and curl for health checks
+RUN apk add --no-cache openjdk17-jre curl
 
 # Copy built frontend from frontend-build stage
 COPY --from=frontend-build /app/frontend/dist/frontend/ /usr/share/nginx/html/
@@ -49,42 +49,42 @@ COPY --from=frontend-build /app/frontend/dist/frontend/ /usr/share/nginx/html/
 # Copy built backend JAR from backend-build stage
 COPY --from=backend-build /app/backend/target/*.jar /app/backend.jar
 
-# Create nginx configuration
-RUN cat > /etc/nginx/conf.d/default.conf << 'EOF'
+# Create startup script
+RUN cat > /app/start.sh << 'EOF'
+#!/bin/bash
+
+# Create nginx config with dynamic port
+cat > /etc/nginx/conf.d/default.conf << NGINX_EOF
 server {
-    listen 80;
+    listen ${PORT:-80};
     server_name localhost;
 
     # Serve Angular frontend
     location / {
         root /usr/share/nginx/html;
         index index.html index.htm;
-        try_files $uri $uri/ /index.html;
+        try_files \$uri \$uri/ /index.html;
     }
 
     # Proxy API requests to Spring Boot backend
     location /api/ {
         proxy_pass http://localhost:8080;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
     }
 
     # Proxy health check
     location /health {
         proxy_pass http://localhost:8080;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
     }
 }
-EOF
-
-# Create startup script
-RUN cat > /app/start.sh << 'EOF'
-#!/bin/bash
+NGINX_EOF
 
 # Start Spring Boot backend in background
 echo "Starting Spring Boot backend..."
@@ -100,12 +100,12 @@ EOF
 
 RUN chmod +x /app/start.sh
 
-# Expose port 80 (nginx will serve both frontend and proxy backend)
-EXPOSE 80
+# Expose port (Railway will set PORT environment variable)
+EXPOSE $PORT
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=60s --retries=3 \
-    CMD curl -f http://localhost/health || exit 1
+    CMD curl -f http://localhost:${PORT:-80}/health || exit 1
 
 # Start both services
 CMD ["/app/start.sh"]

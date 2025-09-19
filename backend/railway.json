@@ -1,9 +1,0 @@
-{
-  "$schema": "https://railway.app/railway.schema.json",
-  "build": {
-    "builder": "NIXPACKS"
-  },
-  "deploy": {
-    "startCommand": "bash -c 'JAR_FILE=$(find target -name \"*.jar\" -type f | head -1); echo \"Starting with JAR: $JAR_FILE\"; java -Dserver.port=$PORT -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -jar \"$JAR_FILE\"'"
-  }
-}
