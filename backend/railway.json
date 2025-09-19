@@ -4,6 +4,6 @@
     "builder": "NIXPACKS"
   },
   "deploy": {
-    "startCommand": "bash -c 'JAR_FILE=$(find target -name \"*.jar\" -type f | head -1); echo \"Starting with JAR: $JAR_FILE\"; java -Dserver.port=$PORT -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -jar \"$JAR_FILE\"'"
+    "startCommand": "bash -c 'JAR_FILE=$(find target -name \"*.jar\" -type f | head -1); echo \"Starting with JAR: $JAR_FILE\"; java -Dserver.port=$PORT -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -jar \"$JAR_FILE\"'"
   }
 }
