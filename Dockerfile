@@ -37,6 +37,9 @@ COPY backend/src src
 # Build the application
 RUN mvn clean package -DskipTests
 
+# List built files for debugging
+RUN ls -la target/
+
 # Stage 3: Runtime image with nginx + Java
 FROM nginx:alpine
 
@@ -47,7 +50,7 @@ RUN apk add --no-cache openjdk17-jre curl
 COPY --from=frontend-build /app/frontend/dist/frontend/ /usr/share/nginx/html/
 
 # Copy built backend JAR from backend-build stage
-COPY --from=backend-build /app/backend/target/*.jar /app/backend.jar
+COPY --from=backend-build /app/backend/target/improvement-hub-backend-1.0.0.jar /app/backend.jar
 
 # Create startup script
 RUN cat > /app/start.sh << 'EOF'
