@@ -17,11 +17,13 @@ RUN mvn clean package -DskipTests
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 
-# Copy JAR file
+# Copy JAR file and startup script
 COPY --from=builder /workspace/target/improvement-hub-backend-1.0.0.jar app.jar
+COPY start.sh .
+RUN chmod +x start.sh
 
 # Expose port
 EXPOSE 8080
 
-# Start the application
-CMD ["sh", "-c", "java -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -Dserver.port=${PORT:-8080} -jar app.jar"]
+# Start the application using the startup script
+CMD ["./start.sh"]
