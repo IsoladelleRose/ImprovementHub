@@ -6,26 +6,34 @@ WORKDIR /app
 # Install Maven
 RUN apk add --no-cache maven
 
-# Copy Maven files
-COPY pom.xml .
-COPY .mvn .mvn
-COPY mvnw .
-COPY mvnw.cmd .
+# Copy Maven files from temp-hide directory
+COPY temp-hide/pom.xml .
+COPY temp-hide/.mvn .mvn
+COPY temp-hide/mvnw .
+COPY temp-hide/mvnw.cmd .
 
 # Download dependencies
 RUN mvn dependency:go-offline -B || true
 
 # Copy source and build
-COPY src src
+COPY temp-hide/src src
 RUN mvn clean package -DskipTests
+
+# Debug: List target directory contents
+RUN echo "=== Target directory contents ===" && ls -la target/
 
 # Runtime stage
 FROM eclipse-temurin:21-jre-alpine
 
 WORKDIR /app
 
-# Copy specific JAR from build stage
-COPY --from=build /app/target/improvement-hub-backend-1.0.0.jar app.jar
+# Debug: List what we're copying
+RUN echo "=== About to copy JAR files ==="
+COPY --from=build /app/target/ ./debug-target/
+RUN ls -la ./debug-target/
+
+# Copy JAR with fallback approach
+COPY --from=build /app/target/*.jar app.jar
 
 # Expose port
 EXPOSE 8080
