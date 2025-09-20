@@ -21,8 +21,26 @@ if (!jarFile) {
 const jarPath = path.join(targetDir, jarFile);
 console.log(`Found JAR: ${jarPath}`);
 
-// Start the Java application
-const javaProcess = spawn('java', [
+// Start the Java application (try multiple Java paths)
+const javaPaths = [
+    '/usr/lib/jvm/temurin-21-jdk-amd64/bin/java',
+    '/usr/bin/java',
+    'java'
+];
+
+let javaPath = 'java';
+for (const path of javaPaths) {
+    try {
+        require('fs').accessSync(path, require('fs').constants.F_OK);
+        javaPath = path;
+        console.log(`Using Java at: ${javaPath}`);
+        break;
+    } catch (e) {
+        // Try next path
+    }
+}
+
+const javaProcess = spawn(javaPath, [
     '-XX:+UseContainerSupport',
     '-XX:MaxRAMPercentage=75.0',
     `-Dserver.port=${process.env.PORT || 8080}`,

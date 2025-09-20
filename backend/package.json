@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "build": "echo 'Building Java app...' && chmod +x build.sh && ./build.sh"
+    "build": "echo 'Building Java app...' && chmod +x build.sh && ./build.sh && echo 'Installing Java for runtime...' && apt-get install -y temurin-21-jdk"
   },
   "dependencies": {
     "child_process": "^1.0.2"
