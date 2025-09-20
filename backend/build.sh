@@ -30,3 +30,8 @@ mvn clean package -DskipTests
 
 echo "Build complete!"
 ls -la target/
+
+echo "Copying Java runtime for deployment..."
+mkdir -p runtime-java
+cp -r /usr/lib/jvm/temurin-21-jdk-amd64 runtime-java/
+echo "Java runtime copied to runtime-java/"

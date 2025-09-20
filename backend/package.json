@@ -4,7 +4,7 @@
   "description": "Java Spring Boot app deployed via Node.js",
   "main": "server.js",
   "scripts": {
-    "start": "chmod +x runtime-setup.sh && ./runtime-setup.sh",
+    "start": "node server.js",
     "build": "echo 'Building Java app...' && chmod +x build.sh && ./build.sh"
   },
   "dependencies": {
