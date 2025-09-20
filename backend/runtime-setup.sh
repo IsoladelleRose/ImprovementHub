@@ -15,7 +15,14 @@ export JAVA_HOME=/usr/lib/jvm/temurin-21-jdk-amd64
 export PATH=$JAVA_HOME/bin:$PATH
 
 echo "Java installed successfully:"
+$JAVA_HOME/bin/java -version
+
+echo "Creating java symlink..."
+ln -sf $JAVA_HOME/bin/java /usr/local/bin/java
+
+echo "Verifying java command..."
+which java
 java -version
 
-echo "Starting Node.js server..."
-node server.js
+echo "Starting Node.js server with Java environment..."
+JAVA_HOME=$JAVA_HOME PATH=$PATH node server.js

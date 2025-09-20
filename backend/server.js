@@ -24,11 +24,12 @@ console.log(`Found JAR: ${jarPath}`);
 // Start the Java application (try multiple Java paths)
 const javaPaths = [
     '/usr/lib/jvm/temurin-21-jdk-amd64/bin/java',
+    '/usr/local/bin/java',
     '/usr/bin/java',
     'java'
 ];
 
-let javaPath = 'java';
+let javaPath = '/usr/lib/jvm/temurin-21-jdk-amd64/bin/java'; // Default to full path
 for (const path of javaPaths) {
     try {
         require('fs').accessSync(path, require('fs').constants.F_OK);
@@ -36,9 +37,11 @@ for (const path of javaPaths) {
         console.log(`Using Java at: ${javaPath}`);
         break;
     } catch (e) {
-        // Try next path
+        console.log(`Java not found at: ${path}`);
     }
 }
+
+console.log(`Final Java path: ${javaPath}`);
 
 const javaProcess = spawn(javaPath, [
     '-XX:+UseContainerSupport',
