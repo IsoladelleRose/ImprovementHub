@@ -1,40 +1,16 @@
-# Multi-stage Docker build - pulls source from parent directory
+# Minimal multi-stage build
 FROM eclipse-temurin:21-jdk-alpine AS build
-
-WORKDIR /app
-
-# Install Maven
+WORKDIR /build
 RUN apk add --no-cache maven
-
-# Copy Maven files from backend directory
-COPY ../backend/temp-hide/pom.xml .
-COPY ../backend/temp-hide/.mvn .mvn
-COPY ../backend/temp-hide/mvnw .
-COPY ../backend/temp-hide/mvnw.cmd .
-
-# Download dependencies
-RUN mvn dependency:go-offline -B || true
-
-# Copy source and build
-COPY ../backend/temp-hide/src src
+# Copy all source files directly
+COPY ../backend/temp-hide/ .
 RUN mvn clean package -DskipTests
 
-# Debug: List target directory contents
-RUN echo "=== Target directory contents ===" && ls -la target/
-
-# Runtime stage
+# Runtime stage - extremely simple
 FROM eclipse-temurin:21-jre-alpine
-
 WORKDIR /app
-
-# Copy JAR with wildcard (should work in COPY)
-COPY --from=build /app/target/*.jar app.jar
-
-# Debug: Verify JAR is copied
-RUN ls -la app.jar
-
-# Expose port
+# Copy any JAR file from build stage
+RUN mkdir -p /app
+COPY --from=build /build/target/*.jar /app/app.jar
 EXPOSE 8080
-
-# Run the application
-CMD ["java", "-XX:+UseContainerSupport", "-XX:MaxRAMPercentage=75.0", "-Dserver.port=${PORT:-8080}", "-jar", "app.jar"]
+CMD ["java", "-XX:+UseContainerSupport", "-XX:MaxRAMPercentage=75.0", "-Dserver.port=${PORT:-8080}", "-jar", "/app/app.jar"]
