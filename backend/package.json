@@ -1,0 +1,16 @@
+{
+  "name": "improvement-hub-backend",
+  "version": "1.0.0",
+  "description": "Java Spring Boot app deployed via Node.js",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "build": "echo 'Building Java app...' && chmod +x build.sh && ./build.sh"
+  },
+  "dependencies": {
+    "child_process": "^1.0.2"
+  },
+  "engines": {
+    "node": "18.x"
+  }
+}
