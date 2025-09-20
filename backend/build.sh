@@ -22,9 +22,11 @@ mv mvnw.cmd.hidden mvnw.cmd
 mv .mvn.hidden .mvn
 mv src.hidden src
 
+echo "Installing Maven..."
+apt-get install -y maven
+
 echo "Building Spring Boot application..."
-chmod +x mvnw
-./mvnw clean package -DskipTests
+mvn clean package -DskipTests
 
 echo "Build complete!"
 ls -la target/
