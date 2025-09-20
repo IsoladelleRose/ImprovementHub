@@ -1,5 +1,2 @@
 [build]
 builder = "dockerfile"
-
-[deploy]
-startCommand = "java -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -Dserver.port=$PORT -jar app.jar"
