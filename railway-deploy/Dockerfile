@@ -24,4 +24,4 @@ COPY --from=builder /workspace/target/improvement-hub-backend-1.0.0.jar app.jar
 EXPOSE 8080
 
 # Start the application
-CMD ["java", "-XX:+UseContainerSupport", "-XX:MaxRAMPercentage=75.0", "-Dserver.port=${PORT:-8080}", "-jar", "app.jar"]
+CMD ["sh", "-c", "java -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -Dserver.port=${PORT:-8080} -jar app.jar"]
