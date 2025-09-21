@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-role-registration',
@@ -12,6 +14,10 @@ export class RoleRegistration {
   showRoleQuestion = false;
   email = '';
   emailError = '';
+
+  private apiUrl = 'http://localhost:8080/api';
+
+  constructor(private router: Router, private http: HttpClient) {}
 
   onHelpRequestChange(value: string) {
     this.showRoleQuestion = value === 'yes';
@@ -26,5 +32,17 @@ export class RoleRegistration {
     } else {
       this.emailError = '';
     }
+  }
+
+  onAnalyze() {
+    this.validateEmail();
+    if (this.emailError) {
+      return;
+    }
+
+    // Navigate to idea registration with email parameter
+    this.router.navigate(['/idea-registration'], {
+      queryParams: { email: this.email }
+    });
   }
 }

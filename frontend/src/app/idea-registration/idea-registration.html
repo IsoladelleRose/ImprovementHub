@@ -100,7 +100,9 @@
           <textarea
             class="form-textarea"
             placeholder="Write down about your idea in a sentence."
-            rows="4">
+            rows="4"
+            [(ngModel)]="coreConcept"
+            name="coreConcept">
           </textarea>
         </div>
 
@@ -112,13 +114,36 @@
           <textarea
             class="form-textarea"
             placeholder="Explain your idea in detail."
-            rows="6">
+            rows="6"
+            [(ngModel)]="problemOpportunity"
+            name="problemOpportunity">
           </textarea>
+        </div>
+
+        <!-- Email Field -->
+        <div class="form-group">
+          <label class="question-label">
+            Email Address
+          </label>
+          <input
+            type="email"
+            class="form-input"
+            placeholder="your.email@example.com"
+            [(ngModel)]="email"
+            name="email"
+            readonly>
+          <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
         </div>
 
         <!-- Continue Button -->
         <div class="form-actions">
-          <button type="button" class="btn-continue" (click)="navigateToRoleRegistration()">Continue</button>
+          <button
+            type="button"
+            class="btn-continue"
+            (click)="onSubmitIdea()"
+            [disabled]="isSubmitting">
+            {{ isSubmitting ? 'Submitting...' : 'Submit Idea' }}
+          </button>
         </div>
       </form>
     </div>

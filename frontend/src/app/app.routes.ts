@@ -4,6 +4,8 @@ import { PartnerRegistration } from './partner-registration/partner-registration
 import { PartnerDetails } from './partner-details/partner-details';
 import { IdeaRegistration } from './idea-registration/idea-registration';
 import { RoleRegistration } from './role-registration/role-registration';
+import { LoginComponent } from './login/login.component';
+import { ProfileComponent } from './profile/profile.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -13,5 +15,7 @@ export const routes: Routes = [
   { path: 'partner-details', component: PartnerDetails },
   { path: 'idea-registration', component: IdeaRegistration },
   { path: 'role-registration', component: RoleRegistration },
+  { path: 'login', component: LoginComponent },
+  { path: 'profile', component: ProfileComponent },
   { path: '**', redirectTo: '/home' }
 ];

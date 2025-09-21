@@ -1,0 +1,312 @@
+<div class="profile-container">
+  <!-- Navigation Header -->
+  <header class="nav-header">
+    <div class="logo" (click)="navigateHome()">
+      <div class="logo-icon">🔧</div>
+      <span>INNOVISION</span>
+    </div>
+    <nav class="nav-links">
+      <a (click)="navigateHome()">HOME</a>
+      <a>WHO WE ARE</a>
+      <a>VIEWS</a>
+      <a>CONTACT</a>
+    </nav>
+    <div class="user-section">
+      <div class="notification-icon">🔔</div>
+      <div class="user-avatar" *ngIf="user">
+        {{ user.emailAddress.charAt(0).toUpperCase() }}
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="profile-section">
+        <h3>Profile</h3>
+        <div class="menu-item" [class.active]="activeSection === 'profile'" (click)="setActiveSection('profile')">
+          <span class="menu-icon">👤</span>
+          Edit Profile
+        </div>
+        <div class="menu-item" [class.active]="activeSection === 'language'" (click)="setActiveSection('language')">
+          <span class="menu-icon">🌐</span>
+          Language
+        </div>
+        <div class="menu-item" [class.active]="activeSection === 'notifications'" (click)="setActiveSection('notifications')">
+          <span class="menu-icon">🔔</span>
+          Notifications
+        </div>
+      </div>
+
+      <div class="bank-section">
+        <h3>Bank</h3>
+        <div class="menu-item" [class.active]="activeSection === 'billing'" (click)="setActiveSection('billing')">
+          <span class="menu-icon">💳</span>
+          Billing information
+        </div>
+      </div>
+
+      <div class="secure-section">
+        <h3>Secure</h3>
+        <div class="menu-item" [class.active]="activeSection === 'passwords'" (click)="setActiveSection('passwords')">
+          <span class="menu-icon">🔒</span>
+          Passwords
+        </div>
+        <div class="menu-item" [class.active]="activeSection === 'settings'" (click)="setActiveSection('settings')">
+          <span class="menu-icon">⚙️</span>
+          Settings
+        </div>
+      </div>
+
+      <div class="logout-section">
+        <div class="menu-item logout" (click)="logout()">
+          <span class="menu-icon">🚪</span>
+          Logout
+        </div>
+      </div>
+    </aside>
+
+    <!-- Content Area -->
+    <main class="content-area">
+      <!-- Profile Section -->
+      <div *ngIf="activeSection === 'profile'" class="section-content">
+        <div class="section-header">
+          <h1>Profile Information</h1>
+          <div class="decorative-arrow">📄</div>
+        </div>
+
+        <div class="info-card">
+          <div class="card-header">
+            <h2>User Profile</h2>
+          </div>
+          <div class="profile-info">
+            <div class="info-group">
+              <label>Email Address</label>
+              <div class="info-value">{{ user?.emailAddress || 'N/A' }}</div>
+            </div>
+            <div class="info-group">
+              <label>User Role</label>
+              <div class="info-value">{{ getUserRole() }}</div>
+            </div>
+            <div class="info-group">
+              <label>Member Since</label>
+              <div class="info-value">{{ getMemberSince() }}</div>
+            </div>
+            <div class="info-group">
+              <label>User ID</label>
+              <div class="info-value">#{{ user?.userId || user?.id || 'N/A' }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Password Section -->
+      <div *ngIf="activeSection === 'passwords'" class="section-content">
+        <div class="section-header">
+          <h1>Password Management</h1>
+          <div class="decorative-arrow">🔒</div>
+        </div>
+
+        <!-- Success Message -->
+        <div *ngIf="passwordChangeSuccess" class="success-message">
+          {{ passwordChangeSuccess }}
+        </div>
+
+        <!-- Error Message -->
+        <div *ngIf="passwordChangeError" class="error-message">
+          {{ passwordChangeError }}
+        </div>
+
+        <div class="password-card">
+          <div class="card-header">
+            <h2>Change Password</h2>
+          </div>
+
+          <form (ngSubmit)="onChangePassword()" class="password-form">
+            <div class="form-group">
+              <label for="currentPassword">Current Password</label>
+              <input
+                type="password"
+                id="currentPassword"
+                [(ngModel)]="currentPassword"
+                name="currentPassword"
+                placeholder="Enter your current password"
+                required
+                [disabled]="isChangingPassword"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="newPassword">New Password</label>
+              <input
+                type="password"
+                id="newPassword"
+                [(ngModel)]="newPassword"
+                name="newPassword"
+                placeholder="Enter your new password"
+                required
+                [disabled]="isChangingPassword"
+              />
+              <div class="password-requirements">
+                <small>Password must be at least 8 characters long and contain uppercase, lowercase, number, and special character.</small>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="confirmNewPassword">Confirm New Password</label>
+              <input
+                type="password"
+                id="confirmNewPassword"
+                [(ngModel)]="confirmNewPassword"
+                name="confirmNewPassword"
+                placeholder="Confirm your new password"
+                required
+                [disabled]="isChangingPassword"
+              />
+            </div>
+
+            <button
+              type="submit"
+              class="change-password-btn"
+              [disabled]="isChangingPassword || !currentPassword || !newPassword || !confirmNewPassword"
+            >
+              {{ isChangingPassword ? 'CHANGING PASSWORD...' : 'CHANGE PASSWORD' }}
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Billing Information Section (placeholder based on wireframe) -->
+      <div *ngIf="activeSection === 'billing'" class="section-content">
+        <div class="section-header">
+          <h1>Billing Information</h1>
+          <div class="decorative-arrow">📄</div>
+        </div>
+
+        <div class="billing-card">
+          <div class="card-header">
+            <h2>Payment Info</h2>
+            <button class="edit-btn">Edit</button>
+          </div>
+          <div class="billing-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label>First Name</label>
+                <input type="text" value="Ronald" disabled />
+              </div>
+              <div class="form-group">
+                <label>Last Name</label>
+                <input type="text" value="Richards" disabled />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Card Number</label>
+                <input type="text" value="1234 **** **** ****" disabled />
+              </div>
+              <div class="form-group">
+                <label>Expiration date</label>
+                <input type="text" value="12/25" disabled />
+              </div>
+              <div class="form-group">
+                <label>CVV</label>
+                <input type="text" value="***" disabled />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="billing-address-card">
+          <div class="card-header">
+            <h2>Billing Address</h2>
+            <button class="edit-btn">Edit</button>
+          </div>
+          <div class="billing-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label>First Name</label>
+                <input type="text" value="Ronald" disabled />
+              </div>
+              <div class="form-group">
+                <label>Last Name</label>
+                <input type="text" value="Richards" disabled />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" value="ronaldrich@example.com" disabled />
+              </div>
+              <div class="form-group">
+                <label>Phone Number</label>
+                <input type="tel" value="+32 45678923" disabled />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Country</label>
+                <input type="text" value="Belgium" disabled />
+              </div>
+              <div class="form-group">
+                <label>Province</label>
+                <input type="text" value="East flanders" disabled />
+              </div>
+              <div class="form-group">
+                <label>Postal Code</label>
+                <input type="text" value="9000" disabled />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Address</label>
+                <input type="text" value="St Bastion" disabled />
+              </div>
+              <div class="form-group">
+                <label>City</label>
+                <input type="text" value="Lebbeke" disabled />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Other sections (placeholder) -->
+      <div *ngIf="activeSection === 'language'" class="section-content">
+        <div class="section-header">
+          <h1>Language Settings</h1>
+          <div class="decorative-arrow">🌐</div>
+        </div>
+        <div class="info-card">
+          <p>Language settings will be available in a future update.</p>
+        </div>
+      </div>
+
+      <div *ngIf="activeSection === 'notifications'" class="section-content">
+        <div class="section-header">
+          <h1>Notification Settings</h1>
+          <div class="decorative-arrow">🔔</div>
+        </div>
+        <div class="info-card">
+          <p>Notification settings will be available in a future update.</p>
+        </div>
+      </div>
+
+      <div *ngIf="activeSection === 'settings'" class="section-content">
+        <div class="section-header">
+          <h1>General Settings</h1>
+          <div class="decorative-arrow">⚙️</div>
+        </div>
+        <div class="info-card">
+          <p>General settings will be available in a future update.</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Background Decorative Elements -->
+  <div class="bg-decoration">
+    <div class="gear gear-1">⚙️</div>
+    <div class="triangle triangle-1"></div>
+  </div>
+</div>

@@ -1,0 +1,94 @@
+<div class="login-container">
+  <!-- Navigation Header -->
+  <header class="nav-header">
+    <div class="logo" (click)="navigateHome()">
+      <div class="logo-icon">🔧</div>
+      <span>INNOSTORE</span>
+    </div>
+    <nav class="nav-links">
+      <a (click)="navigateHome()">HOME</a>
+      <a>WHO WE ARE</a>
+      <a>VIEWS</a>
+      <a>CONTACT</a>
+      <button class="login-btn active">LOGIN</button>
+      <button class="register-btn" (click)="navigateRegister()">REGISTER</button>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="login-card">
+      <h1 class="welcome-title">
+        <span class="highlight">Welcome</span> back
+      </h1>
+
+      <h2 class="form-title">Your Account details</h2>
+
+      <!-- Error Message -->
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+
+      <!-- Login Form -->
+      <form (ngSubmit)="onLogin()" class="login-form">
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input
+            type="email"
+            id="email"
+            [(ngModel)]="emailAddress"
+            name="emailAddress"
+            placeholder="Email Address"
+            required
+            [disabled]="isLoading"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="password-input">
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              id="password"
+              [(ngModel)]="password"
+              name="password"
+              placeholder="Password"
+              required
+              [disabled]="isLoading"
+            />
+            <button
+              type="button"
+              class="password-toggle"
+              (click)="togglePasswordVisibility()"
+              [disabled]="isLoading"
+            >
+              {{ showPassword ? '🙈' : '👁️' }}
+            </button>
+          </div>
+        </div>
+
+        <a class="forgot-password" (click)="onForgotPassword()" [class.disabled]="isLoading">
+          Forgot your Password
+        </a>
+
+        <button
+          type="submit"
+          class="login-submit-btn"
+          [disabled]="isLoading || !emailAddress || !password"
+        >
+          {{ isLoading ? 'LOGGING IN...' : 'LOGIN' }}
+        </button>
+      </form>
+    </div>
+  </main>
+
+  <!-- Background Decorative Elements -->
+  <div class="bg-decoration">
+    <div class="gear gear-1">⚙️</div>
+    <div class="gear gear-2">⚙️</div>
+    <div class="gear gear-3">⚙️</div>
+    <div class="triangle triangle-1"></div>
+    <div class="triangle triangle-2"></div>
+    <div class="triangle triangle-3"></div>
+  </div>
+</div>
