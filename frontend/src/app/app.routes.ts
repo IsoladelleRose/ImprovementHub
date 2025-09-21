@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { Home } from './home/home';
 import { HowDoesItWork } from './how-does-it-work/how-does-it-work';
 import { PartnerRegistration } from './partner-registration/partner-registration';
 import { PartnerDetails } from './partner-details/partner-details';
@@ -9,7 +10,7 @@ import { ProfileComponent } from './profile/profile.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'home', loadComponent: () => import('./home/home').then(m => m.Home) },
+  { path: 'home', component: Home },
   { path: 'how-does-it-work', component: HowDoesItWork },
   { path: 'partner-registration', component: PartnerRegistration },
   { path: 'partner-details', component: PartnerDetails },
