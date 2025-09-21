@@ -21,9 +21,9 @@ RUN npm run build
 
 # Build backend
 WORKDIR /app/backend
-COPY backend/pom.xml ./
+COPY backend/temp-hide/pom.xml ./
 RUN mvn dependency:go-offline -B
-COPY backend/src src
+COPY backend/temp-hide/src src
 RUN mvn clean package -DskipTests
 
 # Debug: Show what was built

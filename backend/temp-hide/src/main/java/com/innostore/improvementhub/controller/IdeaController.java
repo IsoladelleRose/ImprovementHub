@@ -5,6 +5,8 @@ import com.innostore.improvementhub.dto.IdeaRegistrationResponse;
 import com.innostore.improvementhub.entity.Idea;
 import com.innostore.improvementhub.repository.IdeaRepository;
 import com.innostore.improvementhub.service.EmailService;
+import com.innostore.improvementhub.service.UserService;
+import com.innostore.improvementhub.entity.User;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +27,9 @@ public class IdeaController {
     @Autowired
     private EmailService emailService;
 
+    @Autowired
+    private UserService userService;
+
     @PostMapping("/register")
     public ResponseEntity<?> registerIdea(@Valid @RequestBody IdeaRegistrationRequest request) {
         try {
@@ -42,7 +47,9 @@ public class IdeaController {
                     false
                 ));
             } else {
-                // User wants help - save to database and send welcome email
+                // User wants help - create user account, save to database and send welcome email
+                User user = userService.createUserAccount(request.getEmail());
+
                 Idea idea = new Idea();
                 idea.setCoreConcept(request.getCoreConcept());
                 idea.setProblemOpportunity(request.getProblemOpportunity());
@@ -53,12 +60,15 @@ public class IdeaController {
                 // Save idea
                 Idea savedIdea = ideaRepository.save(idea);
 
-                // Send welcome email
+                // Send welcome email with login credentials
                 emailService.sendHelpRequestEmail(
                     request.getEmail(),
                     request.getCoreConcept(),
                     request.getProblemOpportunity(),
-                    request.getUserRole()
+                    request.getUserRole(),
+                    user.getEmail(), // username is email
+                    user.getPassword(),
+                    "http://localhost:4200/login"
                 );
 
                 return ResponseEntity.ok(new IdeaRegistrationResponse(

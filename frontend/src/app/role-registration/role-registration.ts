@@ -19,6 +19,7 @@ export class RoleRegistration implements OnInit {
   userRole = '';
   isSubmitting = false;
   errorMessage = '';
+  successMessage = '';
 
   // Data from previous step
   coreConcept = '';
@@ -79,6 +80,7 @@ export class RoleRegistration implements OnInit {
 
     this.isSubmitting = true;
     this.errorMessage = '';
+    this.successMessage = '';
 
     const ideaData = {
       email: this.email,
@@ -94,17 +96,19 @@ export class RoleRegistration implements OnInit {
         // Clear the stored idea data
         localStorage.removeItem('ideaData');
 
-        // Show appropriate message based on response
-        alert(response.message || 'Idea submitted successfully!');
+        // Show appropriate success message based on response
+        this.successMessage = response.message || 'Idea submitted successfully!';
 
-        // Navigate based on whether they wanted help or not
-        if (response.savedToDatabase) {
-          // User wanted help - navigate to login
-          this.router.navigate(['/login']);
-        } else {
-          // User didn't want help - navigate back to home
-          this.router.navigate(['/']);
-        }
+        // Navigate after a short delay to let user see the message
+        setTimeout(() => {
+          if (response.savedToDatabase) {
+            // User wanted help - navigate to login
+            this.router.navigate(['/login']);
+          } else {
+            // User didn't want help - navigate back to home
+            this.router.navigate(['/']);
+          }
+        }, 3000);
       },
       error: (error) => {
         this.isSubmitting = false;
