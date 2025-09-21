@@ -95,28 +95,30 @@
         <!-- Question 1 -->
         <div class="form-group">
           <label class="question-label">
-            What is the core concept of the idea ?
+            What is the core concept of the idea? *
           </label>
           <textarea
             class="form-textarea"
             placeholder="Write down about your idea in a sentence."
             rows="4"
             [(ngModel)]="coreConcept"
-            name="coreConcept">
+            name="coreConcept"
+            required>
           </textarea>
         </div>
 
         <!-- Question 2 -->
         <div class="form-group">
           <label class="question-label">
-            What Problem or opportunity does the idea address?
+            What Problem or opportunity does the idea address? *
           </label>
           <textarea
             class="form-textarea"
             placeholder="Explain your idea in detail."
             rows="6"
             [(ngModel)]="problemOpportunity"
-            name="problemOpportunity">
+            name="problemOpportunity"
+            required>
           </textarea>
         </div>
 

@@ -94,15 +94,15 @@
         <!-- Question 1 -->
         <div class="form-group">
           <label class="question-label">
-            Do you want us to help?
+            Do you want us to help? *
           </label>
           <div class="form-radio-group">
             <label class="radio-option">
-              <input type="radio" name="helpRequest" value="yes" class="radio-input" (change)="onHelpRequestChange('yes')">
+              <input type="radio" name="helpRequest" value="yes" class="radio-input" (change)="onHelpRequestChange('yes')" required>
               <span class="radio-text">Yes</span>
             </label>
             <label class="radio-option">
-              <input type="radio" name="helpRequest" value="no" class="radio-input" (change)="onHelpRequestChange('no')">
+              <input type="radio" name="helpRequest" value="no" class="radio-input" (change)="onHelpRequestChange('no')" required>
               <span class="radio-text">No</span>
             </label>
           </div>
@@ -125,7 +125,7 @@
         <!-- Email Question -->
         <div class="form-group">
           <label class="question-label">
-            E-mail address
+            E-mail address *
           </label>
           <input
             type="email"
@@ -134,7 +134,8 @@
             [(ngModel)]="email"
             name="email"
             (blur)="validateEmail()"
-            [class.error]="emailError">
+            [class.error]="emailError"
+            required>
           <div class="error-message" *ngIf="emailError">{{ emailError }}</div>
         </div>
 

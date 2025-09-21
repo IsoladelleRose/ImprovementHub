@@ -13,6 +13,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class RoleRegistration implements OnInit {
   showRoleQuestion = false;
+  helpRequestAnswered = false;
   email = '';
   emailError = '';
   userRole = '';
@@ -39,6 +40,7 @@ export class RoleRegistration implements OnInit {
 
   onHelpRequestChange(value: string) {
     this.showRoleQuestion = value === 'yes';
+    this.helpRequestAnswered = true;
   }
 
   validateEmail() {
@@ -53,6 +55,12 @@ export class RoleRegistration implements OnInit {
   }
 
   onAnalyze() {
+    // Validate help request selection
+    if (!this.helpRequestAnswered) {
+      this.errorMessage = 'Please select whether you want us to help';
+      return;
+    }
+
     this.validateEmail();
     if (this.emailError) {
       return;

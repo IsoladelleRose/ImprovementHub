@@ -17,6 +17,17 @@ export class IdeaRegistration {
   constructor(private router: Router) {}
 
   navigateToRoleRegistration() {
+    // Validate required fields
+    if (!this.coreConcept.trim()) {
+      alert('Please enter the core concept of your idea.');
+      return;
+    }
+
+    if (!this.problemOpportunity.trim()) {
+      alert('Please describe what problem or opportunity your idea addresses.');
+      return;
+    }
+
     // Store the idea data in localStorage to pass to the next step
     const ideaData = {
       coreConcept: this.coreConcept,

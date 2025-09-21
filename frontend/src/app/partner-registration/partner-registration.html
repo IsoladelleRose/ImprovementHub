@@ -90,12 +90,15 @@
         <div class="form-group">
           <label class="question-label">
             <span class="question-number">1.</span>
-            Which areas of innovation or improvement are you most interested in?
+            Which areas of innovation or improvement are you most interested in? *
           </label>
           <textarea
             class="form-textarea"
             placeholder="Write down about your area of innovation"
-            rows="4">
+            rows="4"
+            [(ngModel)]="innovationAreas"
+            name="innovationAreas"
+            required>
           </textarea>
         </div>
 
@@ -103,12 +106,15 @@
         <div class="form-group">
           <label class="question-label">
             <span class="question-number">2.</span>
-            Are there any specific industries or markets you are looking to expand into or strengthen your presence in?
+            Are there any specific industries or markets you are looking to expand into or strengthen your presence in? *
           </label>
           <textarea
             class="form-textarea"
             placeholder="Write down about your expertise"
-            rows="4">
+            rows="4"
+            [(ngModel)]="industries"
+            name="industries"
+            required>
           </textarea>
         </div>
 
@@ -116,12 +122,15 @@
         <div class="form-group">
           <label class="question-label">
             <span class="question-number">3.</span>
-            What is your long-term vision for innovation and growth, and how can we contribute to it?
+            What is your long-term vision for innovation and growth, and how can we contribute to it? *
           </label>
           <textarea
             class="form-textarea"
             placeholder="Write down about your vision"
-            rows="4">
+            rows="4"
+            [(ngModel)]="vision"
+            name="vision"
+            required>
           </textarea>
         </div>
 
@@ -129,12 +138,15 @@
         <div class="form-group">
           <label class="question-label">
             <span class="question-number">4.</span>
-            What do you bring to the table by means of competences, experience, resources (financial or otherwise)?
+            What do you bring to the table by means of competences, experience, resources (financial or otherwise)? *
           </label>
           <textarea
             class="form-textarea"
             placeholder="Describe what you can contribute"
-            rows="4">
+            rows="4"
+            [(ngModel)]="contributions"
+            name="contributions"
+            required>
           </textarea>
         </div>
 
