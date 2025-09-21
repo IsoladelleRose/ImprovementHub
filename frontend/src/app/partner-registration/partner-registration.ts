@@ -13,4 +13,8 @@ export class PartnerRegistration {
   navigateToPartnerDetails() {
     this.router.navigate(['/partner-details']);
   }
+
+  navigateToLogin() {
+    this.router.navigate(['/login']);
+  }
 }

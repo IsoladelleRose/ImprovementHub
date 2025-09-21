@@ -99,4 +99,8 @@ export class PartnerDetails implements OnInit {
       }
     });
   }
+
+  navigateToLogin() {
+    this.router.navigate(['/login']);
+  }
 }

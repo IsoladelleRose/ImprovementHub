@@ -69,4 +69,8 @@ export class IdeaRegistration implements OnInit {
   navigateToRoleRegistration() {
     this.router.navigate(['/role-registration']);
   }
+
+  navigateToLogin() {
+    this.router.navigate(['/login']);
+  }
 }

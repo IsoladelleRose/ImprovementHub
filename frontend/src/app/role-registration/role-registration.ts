@@ -45,4 +45,8 @@ export class RoleRegistration {
       queryParams: { email: this.email }
     });
   }
+
+  navigateToLogin() {
+    this.router.navigate(['/login']);
+  }
 }

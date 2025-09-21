@@ -21,4 +21,8 @@ export class Home {
   navigateToIdeaRegistration() {
     this.router.navigate(['/idea-registration']);
   }
+
+  navigateToLogin() {
+    this.router.navigate(['/login']);
+  }
 }
