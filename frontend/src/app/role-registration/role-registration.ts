@@ -61,6 +61,12 @@ export class RoleRegistration implements OnInit {
       return;
     }
 
+    // Validate role field if user wants help
+    if (this.showRoleQuestion && !this.userRole.trim()) {
+      this.errorMessage = 'Please describe which role you want to take up yourself';
+      return;
+    }
+
     this.validateEmail();
     if (this.emailError) {
       return;

@@ -111,14 +111,15 @@
         <!-- Conditional Question - Only show when Yes is selected -->
         <div class="form-group" *ngIf="showRoleQuestion">
           <label class="question-label">
-            Which role do you want to take up yourself? (Just put 'none' if you want us to do everything)
+            Which role do you want to take up yourself? (Just put 'none' if you want us to do everything) *
           </label>
           <textarea
             class="form-textarea"
             placeholder="Describe the role you'd like to take..."
             rows="4"
             [(ngModel)]="userRole"
-            name="userRole">
+            name="userRole"
+            required>
           </textarea>
         </div>
 
