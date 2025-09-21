@@ -119,30 +119,9 @@
           </textarea>
         </div>
 
-        <!-- Email Field -->
-        <div class="form-group">
-          <label class="question-label">
-            Email Address
-          </label>
-          <input
-            type="email"
-            class="form-input"
-            placeholder="your.email@example.com"
-            [(ngModel)]="email"
-            name="email"
-            readonly>
-          <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
-        </div>
-
         <!-- Continue Button -->
         <div class="form-actions">
-          <button
-            type="button"
-            class="btn-continue"
-            (click)="onSubmitIdea()"
-            [disabled]="isSubmitting">
-            {{ isSubmitting ? 'Submitting...' : 'Submit Idea' }}
-          </button>
+          <button type="button" class="btn-continue" (click)="navigateToRoleRegistration()">Continue</button>
         </div>
       </form>
     </div>
