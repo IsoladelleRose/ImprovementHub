@@ -6,10 +6,9 @@ import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-profile',
-  standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+  styleUrl: './profile.component.scss'
 })
 export class ProfileComponent implements OnInit {
   // User data
