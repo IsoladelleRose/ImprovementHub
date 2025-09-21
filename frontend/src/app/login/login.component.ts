@@ -18,7 +18,7 @@ export class LoginComponent {
   errorMessage = '';
   isLoading = false;
 
-  private apiUrl = 'http://localhost:8080/api'; // Update with your backend URL
+  private apiUrl = '/api';
 
   constructor(private router: Router, private http: HttpClient) {}
 

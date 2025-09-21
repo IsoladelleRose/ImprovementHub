@@ -29,7 +29,7 @@ export class ProfileComponent implements OnInit {
   // Active section
   activeSection = 'profile';
 
-  private apiUrl = 'http://localhost:8080/api';
+  private apiUrl = '/api';
 
   constructor(private router: Router, private http: HttpClient) {}
 
