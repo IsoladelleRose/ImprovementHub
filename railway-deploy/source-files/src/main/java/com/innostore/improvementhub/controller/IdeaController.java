@@ -2,7 +2,9 @@ package com.innostore.improvementhub.controller;
 
 import com.innostore.improvementhub.dto.IdeaRegistrationRequest;
 import com.innostore.improvementhub.entity.Idea;
+import com.innostore.improvementhub.entity.User;
 import com.innostore.improvementhub.repository.IdeaRepository;
+import com.innostore.improvementhub.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,9 +22,15 @@ public class IdeaController {
     @Autowired
     private IdeaRepository ideaRepository;
 
+    @Autowired
+    private UserService userService;
+
     @PostMapping("/register")
     public ResponseEntity<?> registerIdea(@Valid @RequestBody IdeaRegistrationRequest request) {
         try {
+            // Create or update user (inventor)
+            User user = userService.createOrUpdateInventorUser(request.getEmail());
+
             // Create new idea entity
             Idea idea = new Idea();
             idea.setCoreConcept(request.getCoreConcept());
@@ -30,6 +38,7 @@ public class IdeaController {
             idea.setWantsHelp(request.getWantsHelp());
             idea.setUserRole(request.getUserRole());
             idea.setEmail(request.getEmail());
+            idea.setUser(user); // Link to user
 
             // Save idea
             Idea savedIdea = ideaRepository.save(idea);
