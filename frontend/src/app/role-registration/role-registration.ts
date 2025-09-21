@@ -79,8 +79,18 @@ export class RoleRegistration implements OnInit {
         this.isSubmitting = false;
         // Clear the stored idea data
         localStorage.removeItem('ideaData');
-        alert('Idea submitted successfully! Check your email for login credentials.');
-        this.router.navigate(['/login']);
+
+        // Show appropriate message based on response
+        alert(response.message || 'Idea submitted successfully!');
+
+        // Navigate based on whether they wanted help or not
+        if (response.savedToDatabase) {
+          // User wanted help - navigate to login
+          this.router.navigate(['/login']);
+        } else {
+          // User didn't want help - navigate back to home
+          this.router.navigate(['/']);
+        }
       },
       error: (error) => {
         this.isSubmitting = false;

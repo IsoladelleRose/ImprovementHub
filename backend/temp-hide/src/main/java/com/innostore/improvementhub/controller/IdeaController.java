@@ -1,8 +1,10 @@
 package com.innostore.improvementhub.controller;
 
 import com.innostore.improvementhub.dto.IdeaRegistrationRequest;
+import com.innostore.improvementhub.dto.IdeaRegistrationResponse;
 import com.innostore.improvementhub.entity.Idea;
 import com.innostore.improvementhub.repository.IdeaRepository;
+import com.innostore.improvementhub.service.EmailService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,21 +22,50 @@ public class IdeaController {
     @Autowired
     private IdeaRepository ideaRepository;
 
+    @Autowired
+    private EmailService emailService;
+
     @PostMapping("/register")
     public ResponseEntity<?> registerIdea(@Valid @RequestBody IdeaRegistrationRequest request) {
         try {
-            // Create new idea entity
-            Idea idea = new Idea();
-            idea.setCoreConcept(request.getCoreConcept());
-            idea.setProblemOpportunity(request.getProblemOpportunity());
-            idea.setWantsHelp(request.getWantsHelp());
-            idea.setUserRole(request.getUserRole());
-            idea.setEmail(request.getEmail());
+            // Check if user wants help
+            if (request.getWantsHelp() == null || !request.getWantsHelp()) {
+                // User doesn't want help - only send report email, don't save to database
+                emailService.sendReportEmail(
+                    request.getEmail(),
+                    request.getCoreConcept(),
+                    request.getProblemOpportunity()
+                );
 
-            // Save idea
-            Idea savedIdea = ideaRepository.save(idea);
+                return ResponseEntity.ok(new IdeaRegistrationResponse(
+                    "Thank you for your submission! A report has been sent to your email.",
+                    false
+                ));
+            } else {
+                // User wants help - save to database and send welcome email
+                Idea idea = new Idea();
+                idea.setCoreConcept(request.getCoreConcept());
+                idea.setProblemOpportunity(request.getProblemOpportunity());
+                idea.setWantsHelp(request.getWantsHelp());
+                idea.setUserRole(request.getUserRole());
+                idea.setEmail(request.getEmail());
 
-            return ResponseEntity.ok(savedIdea);
+                // Save idea
+                Idea savedIdea = ideaRepository.save(idea);
+
+                // Send welcome email
+                emailService.sendHelpRequestEmail(
+                    request.getEmail(),
+                    request.getCoreConcept(),
+                    request.getProblemOpportunity(),
+                    request.getUserRole()
+                );
+
+                return ResponseEntity.ok(new IdeaRegistrationResponse(
+                    "Idea registered successfully! Check your email for login credentials.",
+                    true
+                ));
+            }
 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
