@@ -48,6 +48,11 @@ public class Partner {
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
+    // User relationship
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     // Default constructor
     public Partner() {}
 
@@ -145,5 +150,13 @@ public class Partner {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
