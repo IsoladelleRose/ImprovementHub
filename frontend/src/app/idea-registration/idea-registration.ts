@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-idea-registration',
+  standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './idea-registration.html',
   styleUrl: './idea-registration.scss'

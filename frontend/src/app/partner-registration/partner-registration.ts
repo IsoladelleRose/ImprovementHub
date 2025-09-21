@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-partner-registration',
+  standalone: true,
   imports: [],
   templateUrl: './partner-registration.html',
   styleUrl: './partner-registration.scss'

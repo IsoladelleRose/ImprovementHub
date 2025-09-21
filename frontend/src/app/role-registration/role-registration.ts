@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-role-registration',
+  standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './role-registration.html',
   styleUrl: './role-registration.scss'

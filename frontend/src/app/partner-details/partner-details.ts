@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-partner-details',
+  standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './partner-details.html',
   styleUrl: './partner-details.scss'

@@ -18,5 +18,5 @@ export const routes: Routes = [
   { path: 'role-registration', component: RoleRegistration },
   { path: 'login', component: LoginComponent },
   { path: 'profile', component: ProfileComponent },
-  // { path: '**', redirectTo: '/home' }
+  { path: '**', redirectTo: '/home' }
 ];

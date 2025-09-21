@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-how-does-it-work',
+  standalone: true,
   imports: [],
   templateUrl: './how-does-it-work.html',
   styleUrl: './how-does-it-work.scss'
