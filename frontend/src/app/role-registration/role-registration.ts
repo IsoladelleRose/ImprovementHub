@@ -14,6 +14,7 @@ export class RoleRegistration {
   showRoleQuestion = false;
   email = '';
   emailError = '';
+  userRole = '';
 
   private apiUrl = 'http://localhost:8080/api';
 
