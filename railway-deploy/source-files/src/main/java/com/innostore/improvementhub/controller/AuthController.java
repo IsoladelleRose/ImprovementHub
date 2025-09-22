@@ -33,7 +33,7 @@ public class AuthController {
                 User user = userOpt.get();
                 var response = new LoginResponse(
                     user.getId(),
-                    user.getEmailAddress(),
+                    user.getEmail(),
                     user.getInventor(),
                     user.getInnovator(),
                     "Login successful"
@@ -111,7 +111,7 @@ public class AuthController {
                 User user = userOpt.get();
                 var response = new UserProfileResponse(
                     user.getId(),
-                    user.getEmailAddress(),
+                    user.getEmail(),
                     user.getInventor(),
                     user.getInnovator(),
                     user.getCreatedAt(),
