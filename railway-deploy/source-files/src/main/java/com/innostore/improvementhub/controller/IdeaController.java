@@ -52,9 +52,14 @@ public class IdeaController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Idea>> getAllIdeas() {
-        List<Idea> ideas = ideaRepository.findAll();
-        return ResponseEntity.ok(ideas);
+    public ResponseEntity<?> getAllIdeas() {
+        try {
+            List<Idea> ideas = ideaRepository.findAll();
+            return ResponseEntity.ok(ideas);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Error fetching ideas: " + e.getMessage());
+        }
     }
 
     @GetMapping("/{id}")
