@@ -17,7 +17,7 @@ public class User {
 
     @Email
     @NotBlank
-    @Column(name = "email", unique = true, nullable = false)
+    @Column(name = "email_address", unique = true, nullable = false)
     private String email;
 
     @NotBlank
