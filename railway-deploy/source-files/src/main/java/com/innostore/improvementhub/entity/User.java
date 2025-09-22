@@ -17,8 +17,8 @@ public class User {
 
     @Email
     @NotBlank
-    @Column(unique = true, nullable = false)
-    private String emailAddress;
+    @Column(name = "email", unique = true, nullable = false)
+    private String email;
 
     @NotBlank
     @Size(min = 8)
@@ -47,8 +47,8 @@ public class User {
     // Constructors
     public User() {}
 
-    public User(String emailAddress, String password) {
-        this.emailAddress = emailAddress;
+    public User(String email, String password) {
+        this.email = email;
         this.password = password;
         this.inventor = false;
         this.innovator = false;
@@ -75,12 +75,12 @@ public class User {
         this.id = id;
     }
 
-    public String getEmailAddress() {
-        return emailAddress;
+    public String getEmail() {
+        return email;
     }
 
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {

@@ -24,8 +24,8 @@ public class UserService {
     /**
      * Create or update user for idea submission
      */
-    public User createOrUpdateInventorUser(String emailAddress) {
-        Optional<User> existingUser = userRepository.findByEmailAddress(emailAddress);
+    public User createOrUpdateInventorUser(String email) {
+        Optional<User> existingUser = userRepository.findByEmail(email);
 
         if (existingUser.isPresent()) {
             // User exists, just update inventor flag
@@ -37,12 +37,12 @@ public class UserService {
             String password = passwordService.generateRandomPassword();
             String hashedPassword = passwordService.hashPassword(password);
 
-            User user = new User(emailAddress, hashedPassword);
+            User user = new User(email, hashedPassword);
             user.setInventor(true);
             user = userRepository.save(user);
 
             // Send welcome email
-            emailService.sendWelcomeEmail(emailAddress, password, "Inventor");
+            emailService.sendWelcomeEmail(email, password, "Inventor");
 
             return user;
         }
@@ -51,8 +51,8 @@ public class UserService {
     /**
      * Create or update user for partner registration
      */
-    public User createOrUpdateInnovatorUser(String emailAddress) {
-        Optional<User> existingUser = userRepository.findByEmailAddress(emailAddress);
+    public User createOrUpdateInnovatorUser(String email) {
+        Optional<User> existingUser = userRepository.findByEmail(email);
 
         if (existingUser.isPresent()) {
             // User exists, just update innovator flag
@@ -64,12 +64,12 @@ public class UserService {
             String password = passwordService.generateRandomPassword();
             String hashedPassword = passwordService.hashPassword(password);
 
-            User user = new User(emailAddress, hashedPassword);
+            User user = new User(email, hashedPassword);
             user.setInnovator(true);
             user = userRepository.save(user);
 
             // Send welcome email
-            emailService.sendWelcomeEmail(emailAddress, password, "Innovator");
+            emailService.sendWelcomeEmail(email, password, "Innovator");
 
             return user;
         }
@@ -78,8 +78,8 @@ public class UserService {
     /**
      * Authenticate user login
      */
-    public Optional<User> authenticateUser(String emailAddress, String password) {
-        Optional<User> user = userRepository.findByEmailAddress(emailAddress);
+    public Optional<User> authenticateUser(String email, String password) {
+        Optional<User> user = userRepository.findByEmail(email);
 
         if (user.isPresent() && passwordService.verifyPassword(password, user.get().getPassword())) {
             return user;
@@ -91,12 +91,12 @@ public class UserService {
     /**
      * Change user password
      */
-    public boolean changePassword(String emailAddress, String currentPassword, String newPassword) {
+    public boolean changePassword(String email, String currentPassword, String newPassword) {
         if (!passwordService.isPasswordValid(newPassword)) {
             throw new IllegalArgumentException("New password does not meet security requirements");
         }
 
-        Optional<User> userOpt = userRepository.findByEmailAddress(emailAddress);
+        Optional<User> userOpt = userRepository.findByEmail(email);
         if (userOpt.isEmpty()) {
             return false;
         }
@@ -116,8 +116,8 @@ public class UserService {
     /**
      * Reset password (forgot password functionality)
      */
-    public boolean resetPassword(String emailAddress) {
-        Optional<User> userOpt = userRepository.findByEmailAddress(emailAddress);
+    public boolean resetPassword(String email) {
+        Optional<User> userOpt = userRepository.findByEmail(email);
         if (userOpt.isEmpty()) {
             return false;
         }
@@ -130,7 +130,7 @@ public class UserService {
         userRepository.save(user);
 
         // Send password reset email
-        emailService.sendPasswordResetEmail(emailAddress, newPassword);
+        emailService.sendPasswordResetEmail(email, newPassword);
 
         return true;
     }
@@ -138,14 +138,14 @@ public class UserService {
     /**
      * Get user by email
      */
-    public Optional<User> getUserByEmail(String emailAddress) {
-        return userRepository.findByEmailAddress(emailAddress);
+    public Optional<User> getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     /**
      * Check if user exists
      */
-    public boolean userExists(String emailAddress) {
-        return userRepository.existsByEmailAddress(emailAddress);
+    public boolean userExists(String email) {
+        return userRepository.existsByEmail(email);
     }
 }
