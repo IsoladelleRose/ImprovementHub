@@ -80,4 +80,15 @@ public class IdeaController {
         List<Idea> ideas = ideaRepository.findByWantsHelp(true);
         return ResponseEntity.ok(ideas);
     }
+
+    @GetMapping("/health")
+    public ResponseEntity<String> health() {
+        try {
+            long count = ideaRepository.count();
+            return ResponseEntity.ok("Database connected. Ideas count: " + count);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Database error: " + e.getMessage());
+        }
+    }
 }
