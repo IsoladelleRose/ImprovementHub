@@ -31,7 +31,7 @@ export class PartnerDetails implements OnInit {
   isSubmitting = false;
   errorMessage = '';
 
-  private apiUrl = '/api';
+  private apiUrl = 'https://improvementhub-production.up.railway.app/api';
 
   constructor(
     private router: Router,

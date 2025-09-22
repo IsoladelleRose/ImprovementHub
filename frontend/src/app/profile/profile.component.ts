@@ -29,7 +29,7 @@ export class ProfileComponent implements OnInit {
   // Active section
   activeSection = 'profile';
 
-  private apiUrl = '/api';
+  private apiUrl = 'https://improvementhub-production.up.railway.app/api';
 
   constructor(private router: Router, private http: HttpClient) {}
 
