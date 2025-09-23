@@ -1,17 +1,29 @@
 <div class="login-container">
   <!-- Navigation Header -->
-  <header class="nav-header">
-    <div class="logo" (click)="navigateHome()">
-      <div class="logo-icon">🔧</div>
-      <span>INNOSTORE</span>
+  <header class="navbar">
+    <div class="nav-left">
+      <div class="logo" (click)="navigateHome()">
+        <svg width="24" height="24" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round">
+          <path d="M60 25 C42 25, 30 37, 30 55 C30 68, 37 75, 42 80 L42 90 L78 90 L78 80 C83 75, 90 68, 90 55 C90 37, 78 25, 60 25 Z"/>
+          <line x1="42" y1="95" x2="78" y2="95"/>
+          <line x1="47" y1="100" x2="73" y2="100"/>
+          <path d="M60 10 L57 18 M60 10 L63 18 M40 30 L47 33 M80 30 L73 33"/>
+        </svg>
+        <span>INNOSTORE</span>
+      </div>
     </div>
-    <nav class="nav-links">
-      <a (click)="navigateHome()">HOME</a>
-      <a>WHO WE ARE</a>
-      <a>VIEWS</a>
-      <a>CONTACT</a>
-      <button class="login-btn active">LOGIN</button>
-    </nav>
+    <div class="nav-center">
+      <nav class="nav-links">
+        <a (click)="navigateHome()" class="nav-link">HOME</a>
+        <a href="#" class="nav-link">WHO WE ARE</a>
+        <a href="#" class="nav-link">VIEWS</a>
+        <a href="#" class="nav-link">CONTACT</a>
+      </nav>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-login active">LOGIN</button>
+      <button class="btn-register" (click)="navigateHome()">REGISTER</button>
+    </div>
   </header>
 
   <!-- Main Content -->
@@ -31,7 +43,6 @@
       <!-- Login Form -->
       <form (ngSubmit)="onLogin()" class="login-form">
         <div class="form-group">
-          <label for="email">Email Address</label>
           <input
             type="email"
             id="email"
@@ -44,7 +55,6 @@
         </div>
 
         <div class="form-group">
-          <label for="password">Password</label>
           <div class="password-input">
             <input
               [type]="showPassword ? 'text' : 'password'"
@@ -61,7 +71,13 @@
               (click)="togglePasswordVisibility()"
               [disabled]="isLoading"
             >
-              {{ showPassword ? '🙈' : '👁️' }}
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" *ngIf="!showPassword"/>
+                <circle cx="12" cy="12" r="3" *ngIf="!showPassword"/>
+                <path d="m9.88 9.88a3 3 0 1 0 4.24 4.24" *ngIf="showPassword"/>
+                <path d="m14.12 14.12a3 3 0 1 0-4.24-4.24" *ngIf="showPassword"/>
+                <path d="M2.85 2.85l18.3 18.3" *ngIf="showPassword"/>
+              </svg>
             </button>
           </div>
         </div>
@@ -83,11 +99,33 @@
 
   <!-- Background Decorative Elements -->
   <div class="bg-decoration">
-    <div class="gear gear-1">⚙️</div>
-    <div class="gear gear-2">⚙️</div>
-    <div class="gear gear-3">⚙️</div>
-    <div class="triangle triangle-1"></div>
-    <div class="triangle triangle-2"></div>
-    <div class="triangle triangle-3"></div>
+    <!-- Yellow Triangles -->
+    <div class="shape yellow-triangle-1"></div>
+    <div class="shape yellow-triangle-2"></div>
+    <div class="shape yellow-triangle-3"></div>
+    <div class="shape yellow-triangle-4"></div>
+
+    <!-- Green Triangles -->
+    <div class="shape green-triangle-1"></div>
+    <div class="shape green-triangle-2"></div>
+
+    <!-- Gear Icons -->
+    <div class="gear-icon gear-1">⚙️</div>
+    <div class="gear-icon gear-2">⚙️</div>
+    <div class="gear-icon gear-3">⚙️</div>
+    <div class="gear-icon gear-4">⚙️</div>
+    <div class="gear-icon gear-5">⚙️</div>
+    <div class="gear-icon gear-6">⚙️</div>
+
+    <!-- Circles -->
+    <div class="circle-outline circle-1"></div>
+    <div class="circle-outline circle-2"></div>
+    <div class="circle-outline circle-3"></div>
+    <div class="circle-outline circle-4"></div>
+
+    <!-- Additional Icons -->
+    <div class="icon-element lightbulb-1">💡</div>
+    <div class="icon-element chart-1">📊</div>
+    <div class="icon-element arrow-1">➤</div>
   </div>
 </div>
