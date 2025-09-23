@@ -31,7 +31,7 @@ public class EmailService {
                     "Email: " + emailAddress + "\n" +
                     "Password: " + password + "\n" +
                     "Role: " + role + "\n\n" +
-                    "You can login at: https://collaborationhub-frontend-productin.up.railway.app/login\n\n" +
+                    "You can login at: https://collaborationhub-frontend-production.up.railway.app/login\n\n" +
                     "For security reasons, please change your password after your first login.\n\n" +
                     "Best regards,\n" +
                     "The ImprovementHub Team";
@@ -64,7 +64,7 @@ public class EmailService {
                     "Your password has been reset as requested.\n\n" +
                     "Your new temporary password is: " + newPassword + "\n\n" +
                     "Please login and change your password immediately for security reasons.\n\n" +
-                    "Login at: https://collaborationhub-frontend-productin.up.railway.app/login\n\n" +
+                    "Login at: https://collaborationhub-frontend-production.up.railway.app/login\n\n" +
                     "Best regards,\n" +
                     "The ImprovementHub Team";
 
