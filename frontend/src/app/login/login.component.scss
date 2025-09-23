@@ -60,7 +60,7 @@
 
 .login-btn {
   background: #28a745;
-  color: #333;
+  color: white;
 }
 
 .login-btn.active {
@@ -173,7 +173,7 @@
   position: absolute;
   right: 1rem;
   background: none;
-  border: 3px solid #ffc107;
+  border: none;
   font-size: 1.2rem;
   cursor: pointer;
   padding: 0.5rem;
@@ -214,9 +214,9 @@
 
 /* Submit Button */
 .login-submit-btn {
-  background: white;
-  color: #333;
-  border: 2px solid #ffc107; border-left: 4px solid #28a745;
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  border: none;
   padding: 1rem 2rem;
   border-radius: 10px;
   font-size: 1.1rem;
@@ -379,4 +379,8 @@
   .form-title {
     font-size: 1rem;
   }
+}
+/* Hide left-side elements */
+.gear-1, .gear-3, .gear-5, .lightbulb-1, .arrow-1, .circle-1, .circle-3 {
+  display: none;
 }
