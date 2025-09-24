@@ -26,4 +26,8 @@ export class Home {
   navigateToLogin() {
     this.router.navigate(['/login']);
   }
+
+  navigateToRag() {
+    this.router.navigate(['/rag']);
+  }
 }

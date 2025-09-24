@@ -53,7 +53,28 @@ body {
 .nav-buttons {
   display: flex;
   justify-content: flex-end;
-  
+  gap: 16px;
+
+  .btn-rag {
+    padding: 12px 32px;
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    border: 2px solid #007bff;
+    border-radius: 25px;
+    color: white;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    letter-spacing: 0.5px;
+
+    &:hover {
+      background: linear-gradient(135deg, #0056b3 0%, #004085 100%);
+      border-color: #0056b3;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+    }
+  }
+
   .btn-login {
     padding: 12px 32px;
     background: transparent;
@@ -66,14 +87,14 @@ body {
     transition: all 0.3s ease;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    
+
     &:hover {
       background: #28a745;
       color: white;
       transform: translateY(-1px);
     }
   }
-  
+
 }
 
 /* Main Content */

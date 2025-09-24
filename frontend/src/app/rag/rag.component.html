@@ -1,0 +1,214 @@
+<div class="rag-container">
+  <!-- Navigation Header -->
+  <div class="nav-header">
+    <div class="logo" (click)="goHome()">
+      <span class="logo-icon">🚀</span>
+      <span>ImprovementHub</span>
+    </div>
+
+    <div class="nav-links">
+      <a (click)="goHome()">Dashboard</a>
+    </div>
+
+    <div class="user-section">
+      <div class="user-avatar">S</div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Page Header -->
+    <div class="page-header">
+      <h1>
+        <span class="page-icon">🤖</span>
+        RAG System
+      </h1>
+      <p class="page-description">Upload documents and ask questions with AI-powered search</p>
+      <div class="stats" *ngIf="stats">{{ stats }}</div>
+    </div>
+
+    <!-- Messages -->
+    <div *ngIf="successMessage" class="success-message">
+      {{ successMessage }}
+    </div>
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+
+    <!-- Tab Navigation -->
+    <div class="tab-navigation">
+      <button
+        class="tab-btn"
+        [class.active]="activeTab === 'query'"
+        (click)="setActiveTab('query')">
+        <span class="tab-icon">❓</span>
+        Ask Questions
+      </button>
+      <button
+        class="tab-btn"
+        [class.active]="activeTab === 'upload'"
+        (click)="setActiveTab('upload')">
+        <span class="tab-icon">📤</span>
+        Upload Documents
+      </button>
+      <button
+        class="tab-btn"
+        [class.active]="activeTab === 'documents'"
+        (click)="setActiveTab('documents')">
+        <span class="tab-icon">📚</span>
+        Manage Documents
+      </button>
+    </div>
+
+    <!-- Query Tab -->
+    <div *ngIf="activeTab === 'query'" class="tab-content">
+      <div class="query-section">
+        <div class="input-section">
+          <h3>Ask a Question</h3>
+          <div class="question-input">
+            <textarea
+              [(ngModel)]="question"
+              placeholder="Enter your question here..."
+              rows="3"
+              [disabled]="isQuerying">
+            </textarea>
+            <button
+              class="query-btn"
+              (click)="submitQuery()"
+              [disabled]="isQuerying || !question.trim()">
+              <span *ngIf="isQuerying">🔄 Thinking...</span>
+              <span *ngIf="!isQuerying">🚀 Ask AI</span>
+            </button>
+          </div>
+        </div>
+
+        <div *ngIf="answer" class="answer-section">
+          <h3>Answer</h3>
+          <div class="answer-box">
+            <pre>{{ answer }}</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Upload Tab -->
+    <div *ngIf="activeTab === 'upload'" class="tab-content">
+      <div class="upload-section">
+        <div class="upload-mode-selector">
+          <button
+            class="mode-btn"
+            [class.active]="uploadMode === 'text'"
+            (click)="uploadMode = 'text'">
+            📝 Text Upload
+          </button>
+          <button
+            class="mode-btn"
+            [class.active]="uploadMode === 'file'"
+            (click)="uploadMode = 'file'">
+            📁 File Upload
+          </button>
+        </div>
+
+        <div class="upload-form">
+          <div class="form-group">
+            <label>Document Title</label>
+            <input
+              type="text"
+              [(ngModel)]="uploadTitle"
+              placeholder="Enter document title"
+              [disabled]="isUploading">
+          </div>
+
+          <div *ngIf="uploadMode === 'file'" class="form-group">
+            <label>Select File</label>
+            <input
+              type="file"
+              id="fileInput"
+              (change)="onFileSelected($event)"
+              accept=".txt,.md,.pdf,.doc,.docx"
+              [disabled]="isUploading">
+            <small *ngIf="selectedFile" class="file-info">
+              Selected: {{ selectedFile.name }} ({{ formatFileSize(selectedFile.size) }})
+            </small>
+          </div>
+
+          <div *ngIf="uploadMode === 'text'" class="form-group">
+            <label>Content</label>
+            <textarea
+              [(ngModel)]="textContent"
+              placeholder="Enter or paste your content here..."
+              rows="8"
+              [disabled]="isUploading">
+            </textarea>
+            <small class="content-info">{{ textContent.length }}/102,400 characters</small>
+          </div>
+
+          <button
+            class="upload-btn"
+            (click)="uploadDocument()"
+            [disabled]="isUploading || !uploadTitle.trim() || (uploadMode === 'file' && !selectedFile) || (uploadMode === 'text' && !textContent.trim())">
+            <span *ngIf="isUploading">🔄 Uploading...</span>
+            <span *ngIf="!isUploading">📤 Upload Document</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Documents Tab -->
+    <div *ngIf="activeTab === 'documents'" class="tab-content">
+      <div class="documents-section">
+        <div class="documents-header">
+          <h3>Document Library</h3>
+          <div class="search-box">
+            <input
+              type="text"
+              [(ngModel)]="searchTitle"
+              placeholder="Search by title..."
+              (input)="searchDocuments()">
+            <button class="refresh-btn" (click)="loadDocuments()">🔄</button>
+          </div>
+        </div>
+
+        <div *ngIf="isLoadingDocuments" class="loading">
+          <span>🔄 Loading documents...</span>
+        </div>
+
+        <div *ngIf="!isLoadingDocuments && documents.length === 0" class="no-documents">
+          <span class="empty-icon">📭</span>
+          <p>No documents found</p>
+          <p><small>Upload some documents to get started!</small></p>
+        </div>
+
+        <div *ngIf="!isLoadingDocuments && documents.length > 0" class="documents-grid">
+          <div *ngFor="let doc of documents" class="document-card">
+            <div class="document-header">
+              <h4>{{ doc.title }}</h4>
+              <button
+                class="delete-btn"
+                (click)="deleteDocument(doc.id, doc.title)"
+                title="Delete document">
+                🗑️
+              </button>
+            </div>
+            <div class="document-meta">
+              <small>
+                <span *ngIf="doc.fileName">📄 {{ doc.fileName }}</span>
+                <span *ngIf="doc.fileSize"> • {{ formatFileSize(doc.fileSize) }}</span>
+                <span> • {{ formatDate(doc.uploadedAt) }}</span>
+              </small>
+            </div>
+            <div class="document-preview">
+              <p>{{ doc.content.substring(0, 200) }}<span *ngIf="doc.content.length > 200">...</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Background Decorations -->
+  <div class="bg-decoration">
+    <div class="gear gear-1">⚙️</div>
+    <div class="triangle triangle-1"></div>
+  </div>
+</div>

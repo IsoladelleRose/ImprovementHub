@@ -7,6 +7,7 @@ import { IdeaRegistration } from './idea-registration/idea-registration';
 import { RoleRegistration } from './role-registration/role-registration';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
+import { RagComponent } from './rag/rag.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -18,5 +19,7 @@ export const routes: Routes = [
   { path: 'role-registration', component: RoleRegistration },
   { path: 'login', component: LoginComponent },
   { path: 'profile', component: ProfileComponent },
+  { path: 'rag', component: RagComponent },
+  { path: 'dashboard', redirectTo: '/rag' },
   { path: '**', redirectTo: '/home' }
 ];
