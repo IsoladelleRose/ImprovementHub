@@ -64,7 +64,8 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- LangChain4J Core -->
+        <!-- LangChain4J Core - Temporarily disabled -->
+        <!--
         <dependency>
             <groupId>dev.langchain4j</groupId>
             <artifactId>langchain4j-spring-boot-starter</artifactId>
@@ -98,6 +99,7 @@
             <artifactId>langchain4j-open-ai</artifactId>
             <version>0.29.1</version>
         </dependency>
+        -->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
