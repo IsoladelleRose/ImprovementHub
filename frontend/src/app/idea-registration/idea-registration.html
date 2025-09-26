@@ -122,6 +122,48 @@
           </textarea>
         </div>
 
+        <!-- Email Field -->
+        <div class="form-group">
+          <label class="question-label">
+            Email Address *
+          </label>
+          <input
+            type="email"
+            class="form-input"
+            placeholder="your.email@example.com"
+            [(ngModel)]="email"
+            name="email"
+            required>
+        </div>
+
+        <!-- AI Analysis Section -->
+        <div class="ai-analysis-section" *ngIf="aiAvailable">
+          <div class="ai-header">
+            <h3>🤖 AI Analysis</h3>
+            <p>Get instant AI-powered feedback on your business idea</p>
+          </div>
+
+          <button
+            type="button"
+            class="btn-analyze"
+            (click)="analyzeWithAI()"
+            [disabled]="isAnalyzing || !coreConcept.trim() || !problemOpportunity.trim() || !email.trim()">
+            <span *ngIf="isAnalyzing">🔄 Analyzing...</span>
+            <span *ngIf="!isAnalyzing">🚀 Analyze with AI</span>
+          </button>
+
+          <div *ngIf="analysisError" class="error-message">
+            {{ analysisError }}
+          </div>
+
+          <div *ngIf="aiAnalysis" class="analysis-result">
+            <h4>📊 AI Analysis Report</h4>
+            <div class="analysis-content">
+              <pre>{{ aiAnalysis }}</pre>
+            </div>
+          </div>
+        </div>
+
         <!-- Continue Button -->
         <div class="form-actions">
           <button type="button" class="btn-continue" (click)="navigateToRoleRegistration()">Continue</button>
