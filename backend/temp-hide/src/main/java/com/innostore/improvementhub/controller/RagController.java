@@ -14,9 +14,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
-@RestController
-@RequestMapping("/api/rag")
-@CrossOrigin(origins = {"http://localhost:4200", "https://improvementhub-frontend-production.up.railway.app"})
+// @RestController
+// @RequestMapping("/api/rag")
+// @CrossOrigin(origins = {"http://localhost:4200", "https://improvementhub-frontend-production.up.railway.app"})
 public class RagController {
 
     private static final Logger logger = LoggerFactory.getLogger(RagController.class);

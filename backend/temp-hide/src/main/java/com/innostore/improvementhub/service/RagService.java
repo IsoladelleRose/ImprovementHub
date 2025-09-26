@@ -23,7 +23,7 @@ import javax.sql.DataSource;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
+// @Service
 public class RagService {
 
     private static final Logger logger = LoggerFactory.getLogger(RagService.class);
