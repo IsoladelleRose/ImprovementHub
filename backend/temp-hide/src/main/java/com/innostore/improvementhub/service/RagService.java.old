@@ -16,13 +16,11 @@ public class RagService {
 
     private static final Logger logger = LoggerFactory.getLogger(RagService.class);
     private final DocumentRepository documentRepository;
-    private final OpenAIService openAIService;
 
     @Autowired
-    public RagService(DocumentRepository documentRepository, OpenAIService openAIService) {
+    public RagService(DocumentRepository documentRepository) {
         this.documentRepository = documentRepository;
-        this.openAIService = openAIService;
-        logger.info("Initialized RAG service with OpenAI integration");
+        logger.info("Initialized simplified RAG service");
     }
 
     /**
@@ -41,52 +39,21 @@ public class RagService {
     }
 
     /**
-     * Query with RAG and OpenAI integration
+     * Simple mock query response
      */
     public String queryWithRag(String question) {
         try {
             logger.info("Processing RAG query: {}", question);
 
-            // Get relevant documents from the database
-            List<Document> relevantDocs = searchRelevantDocuments(question);
-
-            // Build context from documents
-            StringBuilder context = new StringBuilder();
-            if (!relevantDocs.isEmpty()) {
-                context.append("Relevant context from your knowledge base:\n");
-                for (Document doc : relevantDocs) {
-                    context.append("- ").append(doc.getTitle()).append(": ")
-                           .append(doc.getContent().substring(0, Math.min(200, doc.getContent().length())))
-                           .append("...\n");
-                }
-                context.append("\n");
-            }
-
-            // Enhance the question with context
-            String enhancedQuestion = context.toString() +
-                "Based on the above context and your general knowledge, please answer this question: " + question;
-
-            // Call OpenAI with the enhanced question
-            return openAIService.queryOpenAI(enhancedQuestion);
+            // For now, return a simple mock response
+            return String.format("Mock RAG Response: I received your question '%s'. " +
+                "This is a simplified version of the RAG system. " +
+                "The full AI-powered responses will be available once the complete system is deployed.",
+                question);
 
         } catch (Exception e) {
             logger.error("Error processing RAG query: {}", question, e);
-            return "Sorry, I encountered an error while processing your question: " + e.getMessage();
-        }
-    }
-
-    /**
-     * Search for relevant documents based on the question
-     */
-    private List<Document> searchRelevantDocuments(String question) {
-        try {
-            // Simple implementation: get all documents and return first few
-            // In a real RAG system, this would use semantic search
-            List<Document> allDocs = (List<Document>) documentRepository.findAll();
-            return allDocs.size() > 3 ? allDocs.subList(0, 3) : allDocs;
-        } catch (Exception e) {
-            logger.error("Error searching relevant documents", e);
-            return new ArrayList<>();
+            return "Error processing your question: " + e.getMessage();
         }
     }
 
@@ -109,6 +76,7 @@ public class RagService {
      */
     public List<Document> searchDocumentsByTitle(String title) {
         try {
+            // Simple implementation - for now just return all documents
             return getAllDocuments();
         } catch (Exception e) {
             logger.error("Error searching documents by title: {}", title, e);
