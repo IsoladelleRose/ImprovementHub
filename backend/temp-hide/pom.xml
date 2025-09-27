@@ -64,31 +64,8 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- OpenAI Integration - Simple approach -->
-        <dependency>
-            <groupId>dev.langchain4j</groupId>
-            <artifactId>langchain4j-open-ai</artifactId>
-            <version>0.29.1</version>
-        </dependency>
-
-        <!-- RAG System Dependencies -->
-        <dependency>
-            <groupId>dev.langchain4j</groupId>
-            <artifactId>langchain4j-embeddings-all-minilm-l6-v2</artifactId>
-            <version>0.29.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>dev.langchain4j</groupId>
-            <artifactId>langchain4j-pgvector</artifactId>
-            <version>0.29.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>dev.langchain4j</groupId>
-            <artifactId>langchain4j</artifactId>
-            <version>0.29.1</version>
-        </dependency>
+        <!-- RAG Dependencies temporarily removed for simplified deployment -->
+        <!-- Will be added back once basic infrastructure is working -->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
