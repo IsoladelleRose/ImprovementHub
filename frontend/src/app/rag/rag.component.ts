@@ -28,8 +28,8 @@ export class RagComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // Test the connection immediately
-    this.testConnection();
+    // Skip automatic health check for now - test manually
+    this.showSuccess('RAG interface loaded. Try asking a question when Railway deployment completes.');
   }
 
   async testConnection() {
