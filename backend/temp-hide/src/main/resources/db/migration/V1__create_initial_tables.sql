@@ -15,12 +15,16 @@ CREATE TABLE IF NOT EXISTS users (
 -- Create partners table
 CREATE TABLE IF NOT EXISTS partners (
     id BIGSERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
+    company_name VARCHAR(255) NOT NULL,
+    vat_number VARCHAR(100),
+    contact_person VARCHAR(255) NOT NULL,
+    street_address VARCHAR(500),
+    city VARCHAR(255),
+    postal_code VARCHAR(20),
+    country VARCHAR(255),
     email VARCHAR(255) NOT NULL UNIQUE,
-    company VARCHAR(255),
-    phone VARCHAR(50),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    interests_skills TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Create ideas table
