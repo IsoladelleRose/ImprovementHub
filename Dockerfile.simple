@@ -1,5 +1,5 @@
 # Simple single-stage Dockerfile for Railway deployment
-FROM openjdk:17-jdk-slim
+FROM openjdk:21-jdk-slim
 
 # Install Node.js, npm, Maven, nginx, and curl
 RUN apt-get update && apt-get install -y \
