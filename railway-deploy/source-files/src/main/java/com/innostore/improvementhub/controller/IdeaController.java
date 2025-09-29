@@ -1,10 +1,12 @@
 package com.innostore.improvementhub.controller;
 
 import com.innostore.improvementhub.dto.IdeaRegistrationRequest;
+import com.innostore.improvementhub.dto.IdeaRegistrationResponse;
 import com.innostore.improvementhub.entity.Idea;
-import com.innostore.improvementhub.entity.User;
 import com.innostore.improvementhub.repository.IdeaRepository;
+import com.innostore.improvementhub.service.EmailService;
 import com.innostore.improvementhub.service.UserService;
+import com.innostore.improvementhub.entity.User;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,11 +18,14 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/ideas")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:4200")
 public class IdeaController {
 
     @Autowired
     private IdeaRepository ideaRepository;
+
+    @Autowired
+    private EmailService emailService;
 
     @Autowired
     private UserService userService;
@@ -28,22 +33,49 @@ public class IdeaController {
     @PostMapping("/register")
     public ResponseEntity<?> registerIdea(@Valid @RequestBody IdeaRegistrationRequest request) {
         try {
-            // Create or update user (inventor)
-            User user = userService.createOrUpdateInventorUser(request.getEmail());
+            // Check if user wants help
+            if (request.getWantsHelp() == null || !request.getWantsHelp()) {
+                // User doesn't want help - only send report email, don't save to database
+                emailService.sendReportEmail(
+                    request.getEmail(),
+                    request.getCoreConcept(),
+                    request.getProblemOpportunity()
+                );
 
-            // Create new idea entity
-            Idea idea = new Idea();
-            idea.setCoreConcept(request.getCoreConcept());
-            idea.setProblemOpportunity(request.getProblemOpportunity());
-            idea.setWantsHelp(request.getWantsHelp());
-            idea.setUserRole(request.getUserRole());
-            idea.setEmail(request.getEmail());
-            idea.setUser(user); // Link to user
+                return ResponseEntity.ok(new IdeaRegistrationResponse(
+                    "Thank you for your submission! A report has been sent to your email.",
+                    false
+                ));
+            } else {
+                // User wants help - create user account, save to database and send welcome email
+                User user = userService.createUserAccount(request.getEmail());
 
-            // Save idea
-            Idea savedIdea = ideaRepository.save(idea);
+                Idea idea = new Idea();
+                idea.setCoreConcept(request.getCoreConcept());
+                idea.setProblemOpportunity(request.getProblemOpportunity());
+                idea.setWantsHelp(request.getWantsHelp());
+                idea.setUserRole(request.getUserRole());
+                idea.setEmail(request.getEmail());
 
-            return ResponseEntity.ok(savedIdea);
+                // Save idea
+                Idea savedIdea = ideaRepository.save(idea);
+
+                // Send welcome email with login credentials
+                emailService.sendHelpRequestEmail(
+                    request.getEmail(),
+                    request.getCoreConcept(),
+                    request.getProblemOpportunity(),
+                    request.getUserRole(),
+                    user.getEmail(), // username is email
+                    user.getPassword(),
+                    "http://localhost:4200/login"
+                );
+
+                return ResponseEntity.ok(new IdeaRegistrationResponse(
+                    "Idea registered successfully! Check your email for login credentials.",
+                    true
+                ));
+            }
 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -52,14 +84,9 @@ public class IdeaController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getAllIdeas() {
-        try {
-            List<Idea> ideas = ideaRepository.findAll();
-            return ResponseEntity.ok(ideas);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("Error fetching ideas: " + e.getMessage());
-        }
+    public ResponseEntity<List<Idea>> getAllIdeas() {
+        List<Idea> ideas = ideaRepository.findAll();
+        return ResponseEntity.ok(ideas);
     }
 
     @GetMapping("/{id}")
@@ -79,16 +106,5 @@ public class IdeaController {
     public ResponseEntity<List<Idea>> getIdeasWantingHelp() {
         List<Idea> ideas = ideaRepository.findByWantsHelp(true);
         return ResponseEntity.ok(ideas);
-    }
-
-    @GetMapping("/health")
-    public ResponseEntity<String> health() {
-        try {
-            long count = ideaRepository.count();
-            return ResponseEntity.ok("Database connected. Ideas count: " + count);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("Database error: " + e.getMessage());
-        }
     }
 }

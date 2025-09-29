@@ -3,10 +3,10 @@ package com.innostore.improvementhub.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -16,57 +16,35 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Email
-    @NotBlank
-    @Column(name = "email_address", unique = true, nullable = false)
+    @Email(message = "Email should be valid")
+    @NotBlank(message = "Email is required")
+    @Column(name = "email", unique = true)
     private String email;
 
-    @NotBlank
-    @Size(min = 8)
-    @Column(nullable = false)
+    @NotBlank(message = "Password is required")
     private String password;
 
-    @Column(nullable = false)
-    private Boolean inventor = false;
+    @Column(name = "innovator")
+    private Boolean innovator;
 
-    @Column(nullable = false)
-    private Boolean innovator = false;
+    @Column(name = "inventor")
+    private Boolean inventor;
 
-    @Column(nullable = false, updatable = false)
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
-    @Column(nullable = false)
+    @UpdateTimestamp
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    // Relationships
-    @JsonIgnore
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Idea> ideas;
-
-    @JsonIgnore
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Partner partner;
-
-    // Constructors
+    // Default constructor
     public User() {}
 
+    // Constructor with required fields
     public User(String email, String password) {
         this.email = email;
         this.password = password;
-        this.inventor = false;
-        this.innovator = false;
-    }
-
-    // Lifecycle callbacks
-    @PrePersist
-    protected void onCreate() {
-        createdAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        updatedAt = LocalDateTime.now();
     }
 
     // Getters and Setters
@@ -94,14 +72,6 @@ public class User {
         this.password = password;
     }
 
-    public Boolean getInventor() {
-        return inventor;
-    }
-
-    public void setInventor(Boolean inventor) {
-        this.inventor = inventor;
-    }
-
     public Boolean getInnovator() {
         return innovator;
     }
@@ -110,27 +80,27 @@ public class User {
         this.innovator = innovator;
     }
 
+    public Boolean getInventor() {
+        return inventor;
+    }
+
+    public void setInventor(Boolean inventor) {
+        this.inventor = inventor;
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public List<Idea> getIdeas() {
-        return ideas;
-    }
-
-    public void setIdeas(List<Idea> ideas) {
-        this.ideas = ideas;
-    }
-
-    public Partner getPartner() {
-        return partner;
-    }
-
-    public void setPartner(Partner partner) {
-        this.partner = partner;
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

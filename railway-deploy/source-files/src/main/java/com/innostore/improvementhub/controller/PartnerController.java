@@ -3,9 +3,7 @@ package com.innostore.improvementhub.controller;
 import com.innostore.improvementhub.dto.PartnerRegistrationRequest;
 import com.innostore.improvementhub.dto.PartnerResponse;
 import com.innostore.improvementhub.entity.Partner;
-import com.innostore.improvementhub.entity.User;
 import com.innostore.improvementhub.repository.PartnerRepository;
-import com.innostore.improvementhub.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,29 +22,23 @@ import java.util.Map;
 public class PartnerController {
 
     private final PartnerRepository partnerRepository;
-    private final UserService userService;
 
     // Constructor-based dependency injection (recommended over @Autowired)
-    public PartnerController(PartnerRepository partnerRepository, UserService userService) {
+    public PartnerController(PartnerRepository partnerRepository) {
         this.partnerRepository = partnerRepository;
-        this.userService = userService;
     }
 
     @PostMapping("/register")
     public ResponseEntity<?> registerPartner(@Valid @RequestBody PartnerRegistrationRequest request) {
         try {
-            // Check if email already exists as partner
+            // Check if email already exists
             if (partnerRepository.existsByEmail(request.email())) {
                 return ResponseEntity.badRequest()
                     .body(Map.of("error", "Email already exists", "field", "email"));
             }
 
-            // Create or update user (innovator)
-            User user = userService.createOrUpdateInnovatorUser(request.email());
-
             // Create new partner entity using modern Java 21 approach
             var partner = mapToEntity(request);
-            partner.setUser(user); // Link to user
 
             // Save partner and map to response DTO
             var savedPartner = partnerRepository.save(partner);

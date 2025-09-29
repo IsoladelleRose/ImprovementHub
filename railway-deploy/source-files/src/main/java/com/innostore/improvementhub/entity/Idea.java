@@ -37,11 +37,6 @@ public class Idea {
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
-    // User relationship
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
-
     // Default constructor
     public Idea() {}
 
@@ -107,13 +102,5 @@ public class Idea {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 }
