@@ -145,4 +145,20 @@ public class RagService {
             return "Error retrieving statistics: " + e.getMessage();
         }
     }
+
+    /**
+     * Test OpenAI connection with a simple query
+     */
+    public String testOpenAIConnection() {
+        try {
+            logger.info("Testing OpenAI connection");
+            String testQuestion = "What is 2+2? Please respond with just the number.";
+            String response = openAIService.queryOpenAI(testQuestion);
+            logger.info("OpenAI test response received: {}", response);
+            return response;
+        } catch (Exception e) {
+            logger.error("OpenAI connection test failed", e);
+            throw new RuntimeException("OpenAI test failed: " + e.getMessage(), e);
+        }
+    }
 }

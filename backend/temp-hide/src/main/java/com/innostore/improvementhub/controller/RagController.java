@@ -196,4 +196,45 @@ public class RagController {
     public ResponseEntity<String> healthCheck() {
         return ResponseEntity.ok("RAG system is running");
     }
+
+    /**
+     * Test OpenAI connection and environment variables
+     */
+    @GetMapping("/test-openai")
+    public ResponseEntity<String> testOpenAI() {
+        try {
+            logger.info("Testing OpenAI connection and configuration");
+
+            // Get environment info
+            String apiKeyPresent = System.getenv("OPENAI_API_KEY") != null ? "Present" : "Missing";
+            String apiKeyLength = System.getenv("OPENAI_API_KEY") != null ?
+                String.valueOf(System.getenv("OPENAI_API_KEY").length()) : "0";
+
+            StringBuilder result = new StringBuilder();
+            result.append("OpenAI Connection Test Results:\n");
+            result.append("==============================\n");
+            result.append("Environment: ").append(System.getProperty("spring.profiles.active", "default")).append("\n");
+            result.append("API Key Status: ").append(apiKeyPresent).append("\n");
+            result.append("API Key Length: ").append(apiKeyLength).append(" characters\n");
+            result.append("Java Version: ").append(System.getProperty("java.version")).append("\n");
+            result.append("OS: ").append(System.getProperty("os.name")).append("\n");
+            result.append("Timestamp: ").append(java.time.Instant.now()).append("\n\n");
+
+            // Test actual OpenAI call
+            try {
+                String testResponse = ragService.testOpenAIConnection();
+                result.append("OpenAI Test Response: ").append(testResponse).append("\n");
+            } catch (Exception e) {
+                result.append("OpenAI Test Failed: ").append(e.getMessage()).append("\n");
+                logger.error("OpenAI test failed", e);
+            }
+
+            return ResponseEntity.ok(result.toString());
+
+        } catch (Exception e) {
+            logger.error("Failed to test OpenAI connection", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Test failed: " + e.getMessage());
+        }
+    }
 }
