@@ -30,14 +30,12 @@ CREATE TABLE IF NOT EXISTS partners (
 -- Create ideas table
 CREATE TABLE IF NOT EXISTS ideas (
     id BIGSERIAL PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
-    description TEXT,
-    category VARCHAR(100),
-    status VARCHAR(50) DEFAULT 'PENDING',
-    submitter_name VARCHAR(255),
-    submitter_email VARCHAR(255),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    core_concept TEXT NOT NULL,
+    problem_opportunity TEXT NOT NULL,
+    wants_help BOOLEAN,
+    user_role TEXT,
+    email VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Create documents table (for RAG system)
@@ -53,6 +51,5 @@ CREATE TABLE IF NOT EXISTS documents (
 -- Create indexes for better performance
 CREATE INDEX IF NOT EXISTS idx_users_email ON users(email_address);
 CREATE INDEX IF NOT EXISTS idx_partners_email ON partners(email);
-CREATE INDEX IF NOT EXISTS idx_ideas_status ON ideas(status);
-CREATE INDEX IF NOT EXISTS idx_ideas_category ON ideas(category);
+CREATE INDEX IF NOT EXISTS idx_ideas_email ON ideas(email);
 CREATE INDEX IF NOT EXISTS idx_documents_title ON documents(title);
