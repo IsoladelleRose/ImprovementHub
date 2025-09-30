@@ -16,7 +16,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/rag")
-@CrossOrigin(origins = {"http://localhost:4200", "https://improvementhub-production.up.railway.app"})
+@CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS})
 public class RagController {
 
     private static final Logger logger = LoggerFactory.getLogger(RagController.class);
