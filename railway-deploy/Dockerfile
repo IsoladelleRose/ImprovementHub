@@ -5,7 +5,7 @@ RUN apk add --no-cache maven
 
 # Copy source files and rename them
 COPY source-files/ ./
-RUN mv pom.txt pom.xml
+# pom.xml already exists (no longer pom.txt)
 RUN mv mvnw.txt mvnw
 RUN mv mvnw-cmd.txt mvnw.cmd
 RUN chmod +x mvnw
