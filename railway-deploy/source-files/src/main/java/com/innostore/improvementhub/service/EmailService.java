@@ -11,6 +11,12 @@ public class EmailService {
     @Autowired
     private JavaMailSender mailSender;
 
+    public EmailService() {
+        // Debug: Check if email password is configured
+        String password = System.getenv("MAIL_PASSWORD");
+        System.out.println("DEBUG: MAIL_PASSWORD is " + (password != null && !password.isEmpty() ? "configured" : "NOT configured"));
+    }
+
     public void sendReportEmail(String toEmail, String coreConcept, String problemOpportunity) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
