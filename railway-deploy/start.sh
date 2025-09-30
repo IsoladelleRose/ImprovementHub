@@ -8,13 +8,16 @@ else
     echo "Using PORT: $PORT"
 fi
 
-# Debug: Print mail environment variables
-echo "=== Mail Configuration Debug ==="
-echo "MAIL_HOST: ${MAIL_HOST:-not set}"
-echo "MAIL_PORT: ${MAIL_PORT:-not set}"
-echo "MAIL_USERNAME: ${MAIL_USERNAME:-not set}"
-echo "MAIL_PASSWORD: $([ -z "$MAIL_PASSWORD" ] && echo 'not set' || echo 'is set')"
+# Debug: Print all environment variables
+echo "=== Environment Variables Debug ==="
+env | sort
 echo "================================"
 
-# Start the Java application
-exec java -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -Dserver.port=$PORT -jar app.jar
+# Start the Java application with explicit environment variable passing
+exec java -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 \
+  -Dserver.port=$PORT \
+  -DMAIL_HOST="${MAIL_HOST}" \
+  -DMAIL_PORT="${MAIL_PORT}" \
+  -DMAIL_USERNAME="${MAIL_USERNAME}" \
+  -DMAIL_PASSWORD="${MAIL_PASSWORD}" \
+  -jar app.jar
