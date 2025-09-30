@@ -82,8 +82,9 @@ public class IdeaController {
             }
 
         } catch (Exception e) {
+            e.printStackTrace(); // Log full stack trace
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("Error registering idea: " + e.getMessage());
+                .body("Error registering idea: " + e.getMessage() + " | Cause: " + (e.getCause() != null ? e.getCause().getMessage() : "none"));
         }
     }
 
