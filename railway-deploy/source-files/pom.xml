@@ -58,11 +58,7 @@
             <scope>runtime</scope>
         </dependency>
 
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>runtime</scope>
-        </dependency>
+        <!-- H2 removed - using PostgreSQL on Railway -->
 
         <!-- RAG Dependencies temporarily removed for simplified deployment -->
         <!-- Will be added back once basic infrastructure is working -->
