@@ -6,6 +6,7 @@ import com.innostore.improvementhub.entity.Idea;
 import com.innostore.improvementhub.repository.IdeaRepository;
 import com.innostore.improvementhub.service.EmailService;
 import com.innostore.improvementhub.service.UserService;
+import com.innostore.improvementhub.service.RagService;
 import com.innostore.improvementhub.entity.User;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class IdeaController {
     private UserService userService;
 
     @Autowired
-    private com.innostore.improvementhub.service.RagService ragService;
+    private RagService ragService;
 
     @PostMapping("/register")
     public ResponseEntity<?> registerIdea(@Valid @RequestBody IdeaRegistrationRequest request) {
