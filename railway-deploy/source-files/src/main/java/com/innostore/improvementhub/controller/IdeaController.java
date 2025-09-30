@@ -64,24 +64,19 @@ public class IdeaController {
                 // Save idea
                 Idea savedIdea = ideaRepository.save(idea);
 
-                // Try to send welcome email with login credentials
-                try {
-                    emailService.sendHelpRequestEmail(
-                        request.getEmail(),
-                        request.getCoreConcept(),
-                        request.getProblemOpportunity(),
-                        request.getUserRole(),
-                        user.getEmail(), // username is email
-                        user.getPassword(),
-                        "http://localhost:4200/login"
-                    );
-                } catch (Exception emailError) {
-                    // Log but don't fail if email sending fails
-                    System.err.println("Failed to send email: " + emailError.getMessage());
-                }
+                // Send welcome email with login credentials
+                emailService.sendHelpRequestEmail(
+                    request.getEmail(),
+                    request.getCoreConcept(),
+                    request.getProblemOpportunity(),
+                    request.getUserRole(),
+                    user.getEmail(), // username is email
+                    user.getPassword(),
+                    "http://localhost:4200/login"
+                );
 
                 return ResponseEntity.ok(new IdeaRegistrationResponse(
-                    "Idea registered successfully! Login credentials - Username: " + user.getEmail() + ", Password: " + user.getPassword(),
+                    "Idea registered successfully! Check your email for login credentials.",
                     true
                 ));
             }
