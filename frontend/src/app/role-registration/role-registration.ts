@@ -20,6 +20,8 @@ export class RoleRegistration implements OnInit {
   isSubmitting = false;
   errorMessage = '';
   successMessage = '';
+  aiAnalysis = '';
+  isAnalyzing = false;
 
   // Data from previous step
   coreConcept = '';
@@ -56,6 +58,34 @@ export class RoleRegistration implements OnInit {
   }
 
   onAnalyze() {
+    // Validate that we have idea data
+    if (!this.coreConcept || !this.problemOpportunity) {
+      this.errorMessage = 'Please complete the idea registration first';
+      return;
+    }
+
+    this.isAnalyzing = true;
+    this.errorMessage = '';
+    this.aiAnalysis = '';
+
+    const analysisRequest = {
+      coreConcept: this.coreConcept,
+      problemOpportunity: this.problemOpportunity
+    };
+
+    this.http.post(`${this.apiUrl}/ideas/analyze`, analysisRequest, { responseType: 'text' }).subscribe({
+      next: (response) => {
+        this.isAnalyzing = false;
+        this.aiAnalysis = response;
+      },
+      error: (error) => {
+        this.isAnalyzing = false;
+        this.errorMessage = error.error || 'Failed to analyze idea';
+      }
+    });
+  }
+
+  onSubmit() {
     // Validate help request selection
     if (!this.helpRequestAnswered) {
       this.errorMessage = 'Please select whether you want us to help';

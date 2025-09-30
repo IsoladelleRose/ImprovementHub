@@ -30,6 +30,9 @@ public class IdeaController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private com.innostore.improvementhub.service.RagService ragService;
+
     @PostMapping("/register")
     public ResponseEntity<?> registerIdea(@Valid @RequestBody IdeaRegistrationRequest request) {
         try {
@@ -106,5 +109,30 @@ public class IdeaController {
     public ResponseEntity<List<Idea>> getIdeasWantingHelp() {
         List<Idea> ideas = ideaRepository.findByWantsHelp(true);
         return ResponseEntity.ok(ideas);
+    }
+
+    @PostMapping("/analyze")
+    public ResponseEntity<?> analyzeIdea(@RequestBody IdeaRegistrationRequest request) {
+        try {
+            // Validate input
+            if (request.getCoreConcept() == null || request.getCoreConcept().trim().isEmpty()) {
+                return ResponseEntity.badRequest().body("Core concept is required");
+            }
+            if (request.getProblemOpportunity() == null || request.getProblemOpportunity().trim().isEmpty()) {
+                return ResponseEntity.badRequest().body("Problem/Opportunity is required");
+            }
+
+            // Call RAG service to analyze the idea
+            String analysis = ragService.analyzeIdea(
+                request.getCoreConcept(),
+                request.getProblemOpportunity()
+            );
+
+            return ResponseEntity.ok(analysis);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Error analyzing idea: " + e.getMessage());
+        }
     }
 }

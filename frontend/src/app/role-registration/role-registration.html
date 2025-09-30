@@ -154,10 +154,23 @@
         <!-- Error Message -->
         <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
 
-        <!-- Continue Button -->
-        <div class="form-actions">
-          <button type="button" class="btn-continue" (click)="onAnalyze()" [disabled]="isSubmitting">
-            {{ isSubmitting ? 'Processing...' : 'Analyze!' }}
+        <!-- AI Analysis Result -->
+        <div class="ai-analysis-result" *ngIf="aiAnalysis">
+          <h3>AI Analysis</h3>
+          <div class="analysis-content">{{ aiAnalysis }}</div>
+        </div>
+
+        <!-- Analyze Button -->
+        <div class="form-actions" *ngIf="!aiAnalysis">
+          <button type="button" class="btn-continue" (click)="onAnalyze()" [disabled]="isAnalyzing">
+            {{ isAnalyzing ? 'Analyzing...' : 'Analyze!' }}
+          </button>
+        </div>
+
+        <!-- Submit Button (shown after analysis) -->
+        <div class="form-actions" *ngIf="aiAnalysis">
+          <button type="button" class="btn-continue" (click)="onSubmit()" [disabled]="isSubmitting">
+            {{ isSubmitting ? 'Processing...' : 'Submit Idea' }}
           </button>
         </div>
       </form>

@@ -145,4 +145,38 @@ public class RagService {
             return "Error retrieving statistics: " + e.getMessage();
         }
     }
+
+    /**
+     * Analyze an idea and determine if it's a good idea
+     */
+    public String analyzeIdea(String coreConcept, String problemOpportunity) {
+        try {
+            logger.info("Analyzing idea: {}", coreConcept);
+
+            // Build the analysis prompt
+            String analysisPrompt = String.format(
+                "Please analyze the following business idea:\n\n" +
+                "Core Concept: %s\n\n" +
+                "Problem/Opportunity: %s\n\n" +
+                "Based on this information, provide a brief analysis covering:\n" +
+                "1. Is this a good idea? (Yes/No with brief reasoning)\n" +
+                "2. Key strengths of the idea\n" +
+                "3. Potential challenges or risks\n" +
+                "4. Initial recommendation\n\n" +
+                "Keep the response concise and actionable.",
+                coreConcept,
+                problemOpportunity
+            );
+
+            // Call OpenAI for analysis
+            String analysis = openAIService.queryOpenAI(analysisPrompt);
+            logger.info("Successfully analyzed idea: {}", coreConcept);
+
+            return analysis;
+
+        } catch (Exception e) {
+            logger.error("Error analyzing idea: {}", coreConcept, e);
+            return "Sorry, I encountered an error while analyzing the idea: " + e.getMessage();
+        }
+    }
 }
