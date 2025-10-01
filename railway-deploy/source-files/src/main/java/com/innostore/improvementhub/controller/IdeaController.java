@@ -34,6 +34,9 @@ public class IdeaController {
     @Autowired
     private RagService ragService;
 
+    @Autowired
+    private PdfGenerationService pdfGenerationService;
+
     @PostMapping("/register")
     public ResponseEntity<?> registerIdea(@Valid @RequestBody IdeaRegistrationRequest request) {
         try {
@@ -114,7 +117,7 @@ public class IdeaController {
     }
 
     @PostMapping("/analyze")
-    public ResponseEntity<?> analyzeIdea(@RequestBody IdeaRegistrationRequest request) {
+    public ResponseEntity<?> analyzeAndSubmitIdea(@Valid @RequestBody IdeaRegistrationRequest request) {
         try {
             // Validate input
             if (request.getCoreConcept() == null || request.getCoreConcept().trim().isEmpty()) {
@@ -123,18 +126,78 @@ public class IdeaController {
             if (request.getProblemOpportunity() == null || request.getProblemOpportunity().trim().isEmpty()) {
                 return ResponseEntity.badRequest().body("Problem/Opportunity is required");
             }
+            if (request.getEmail() == null || request.getEmail().trim().isEmpty()) {
+                return ResponseEntity.badRequest().body("Email is required");
+            }
 
-            // Call RAG service to analyze the idea
+            // Step 1: Analyze the idea with RAG
             String analysis = ragService.analyzeIdea(
                 request.getCoreConcept(),
                 request.getProblemOpportunity()
             );
 
-            return ResponseEntity.ok(analysis);
+            // Step 2: Generate PDF with the analysis
+            byte[] pdfBytes = pdfGenerationService.generateIdeaAnalysisPdf(
+                request.getCoreConcept(),
+                request.getProblemOpportunity(),
+                analysis
+            );
+
+            // Step 3: Handle based on whether user wants help
+            if (request.getWantsHelp() != null && request.getWantsHelp()) {
+                // User wants help - create account and save to database
+                User user = userService.createUserAccount(request.getEmail());
+
+                Idea idea = new Idea();
+                idea.setCoreConcept(request.getCoreConcept());
+                idea.setProblemOpportunity(request.getProblemOpportunity());
+                idea.setWantsHelp(request.getWantsHelp());
+                idea.setUserRole(request.getUserRole());
+                idea.setEmail(request.getEmail());
+
+                ideaRepository.save(idea);
+
+                // Send email with PDF and login credentials
+                emailService.sendAnalysisEmailWithPdf(
+                    request.getEmail(),
+                    request.getCoreConcept(),
+                    request.getProblemOpportunity(),
+                    request.getUserRole(),
+                    user.getEmail(),
+                    user.getPassword(),
+                    "http://localhost:4200/login",
+                    pdfBytes,
+                    true
+                );
+
+                return ResponseEntity.ok(new IdeaRegistrationResponse(
+                    "Idea analyzed and registered successfully! Check your email for the analysis report and login credentials.",
+                    true
+                ));
+            } else {
+                // User doesn't want help - just send analysis email with PDF
+                emailService.sendAnalysisEmailWithPdf(
+                    request.getEmail(),
+                    request.getCoreConcept(),
+                    request.getProblemOpportunity(),
+                    null,
+                    null,
+                    null,
+                    null,
+                    pdfBytes,
+                    false
+                );
+
+                return ResponseEntity.ok(new IdeaRegistrationResponse(
+                    "Thank you for your submission! The analysis report has been sent to your email.",
+                    false
+                ));
+            }
 
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("Error analyzing idea: " + e.getMessage());
+                .body("Error analyzing idea: " + e.getMessage() + " | Cause: " + (e.getCause() != null ? e.getCause().getMessage() : "none"));
         }
     }
 }

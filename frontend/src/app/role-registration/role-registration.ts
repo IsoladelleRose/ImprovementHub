@@ -20,8 +20,6 @@ export class RoleRegistration implements OnInit {
   isSubmitting = false;
   errorMessage = '';
   successMessage = '';
-  aiAnalysis = '';
-  isAnalyzing = false;
 
   // Data from previous step
   coreConcept = '';
@@ -58,34 +56,6 @@ export class RoleRegistration implements OnInit {
   }
 
   onAnalyze() {
-    // Validate that we have idea data
-    if (!this.coreConcept || !this.problemOpportunity) {
-      this.errorMessage = 'Please complete the idea registration first';
-      return;
-    }
-
-    this.isAnalyzing = true;
-    this.errorMessage = '';
-    this.aiAnalysis = '';
-
-    const analysisRequest = {
-      coreConcept: this.coreConcept,
-      problemOpportunity: this.problemOpportunity
-    };
-
-    this.http.post(`${this.apiUrl}/ideas/analyze`, analysisRequest, { responseType: 'text' }).subscribe({
-      next: (response) => {
-        this.isAnalyzing = false;
-        this.aiAnalysis = response;
-      },
-      error: (error) => {
-        this.isAnalyzing = false;
-        this.errorMessage = error.error || 'Failed to analyze idea';
-      }
-    });
-  }
-
-  onSubmit() {
     // Validate help request selection
     if (!this.helpRequestAnswered) {
       this.errorMessage = 'Please select whether you want us to help';
@@ -120,14 +90,14 @@ export class RoleRegistration implements OnInit {
       userRole: this.userRole
     };
 
-    this.http.post<any>(`${this.apiUrl}/ideas/register`, ideaData).subscribe({
+    this.http.post<any>(`${this.apiUrl}/ideas/analyze`, ideaData).subscribe({
       next: (response) => {
         this.isSubmitting = false;
         // Clear the stored idea data
         localStorage.removeItem('ideaData');
 
         // Show appropriate success message based on response
-        this.successMessage = response.message || 'Idea submitted successfully!';
+        this.successMessage = response.message || 'Analysis complete! Check your email for the report.';
 
         // Navigate after a short delay to let user see the message
         setTimeout(() => {
@@ -142,7 +112,7 @@ export class RoleRegistration implements OnInit {
       },
       error: (error) => {
         this.isSubmitting = false;
-        this.errorMessage = error.error?.message || 'Failed to submit idea';
+        this.errorMessage = error.error?.message || 'Failed to analyze and submit idea';
       }
     });
   }
