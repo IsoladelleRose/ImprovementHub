@@ -7,6 +7,7 @@ import com.innostore.improvementhub.repository.IdeaRepository;
 import com.innostore.improvementhub.service.EmailService;
 import com.innostore.improvementhub.service.UserService;
 import com.innostore.improvementhub.service.RagService;
+import com.innostore.improvementhub.service.PdfGenerationService;
 import com.innostore.improvementhub.entity.User;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
