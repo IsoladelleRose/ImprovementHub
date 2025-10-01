@@ -154,10 +154,10 @@
         <!-- Error Message -->
         <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
 
-        <!-- Analyze & Submit Button -->
+        <!-- Analyze Button -->
         <div class="form-actions">
           <button type="button" class="btn-continue" (click)="onAnalyze()" [disabled]="isSubmitting">
-            {{ isSubmitting ? 'Analyzing & Processing...' : 'Analyze & Submit!' }}
+            {{ isSubmitting ? 'Analyzing...' : 'Analyze!' }}
           </button>
         </div>
       </form>
