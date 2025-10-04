@@ -91,7 +91,6 @@ export class PartnerDetails implements OnInit {
     this.http.post<any>(`${this.apiUrl}/partners/register`, partnerData).subscribe({
       next: (response) => {
         this.isSubmitting = false;
-        alert('Partner registration successful! Check your email for login credentials.');
         this.router.navigate(['/login']);
       },
       error: (error) => {
