@@ -41,8 +41,8 @@ public class UserService {
         User user = new User();
         user.setEmail(email);
         user.setPassword(passwordEncoder.encode(plainPassword)); // Hash password before saving
-        user.setInnovator(true); // Set as innovator since they submitted an idea
-        user.setInventor(false);
+        user.setInventor(true); // Set as inventor since they submitted an idea
+        user.setInnovator(false);
 
         User savedUser = userRepository.save(user);
 
