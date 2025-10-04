@@ -191,6 +191,9 @@
           <div class="error-message" *ngIf="emailError">{{ emailError }}</div>
         </div>
 
+        <!-- Error Message -->
+        <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+
         <!-- Continue Button -->
         <div class="form-actions">
           <button type="button" class="btn-continue" (click)="onLetsGo()">Let's go!</button>
