@@ -3,6 +3,7 @@ package com.innostore.improvementhub.service;
 import com.innostore.improvementhub.entity.User;
 import com.innostore.improvementhub.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
@@ -16,6 +17,7 @@ public class UserService {
 
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     private static final SecureRandom random = new SecureRandom();
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public String generateRandomPassword(int length) {
         StringBuilder password = new StringBuilder();
@@ -32,14 +34,22 @@ public class UserService {
             return existingUser.get(); // Return existing user
         }
 
+        // Generate plain text password for email
+        String plainPassword = generateRandomPassword(12);
+
         // Create new user
         User user = new User();
         user.setEmail(email);
-        user.setPassword(generateRandomPassword(12)); // Generate 12-character password
+        user.setPassword(passwordEncoder.encode(plainPassword)); // Hash password before saving
         user.setInnovator(true); // Set as innovator since they submitted an idea
         user.setInventor(false);
 
-        return userRepository.save(user);
+        User savedUser = userRepository.save(user);
+
+        // Temporarily set plain password for email sending (not saved to DB)
+        savedUser.setPassword(plainPassword);
+
+        return savedUser;
     }
 
     public Optional<User> findByEmail(String email) {

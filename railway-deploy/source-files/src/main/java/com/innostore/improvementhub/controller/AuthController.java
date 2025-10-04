@@ -5,6 +5,7 @@ import com.innostore.improvementhub.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -18,6 +19,8 @@ public class AuthController {
 
     @Autowired
     private UserRepository userRepository;
+
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> loginRequest) {
@@ -39,8 +42,8 @@ public class AuthController {
 
             User user = userOptional.get();
 
-            // Check password (plain text comparison for now)
-            if (!password.equals(user.getPassword())) {
+            // Check password using BCrypt
+            if (!passwordEncoder.matches(password, user.getPassword())) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(createErrorResponse("Invalid password"));
             }
