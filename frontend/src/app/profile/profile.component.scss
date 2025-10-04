@@ -72,7 +72,7 @@
 .main-content {
   display: flex;
   min-height: calc(100vh - 100px);
-  gap: 2rem;
+  gap: 0;
 }
 
 /* Sidebar */
@@ -146,14 +146,13 @@
 /* Content Area */
 .content-area {
   flex: 1;
-  padding: 2rem 2rem 2rem 0;
+  padding: 2rem;
   background: transparent;
-  max-width: 900px;
 }
 
 .section-content {
-  max-width: 100%;
-  margin: 0;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 .section-header {
