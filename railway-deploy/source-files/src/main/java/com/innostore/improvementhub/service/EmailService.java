@@ -138,4 +138,57 @@ public class EmailService {
             throw new RuntimeException("Failed to send email with PDF attachment", e);
         }
     }
+
+    public void sendPartnerWelcomeEmail(String toEmail, String companyName, String contactPerson,
+                                       String username, String password, String loginUrl) {
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom("noreply@innostore.com");
+            message.setTo(toEmail);
+            message.setSubject("Welcome - Your INNOSTORE Partner Account Created!");
+            message.setText(
+                "Welcome to INNOSTORE!\n\n" +
+                "Thank you for registering as a partner. We're excited to collaborate with you.\n\n" +
+                "PARTNER DETAILS:\n" +
+                "Company: " + companyName + "\n" +
+                "Contact Person: " + contactPerson + "\n\n" +
+                "LOGIN CREDENTIALS:\n" +
+                "Username: " + username + "\n" +
+                "Password: " + password + "\n" +
+                "Login URL: " + loginUrl + "\n\n" +
+                "Please save these credentials securely. You can use them to access your account and explore collaboration opportunities.\n\n" +
+                "We will be in touch soon with next steps.\n\n" +
+                "Best regards,\n" +
+                "INNOSTORE Team"
+            );
+
+            mailSender.send(message);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to send partner welcome email", e);
+        }
+    }
+
+    public void sendPartnerConfirmationEmail(String toEmail, String companyName, String contactPerson) {
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom("noreply@innostore.com");
+            message.setTo(toEmail);
+            message.setSubject("Partner Registration Confirmed - INNOSTORE");
+            message.setText(
+                "Welcome back to INNOSTORE!\n\n" +
+                "Your partner registration has been successfully confirmed.\n\n" +
+                "PARTNER DETAILS:\n" +
+                "Company: " + companyName + "\n" +
+                "Contact Person: " + contactPerson + "\n\n" +
+                "You can log in to your existing account to access partner features and explore collaboration opportunities.\n\n" +
+                "We will be in touch soon with next steps.\n\n" +
+                "Best regards,\n" +
+                "INNOSTORE Team"
+            );
+
+            mailSender.send(message);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to send partner confirmation email", e);
+        }
+    }
 }

@@ -52,6 +52,31 @@ public class UserService {
         return savedUser;
     }
 
+    public User createUserAccountForPartner(String email) {
+        // Check if user already exists
+        Optional<User> existingUser = userRepository.findByEmail(email);
+        if (existingUser.isPresent()) {
+            return existingUser.get(); // Return existing user
+        }
+
+        // Generate plain text password for email
+        String plainPassword = generateRandomPassword(12);
+
+        // Create new user
+        User user = new User();
+        user.setEmail(email);
+        user.setPassword(passwordEncoder.encode(plainPassword)); // Hash password before saving
+        user.setInnovator(true); // Set as innovator since they registered as partner
+        user.setInventor(false);
+
+        User savedUser = userRepository.save(user);
+
+        // Temporarily set plain password for email sending (not saved to DB)
+        savedUser.setPassword(plainPassword);
+
+        return savedUser;
+    }
+
     public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
