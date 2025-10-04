@@ -4,6 +4,7 @@ import com.innostore.improvementhub.dto.IdeaRegistrationRequest;
 import com.innostore.improvementhub.dto.IdeaRegistrationResponse;
 import com.innostore.improvementhub.entity.Idea;
 import com.innostore.improvementhub.repository.IdeaRepository;
+import com.innostore.improvementhub.repository.UserRepository;
 import com.innostore.improvementhub.service.EmailService;
 import com.innostore.improvementhub.service.UserService;
 import com.innostore.improvementhub.service.RagService;
@@ -31,6 +32,9 @@ public class IdeaController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private RagService ragService;
@@ -147,10 +151,19 @@ public class IdeaController {
             // Step 3: Handle based on whether user wants help
             if (request.getWantsHelp() != null && request.getWantsHelp()) {
                 // Check if user already exists
-                boolean userExists = userService.findByEmail(request.getEmail()).isPresent();
+                Optional<User> existingUser = userService.findByEmail(request.getEmail());
+                boolean userExists = existingUser.isPresent();
+                User user;
 
-                // Create or get existing user account
-                User user = userService.createUserAccount(request.getEmail());
+                if (userExists) {
+                    // Update existing user - set inventor to true
+                    user = existingUser.get();
+                    user.setInventor(true);
+                    userRepository.save(user);
+                } else {
+                    // Create new user account and set inventor to true
+                    user = userService.createUserAccount(request.getEmail());
+                }
 
                 Idea idea = new Idea();
                 idea.setCoreConcept(request.getCoreConcept());
