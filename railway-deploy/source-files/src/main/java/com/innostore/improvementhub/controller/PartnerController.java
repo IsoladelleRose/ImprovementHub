@@ -59,7 +59,7 @@ public class PartnerController {
                 user = existingUser.get();
                 if (user.getInnovator() != null && user.getInnovator()) {
                     return ResponseEntity.badRequest()
-                        .body(Map.of("message", "Innovator with same mailaddress already exists."));
+                        .body(Map.of("message", "Innovator with the same email already exists"));
                 }
                 // Update existing user - set innovator to true
                 user.setInnovator(true);
