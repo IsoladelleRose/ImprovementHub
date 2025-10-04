@@ -137,6 +137,10 @@ export class ProfileComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
+  navigateToOverviewInnovator() {
+    this.router.navigate(['/overview-innovator']);
+  }
+
   logout() {
     localStorage.removeItem('user');
     this.router.navigate(['/login']);
