@@ -76,7 +76,7 @@ public class IdeaController {
                     request.getUserRole(),
                     user.getEmail(), // username is email
                     user.getPassword(),
-                    "http://localhost:4200/login"
+                    "https://collaborationhub-frontend-production.up.railway.app/login"
                 );
 
                 return ResponseEntity.ok(new IdeaRegistrationResponse(
@@ -184,7 +184,7 @@ public class IdeaController {
                         request.getUserRole(),
                         user.getEmail(),
                         user.getPassword(),
-                        "http://localhost:4200/login",
+                        "https://collaborationhub-frontend-production.up.railway.app/login",
                         pdfBytes,
                         true
                     );
