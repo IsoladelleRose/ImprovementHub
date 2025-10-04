@@ -146,7 +146,10 @@ public class IdeaController {
 
             // Step 3: Handle based on whether user wants help
             if (request.getWantsHelp() != null && request.getWantsHelp()) {
-                // User wants help - create account and save to database
+                // Check if user already exists
+                boolean userExists = userService.findByEmail(request.getEmail()).isPresent();
+
+                // Create or get existing user account
                 User user = userService.createUserAccount(request.getEmail());
 
                 Idea idea = new Idea();
@@ -158,21 +161,38 @@ public class IdeaController {
 
                 ideaRepository.save(idea);
 
-                // Send email with PDF and login credentials
-                emailService.sendAnalysisEmailWithPdf(
-                    request.getEmail(),
-                    request.getCoreConcept(),
-                    request.getProblemOpportunity(),
-                    request.getUserRole(),
-                    user.getEmail(),
-                    user.getPassword(),
-                    "http://localhost:4200/login",
-                    pdfBytes,
-                    true
-                );
+                // Send email with PDF - include credentials only for new users
+                if (userExists) {
+                    // Existing user - send email without credentials
+                    emailService.sendAnalysisEmailWithPdf(
+                        request.getEmail(),
+                        request.getCoreConcept(),
+                        request.getProblemOpportunity(),
+                        request.getUserRole(),
+                        null,
+                        null,
+                        null,
+                        pdfBytes,
+                        true
+                    );
+                } else {
+                    // New user - send email with credentials
+                    emailService.sendAnalysisEmailWithPdf(
+                        request.getEmail(),
+                        request.getCoreConcept(),
+                        request.getProblemOpportunity(),
+                        request.getUserRole(),
+                        user.getEmail(),
+                        user.getPassword(),
+                        "http://localhost:4200/login",
+                        pdfBytes,
+                        true
+                    );
+                }
 
                 return ResponseEntity.ok(new IdeaRegistrationResponse(
-                    "Idea analyzed and registered successfully! Check your email for the analysis report and login credentials.",
+                    "Idea analyzed and registered successfully! Check your email for the analysis report" +
+                    (userExists ? "." : " and login credentials."),
                     true
                 ));
             } else {

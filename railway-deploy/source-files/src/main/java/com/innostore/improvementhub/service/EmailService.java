@@ -83,20 +83,40 @@ public class EmailService {
 
             String emailBody;
             if (wantsHelp) {
-                emailBody = "Welcome to INNOSTORE!\n\n" +
-                    "Your idea has been successfully registered and we're excited to help you develop it.\n\n" +
-                    "IDEA SUMMARY:\n" +
-                    "Core Concept: " + coreConcept + "\n\n" +
-                    "Problem/Opportunity: " + problemOpportunity + "\n\n" +
-                    "Your Role: " + (userRole != null && !userRole.trim().isEmpty() ? userRole : "We'll handle everything") + "\n\n" +
-                    "LOGIN CREDENTIALS:\n" +
-                    "Username: " + username + "\n" +
-                    "Password: " + password + "\n" +
-                    "Login URL: " + loginUrl + "\n\n" +
-                    "Please find attached a detailed AI analysis of your idea.\n\n" +
-                    "We will be in touch soon with next steps for developing your idea.\n\n" +
-                    "Best regards,\n" +
-                    "INNOSTORE Team";
+                // Check if this is a new user (credentials provided) or existing user (credentials null)
+                boolean isNewUser = (username != null && password != null && loginUrl != null);
+
+                if (isNewUser) {
+                    // New user - include credentials
+                    emailBody = "Welcome to INNOSTORE!\n\n" +
+                        "Your idea has been successfully registered and we're excited to help you develop it.\n\n" +
+                        "IDEA SUMMARY:\n" +
+                        "Core Concept: " + coreConcept + "\n\n" +
+                        "Problem/Opportunity: " + problemOpportunity + "\n\n" +
+                        "Your Role: " + (userRole != null && !userRole.trim().isEmpty() ? userRole : "We'll handle everything") + "\n\n" +
+                        "LOGIN CREDENTIALS:\n" +
+                        "Username: " + username + "\n" +
+                        "Password: " + password + "\n" +
+                        "Login URL: " + loginUrl + "\n\n" +
+                        "Please save these credentials securely. You can use them to access your account and track the progress of your idea.\n\n" +
+                        "Please find attached a detailed AI analysis of your idea.\n\n" +
+                        "We will be in touch soon with next steps for developing your idea.\n\n" +
+                        "Best regards,\n" +
+                        "INNOSTORE Team";
+                } else {
+                    // Existing user - no credentials
+                    emailBody = "Welcome back to INNOSTORE!\n\n" +
+                        "Your new idea has been successfully registered and we're excited to help you develop it.\n\n" +
+                        "IDEA SUMMARY:\n" +
+                        "Core Concept: " + coreConcept + "\n\n" +
+                        "Problem/Opportunity: " + problemOpportunity + "\n\n" +
+                        "Your Role: " + (userRole != null && !userRole.trim().isEmpty() ? userRole : "We'll handle everything") + "\n\n" +
+                        "Please find attached a detailed AI analysis of your idea.\n\n" +
+                        "You can log in to your existing account to track the progress of this idea.\n\n" +
+                        "We will be in touch soon with next steps for developing your idea.\n\n" +
+                        "Best regards,\n" +
+                        "INNOSTORE Team";
+                }
             } else {
                 emailBody = "Thank you for using INNOSTORE!\n\n" +
                     "We've analyzed your idea and attached a detailed report.\n\n" +
