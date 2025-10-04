@@ -43,25 +43,29 @@ public class PartnerController {
     @PostMapping("/register")
     public ResponseEntity<?> registerPartner(@Valid @RequestBody PartnerRegistrationRequest request) {
         try {
-            // Check if partner email already exists
+            // Check if user exists AND innovator is already true
+            Optional<User> existingUser = userService.findByEmail(request.email());
+            if (existingUser.isPresent()) {
+                User user = existingUser.get();
+                if (user.getInnovator() != null && user.getInnovator()) {
+                    return ResponseEntity.badRequest()
+                        .body(Map.of("message", "Innovator with the same email already exists"));
+                }
+            }
+
+            // Check if partner email already exists in partners table
             if (partnerRepository.existsByEmail(request.email())) {
                 return ResponseEntity.badRequest()
                     .body(Map.of("message", "Partner email already exists", "field", "email"));
             }
 
-            // Check if user exists
-            Optional<User> existingUser = userService.findByEmail(request.email());
+            // User validation passed - proceed with registration
             boolean userExists = existingUser.isPresent();
             User user;
 
             if (userExists) {
-                // Check if user is already an innovator
-                user = existingUser.get();
-                if (user.getInnovator() != null && user.getInnovator()) {
-                    return ResponseEntity.badRequest()
-                        .body(Map.of("message", "Innovator with the same email already exists"));
-                }
                 // Update existing user - set innovator to true
+                user = existingUser.get();
                 user.setInnovator(true);
                 userRepository.save(user);
             } else {
