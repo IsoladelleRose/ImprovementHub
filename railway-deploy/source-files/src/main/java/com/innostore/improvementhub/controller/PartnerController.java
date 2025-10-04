@@ -46,7 +46,7 @@ public class PartnerController {
             // Check if partner email already exists
             if (partnerRepository.existsByEmail(request.email())) {
                 return ResponseEntity.badRequest()
-                    .body(Map.of("error", "Partner email already exists", "field", "email"));
+                    .body(Map.of("message", "Partner email already exists", "field", "email"));
             }
 
             // Check if user exists
@@ -55,8 +55,13 @@ public class PartnerController {
             User user;
 
             if (userExists) {
-                // Update existing user - set innovator to true
+                // Check if user is already an innovator
                 user = existingUser.get();
+                if (user.getInnovator() != null && user.getInnovator()) {
+                    return ResponseEntity.badRequest()
+                        .body(Map.of("message", "Innovator with same mailaddress already exists."));
+                }
+                // Update existing user - set innovator to true
                 user.setInnovator(true);
                 userRepository.save(user);
             } else {
