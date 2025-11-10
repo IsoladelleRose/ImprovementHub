@@ -81,6 +81,7 @@
 
 /* Main Content Layout */
 .main-content {
+  align-items: flex-start;
   display: flex;
   min-height: calc(100vh - 80px);
   gap: 0;
@@ -95,7 +96,7 @@
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   position: relative;
-  margin-right: 40px;
+  margin-right: 60px;
   flex-shrink: 0;
 }
 
@@ -379,6 +380,7 @@
 /* Responsive Design */
 @media (max-width: 1024px) {
   .main-content {
+  align-items: flex-start;
     flex-direction: column;
     padding: 24px;
   }
@@ -410,6 +412,7 @@
   }
 
   .main-content {
+  align-items: flex-start;
     padding: 16px;
   }
 
