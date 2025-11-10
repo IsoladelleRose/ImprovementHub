@@ -142,6 +142,10 @@ export class ProfileComponent implements OnInit {
     this.router.navigate(['/ideas-status']);
   }
 
+  navigateToRoadmap() {
+    this.router.navigate(['/roadmap']);
+  }
+
   logout() {
     localStorage.removeItem('user');
     this.router.navigate(['/login']);

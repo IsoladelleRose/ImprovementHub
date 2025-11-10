@@ -9,6 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
 import { RagComponent } from './rag/rag.component';
 import { IdeasStatus } from './ideas-status/ideas-status';
+import { Roadmap } from './roadmap/roadmap';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -21,6 +22,7 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'ideas-status', component: IdeasStatus },
+  { path: 'roadmap', component: Roadmap },
   { path: 'rag', component: RagComponent },
   { path: 'dashboard', redirectTo: '/rag' },
   { path: '**', redirectTo: '/home' }
