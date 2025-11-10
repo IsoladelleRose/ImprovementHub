@@ -1,3 +1,8 @@
+.roadmap-container {
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
 // Navbar
 .navbar {
   background-color: #28a745;
@@ -89,11 +94,90 @@
   }
 }
 
+// Page Layout with Sidebar
+.page-layout {
+  display: flex;
+  align-items: flex-start;
+  min-height: calc(100vh - 80px);
+  gap: 0;
+  padding: 40px 60px;
+}
+
+// Sidebar
+.sidebar {
+  width: 280px;
+  background: white;
+  padding: 40px 0;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  position: relative;
+  margin-right: 60px;
+  flex-shrink: 0;
+}
+
+.sidebar-decoration {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 12px;
+}
+
+.sidebar-decoration-top {
+  top: 30px;
+  right: -20px;
+  background: linear-gradient(135deg, #7bed9f 0%, #2ed573 100%);
+  opacity: 0.8;
+  transform: rotate(25deg);
+}
+
+.sidebar-decoration-bottom {
+  bottom: 40px;
+  right: -20px;
+  background: linear-gradient(135deg, #ffd32a 0%, #ffa801 100%);
+  opacity: 0.7;
+  transform: rotate(-15deg);
+}
+
+.menu-section {
+  margin-bottom: 32px;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 24px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #333;
+  font-weight: 500;
+  font-size: 14px;
+  border-left: 3px solid transparent;
+
+  &:hover {
+    background: #f8f9fa;
+    color: #000;
+  }
+
+  &.active {
+    background: #e8f5e9;
+    color: #2ed573;
+    border-left-color: #2ed573;
+  }
+}
+
+.menu-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: inherit;
+}
+
 // Main content
 .main-content {
-  background-color: #f5f5f5;
-  min-height: calc(100vh - 80px);
-  padding: 2rem;
+  flex: 1;
+  background-color: transparent;
+  padding: 0;
 }
 
 .welcome-section {
@@ -242,5 +326,50 @@
         color: #000;
       }
     }
+  }
+}
+
+// Responsive Design
+@media (max-width: 1024px) {
+  .page-layout {
+    flex-direction: column;
+    padding: 24px;
+  }
+
+  .sidebar {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .nav-center {
+    order: 3;
+    width: 100%;
+  }
+
+  .nav-links {
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+
+  .page-layout {
+    padding: 16px;
+  }
+
+  .progress-steps {
+    flex-wrap: wrap;
+  }
+
+  .idea-card {
+    flex-direction: column;
+    text-align: center;
   }
 }
