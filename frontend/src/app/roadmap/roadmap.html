@@ -45,7 +45,7 @@
         </svg>
         <span>Profile</span>
       </div>
-      <div class="menu-item" [class.active]="activeSection === 'ideas'" (click)="navigateToIdeasStatus()">
+      <div class="menu-item" [class.active]="activeSection === 'ideas'" (click)="setActiveSection('ideas')">
         <svg class="menu-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
           <path d="M10 3 C7 3, 5 5, 5 8 C5 10, 6 11, 7 12 L7 14 L13 14 L13 12 C14 11, 15 10, 15 8 C15 5, 13 3, 10 3 Z" stroke="currentColor" stroke-width="1.5"/>
           <line x1="7" y1="15" x2="13" y2="15" stroke="currentColor" stroke-width="1.5"/>
@@ -90,6 +90,8 @@
 
   <!-- Main Content -->
   <main class="main-content">
+    <!-- Roadmap Section -->
+    <div *ngIf="activeSection === 'roadmap'">
         <div class="progress-section">
       <div class="progress-steps">
         <div class="step active">
@@ -144,6 +146,38 @@
         </div>
       </div>
     </div>
+    </div>
+
+    <!-- Ideas Section -->
+    <div *ngIf="activeSection === 'ideas'" class="section-content">
+      <h1 class="page-title">Ideas Status</h1>
+      <div class="ideas-section">
+        <h2>Ideas you support</h2>
+        <div class="idea-card">
+          <div class="idea-icon">
+            <svg width="60" height="60" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="4">
+              <path d="M60 25 C42 25, 30 37, 30 55 C30 68, 37 75, 42 80 L42 90 L78 90 L78 80 C83 75, 90 68, 90 55 C90 37, 78 25, 60 25 Z"/>
+              <line x1="42" y1="95" x2="78" y2="95"/>
+              <line x1="47" y1="100" x2="73" y2="100"/>
+              <path d="M60 10 L57 18 M60 10 L63 18"/>
+            </svg>
+          </div>
+          <div class="idea-content">
+            <p>Figma ipsum component variant main layer. Underline device flatten hand plugin editor union undo overflow boolean. Boolean comment distribute invite overflow duplicate. Bold invite library move boolean. Follower selection comment overflow rotate.</p>
+          </div>
+          <div class="idea-progress">
+            <svg class="progress-circle" width="100" height="100" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="40" fill="none" stroke="#e0e0e0" stroke-width="8"/>
+              <circle cx="50" cy="50" r="40" fill="none" stroke="#28a745" stroke-width="8"
+                      stroke-dasharray="251.2" stroke-dashoffset="200.96"
+                      transform="rotate(-90 50 50)"/>
+            </svg>
+            <div class="progress-text">20%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
       <!-- Profile Section -->
       <div *ngIf="activeSection === 'profile'" class="section-content">
         <div class="section-header">
