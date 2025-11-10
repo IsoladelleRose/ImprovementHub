@@ -38,7 +38,7 @@
   <aside class="sidebar">
 
     <div class="menu-section">
-      <div class="menu-item" [class.active]="activeSection === 'profile'" (click)="navigateToProfile()">
+      <div class="menu-item" [class.active]="activeSection === 'profile'" (click)="setActiveSection('profile')">
         <svg class="menu-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
           <circle cx="10" cy="6" r="3" stroke="currentColor" stroke-width="1.5"/>
           <path d="M4 16c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
@@ -63,21 +63,21 @@
         </svg>
         <span>Roadmap</span>
       </div>
-      <div class="menu-item" [class.active]="activeSection === 'billing'" (click)="navigateToBilling()">
+      <div class="menu-item" [class.active]="activeSection === 'billing'" (click)="setActiveSection('billing')">
         <svg class="menu-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
           <rect x="2" y="5" width="16" height="10" rx="2" stroke="currentColor" stroke-width="1.5"/>
           <path d="M2 9h16" stroke="currentColor" stroke-width="1.5"/>
         </svg>
         <span>Billing information</span>
       </div>
-      <div class="menu-item" [class.active]="activeSection === 'password'" (click)="navigateToPassword()">
+      <div class="menu-item" [class.active]="activeSection === 'password'" (click)="setActiveSection('password')">
         <svg class="menu-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
           <rect x="5" y="9" width="10" height="8" rx="1" stroke="currentColor" stroke-width="1.5"/>
           <path d="M7 9V6c0-1.7 1.3-3 3-3s3 1.3 3 3v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
         </svg>
         <span>Password</span>
       </div>
-      <div class="menu-item" [class.active]="activeSection === 'settings'" (click)="navigateToSettings()">
+      <div class="menu-item" [class.active]="activeSection === 'settings'" (click)="setActiveSection('settings')">
         <svg class="menu-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
           <circle cx="10" cy="10" r="3" stroke="currentColor" stroke-width="1.5"/>
           <path d="M10 2v2m0 12v2m8-8h-2M4 10H2m14.3-5.7l-1.4 1.4M7.1 14.3l-1.4 1.4m9.6 0l-1.4-1.4M7.1 5.7L5.7 4.3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
@@ -144,6 +144,122 @@
         </div>
       </div>
     </div>
+      <!-- Profile Section -->
+      <div *ngIf="activeSection === 'profile'" class="section-content">
+        <div class="section-header">
+          <h1>Profile Information</h1>
+          <div class="decorative-arrow">📄</div>
+        </div>
+
+        <div class="info-card">
+          <div class="card-header">
+            <h2>User Profile</h2>
+          </div>
+          <div class="profile-info">
+            <div class="info-group">
+              <label>Email Address</label>
+              <div class="info-value">{{ user?.emailAddress || 'N/A' }}</div>
+            </div>
+            <div class="info-group">
+              <label>User Role</label>
+              <div class="info-value">{{ getUserRole() }}</div>
+            </div>
+            <div class="info-group">
+              <label>Member Since</label>
+              <div class="info-value">{{ getMemberSince() }}</div>
+            </div>
+            <div class="info-group">
+              <label>User ID</label>
+              <div class="info-value">#{{ user?.userId || user?.id || 'N/A' }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Password Section -->
+      <div *ngIf="activeSection === 'passwords'" class="section-content">
+        <div class="section-header">
+          <h1>Password Management</h1>
+          <div class="decorative-arrow">🔒</div>
+        </div>
+
+        <!-- Success Message -->
+        <div *ngIf="passwordChangeSuccess" class="success-message">
+          {{ passwordChangeSuccess }}
+        </div>
+
+        <!-- Error Message -->
+        <div *ngIf="passwordChangeError" class="error-message">
+          {{ passwordChangeError }}
+        </div>
+
+        <div class="password-card">
+          <div class="card-header">
+            <h2>Change Password</h2>
+          </div>
+
+          <form (ngSubmit)="onChangePassword()" class="password-form">
+            <div class="form-group">
+              <label for="currentPassword">Current Password</label>
+              <input
+                type="password"
+                id="currentPassword"
+                [(ngModel)]="currentPassword"
+                name="currentPassword"
+                placeholder="Enter your current password"
+                required
+                [disabled]="isChangingPassword"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="newPassword">New Password</label>
+              <input
+                type="password"
+                id="newPassword"
+                [(ngModel)]="newPassword"
+                name="newPassword"
+                placeholder="Enter your new password"
+                required
+                [disabled]="isChangingPassword"
+              />
+              <div class="password-requirements">
+                <small>Password must be at least 8 characters long and contain uppercase, lowercase, number, and special character.</small>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="confirmNewPassword">Confirm New Password</label>
+              <input
+                type="password"
+                id="confirmNewPassword"
+                [(ngModel)]="confirmNewPassword"
+                name="confirmNewPassword"
+                placeholder="Confirm your new password"
+                required
+                [disabled]="isChangingPassword"
+              />
+            </div>
+
+            <button
+              type="submit"
+              class="change-password-btn"
+              [disabled]="isChangingPassword || !currentPassword || !newPassword || !confirmNewPassword"
+            >
+              {{ isChangingPassword ? 'CHANGING PASSWORD...' : 'CHANGE PASSWORD' }}
+            </button>
+          </form>
+        </div>
+      </div>
+      <div *ngIf="activeSection === 'settings'" class="section-content">
+        <div class="section-header">
+          <h1>General Settings</h1>
+          <div class="decorative-arrow">⚙️</div>
+        </div>
+        <div class="info-card">
+          <p>General settings will be available in a future update.</p>
+        </div>
+      </div>
   </main>
 </div>
 </div>
