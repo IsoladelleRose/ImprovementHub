@@ -2,8 +2,8 @@
   <!-- Navigation Header -->
   <header class="navbar">
     <div class="logo" (click)="navigateHome()">
-      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="36" height="36" rx="8" stroke="black" stroke-width="2"/><path d="M12 20 L18 14 L18 26 Z" fill="none" stroke="black" stroke-width="2"/><path d="M20 16 L24 12 L28 16 L28 28 L20 28 Z" fill="none" stroke="black" stroke-width="2"/><circle cx="24" cy="20" r="2" fill="black"/></svg>
-      <span>INNOVISION</span>
+      <div class="logo-icon">🔧</div>
+      <span>INNOSTORE</span>
     </div>
     <nav class="nav-links">
       <a (click)="navigateHome()">HOME</a>
@@ -11,7 +11,7 @@
       <a>VIEWS</a>
       <a>CONTACT</a>
     </nav>
-    <div class="user-section"><div class="notification-icon">🔔</div>
+    <div class="user-section">
       <div class="user-avatar" *ngIf="user">
         {{ user.emailAddress.charAt(0).toUpperCase() }}
       </div>
@@ -23,7 +23,7 @@
     <!-- Sidebar -->
     <aside class="sidebar">
       <div class="profile-section">
-        <h3 class="section-title">Profile</h3>
+        <h3>Profile</h3>
         <div class="menu-item" [class.active]="activeSection === 'profile'" (click)="setActiveSection('profile')">
           <span class="menu-icon">👤</span>
           Edit Profile
@@ -47,7 +47,7 @@
       </div>
 
       <div class="bank-section">
-        <h3 class="section-title">Bank</h3>
+        <h3>Bank</h3>
         <div class="menu-item" [class.active]="activeSection === 'billing'" (click)="setActiveSection('billing')">
           <span class="menu-icon">💳</span>
           Billing information
@@ -55,7 +55,7 @@
       </div>
 
       <div class="secure-section">
-        <h3 class="section-title">Secure</h3>
+        <h3>Secure</h3>
         <div class="menu-item" [class.active]="activeSection === 'passwords'" (click)="setActiveSection('passwords')">
           <span class="menu-icon">🔒</span>
           Passwords
