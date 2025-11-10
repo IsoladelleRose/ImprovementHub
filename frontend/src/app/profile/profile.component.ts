@@ -137,8 +137,9 @@ export class ProfileComponent implements OnInit {
     this.router.navigate(['/']);
   }
 
-  navigateToOverviewInnovator() {
-    this.router.navigate(['/overview-innovator']);
+
+  navigateToIdeasStatus() {
+    this.router.navigate(['/ideas-status']);
   }
 
   logout() {
