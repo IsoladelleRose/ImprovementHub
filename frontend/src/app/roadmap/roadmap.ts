@@ -12,9 +12,13 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ProfileComponent implements OnInit {
   activeSection: any = 'profile';
-  
+
   // User data
   user: any = null;
+
+  // User ideas
+  userIdeas: any[] = [];
+  isLoadingIdeas = false;
 
   // Password change form
   currentPassword = '';
@@ -33,6 +37,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this.loadUserProfile();
+    this.loadUserIdeas();
   }
 
   loadUserProfile() {
@@ -60,6 +65,30 @@ export class ProfileComponent implements OnInit {
         this.errorMessage = 'Failed to load user profile';
       }
     });
+  }
+
+  loadUserIdeas() {
+    const userData = localStorage.getItem('user');
+    if (!userData) return;
+
+    try {
+      const user = JSON.parse(userData);
+      if (!user.emailAddress) return;
+
+      this.isLoadingIdeas = true;
+      this.http.get<any[]>(`${this.apiUrl}/ideas/by-email/${user.emailAddress}`).subscribe({
+        next: (ideas) => {
+          this.userIdeas = ideas;
+          this.isLoadingIdeas = false;
+        },
+        error: (error) => {
+          console.error('Error fetching user ideas:', error);
+          this.isLoadingIdeas = false;
+        }
+      });
+    } catch (error) {
+      console.error('Error parsing user data:', error);
+    }
   }
 
   onChangePassword() {

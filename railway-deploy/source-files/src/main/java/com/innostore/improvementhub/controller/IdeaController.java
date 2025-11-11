@@ -122,6 +122,12 @@ public class IdeaController {
         return ResponseEntity.ok(ideas);
     }
 
+    @GetMapping("/by-email/{email}")
+    public ResponseEntity<List<Idea>> getIdeasByEmail(@PathVariable String email) {
+        List<Idea> ideas = ideaRepository.findByEmail(email);
+        return ResponseEntity.ok(ideas);
+    }
+
     @PostMapping("/analyze")
     public ResponseEntity<?> analyzeAndSubmitIdea(@Valid @RequestBody IdeaRegistrationRequest request) {
         try {

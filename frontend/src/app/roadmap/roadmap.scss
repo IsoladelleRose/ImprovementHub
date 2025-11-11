@@ -234,6 +234,13 @@
     margin-bottom: 1.5rem;
   }
 
+  .idea-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #000;
+    margin: 0 0 0.5rem 0;
+  }
+
   .idea-card {
     background: white;
     border-radius: 12px;
@@ -295,6 +302,39 @@
     .step-number {
       background-color: #ffc107;
     }
+  }
+}
+
+// Loading and empty state messages
+.loading-message,
+.no-ideas-message {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+  .idea-icon {
+    display: inline-block;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+
+    svg {
+      color: #ffc107;
+    }
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+    margin: 1rem 0 0.5rem 0;
+  }
+
+  p {
+    color: #666;
+    font-size: 1rem;
+    margin: 0;
   }
 }
 
