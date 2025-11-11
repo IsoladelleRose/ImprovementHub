@@ -30,6 +30,9 @@ public class User {
     @Column(name = "inventor")
     private Boolean inventor;
 
+    @Column(name = "language")
+    private String language;
+
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
@@ -86,6 +89,14 @@ public class User {
 
     public void setInventor(Boolean inventor) {
         this.inventor = inventor;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
     }
 
     public LocalDateTime getCreatedAt() {
