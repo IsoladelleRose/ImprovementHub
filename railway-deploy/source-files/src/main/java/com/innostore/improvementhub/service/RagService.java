@@ -158,12 +158,14 @@ public class RagService {
                 "Please analyze the following business idea:\n\n" +
                 "Core Concept: %s\n\n" +
                 "Problem/Opportunity: %s\n\n" +
-                "Based on this information, provide a brief analysis covering:\n" +
+                "Based on this information, provide a comprehensive analysis covering:\n" +
                 "1. Is this a good idea? (Yes/No with brief reasoning)\n" +
                 "2. Key strengths of the idea\n" +
                 "3. Potential challenges or risks\n" +
-                "4. Initial recommendation\n\n" +
-                "Keep the response concise and actionable.",
+                "4. How the idea can be executed (provide a practical implementation strategy or roadmap)\n" +
+                "5. What profiles/roles are needed to realize this idea (describe the team composition and key skills required)\n" +
+                "6. Initial recommendation\n\n" +
+                "Keep the response well-structured, concise, and actionable. Use clear section headers for each point.",
                 coreConcept,
                 problemOpportunity
             );
