@@ -91,61 +91,68 @@
   <!-- Main Content -->
   <main class="main-content">
     <!-- Roadmap Section -->
-    <div *ngIf="activeSection === 'roadmap'">
-        <div class="progress-section">
-      <div class="progress-steps">
-        <div class="step active">
-          <div class="step-number">1</div>
-          <div class="step-label">Registration</div>
+    <div *ngIf="activeSection === 'roadmap'" class="section-content">
+      <div class="roadmap-topics">
+        <!-- Topic 1 -->
+        <div class="topic-card">
+          <div class="topic-header">
+            <div class="topic-number">1</div>
+            <h3>Topic 1</h3>
+          </div>
+          <div class="topic-progress-bar">
+            <div class="topic-progress-fill" style="width: 100%"></div>
+          </div>
+          <div class="topic-percentage">100%</div>
         </div>
-        <div class="step-connector"></div>
-        <div class="step">
-          <div class="step-number">2</div>
-          <div class="step-label">Matching</div>
-        </div>
-        <div class="step-connector"></div>
-        <div class="step">
-          <div class="step-number">3</div>
-          <div class="step-label">Idea Proposal</div>
-        </div>
-        <div class="step-connector"></div>
-        <div class="step">
-          <div class="step-number">4</div>
-          <div class="step-label">Idea Acceptance</div>
-        </div>
-        <div class="step-connector"></div>
-        <div class="step">
-          <div class="step-number">5</div>
-          <div class="step-label">Idea Development</div>
-        </div>
-      </div>
-    </div>
 
-    <div class="ideas-section">
-      <h2>Ideas you support</h2>
-      <div class="idea-card">
-        <div class="idea-icon">
-          <svg width="60" height="60" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="4">
-            <path d="M60 25 C42 25, 30 37, 30 55 C30 68, 37 75, 42 80 L42 90 L78 90 L78 80 C83 75, 90 68, 90 55 C90 37, 78 25, 60 25 Z"/>
-            <line x1="42" y1="95" x2="78" y2="95"/>
-            <line x1="47" y1="100" x2="73" y2="100"/>
-            <path d="M60 10 L57 18 M60 10 L63 18"/>
-          </svg>
+        <!-- Topic 2 -->
+        <div class="topic-card">
+          <div class="topic-header">
+            <div class="topic-number">2</div>
+            <h3>Topic 2</h3>
+          </div>
+          <div class="topic-progress-bar">
+            <div class="topic-progress-fill" style="width: 80%"></div>
+          </div>
+          <div class="topic-percentage">80%</div>
         </div>
-        <div class="idea-content">
-          <p>Figma ipsum component variant main layer. Underline device flatten hand plugin editor union undo overflow boolean. Boolean comment distribute invite overflow duplicate. Bold invite library move boolean. Follower selection comment overflow rotate.</p>
+
+        <!-- Topic 3 -->
+        <div class="topic-card">
+          <div class="topic-header">
+            <div class="topic-number">3</div>
+            <h3>Topic 3</h3>
+          </div>
+          <div class="topic-progress-bar">
+            <div class="topic-progress-fill" style="width: 60%"></div>
+          </div>
+          <div class="topic-percentage">60%</div>
         </div>
-        <div class="idea-progress">
-          <svg class="progress-circle" width="100" height="100" viewBox="0 0 100 100">
-            <circle cx="50" cy="50" r="40" fill="none" stroke="#e0e0e0" stroke-width="8"/>
-            <circle cx="50" cy="50" r="40" fill="none" stroke="#28a745" stroke-width="8"
-                    stroke-dasharray="251.2" stroke-dashoffset="200.96"
-                    transform="rotate(-90 50 50)"/>
-          </svg>
-          <div class="progress-text">20%</div>
+
+        <!-- Topic 4 -->
+        <div class="topic-card">
+          <div class="topic-header">
+            <div class="topic-number">4</div>
+            <h3>Topic 4</h3>
+          </div>
+          <div class="topic-progress-bar">
+            <div class="topic-progress-fill" style="width: 40%"></div>
+          </div>
+          <div class="topic-percentage">40%</div>
+        </div>
+
+        <!-- Topic 5 -->
+        <div class="topic-card">
+          <div class="topic-header">
+            <div class="topic-number">5</div>
+            <h3>Topic 5</h3>
+          </div>
+          <div class="topic-progress-bar">
+            <div class="topic-progress-fill" style="width: 20%"></div>
+          </div>
+          <div class="topic-percentage">20%</div>
         </div>
       </div>
-    </div>
     </div>
 
     <!-- Ideas Section -->
