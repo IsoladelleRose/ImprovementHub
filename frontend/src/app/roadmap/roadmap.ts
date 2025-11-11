@@ -11,7 +11,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrl: './roadmap.scss'
 })
 export class Roadmap implements OnInit {
-  activeSection: any = 'roadmap';
+  activeSection: any = 'profile';
   
   // User data
   user: any = null;
