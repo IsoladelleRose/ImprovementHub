@@ -63,6 +63,7 @@ public class IdeaController {
                 User user = userService.createUserAccount(request.getEmail());
 
                 Idea idea = new Idea();
+                idea.setTitle(request.getTitle());
                 idea.setCoreConcept(request.getCoreConcept());
                 idea.setProblemOpportunity(request.getProblemOpportunity());
                 idea.setWantsHelp(request.getWantsHelp());
@@ -166,6 +167,7 @@ public class IdeaController {
                 }
 
                 Idea idea = new Idea();
+                idea.setTitle(request.getTitle());
                 idea.setCoreConcept(request.getCoreConcept());
                 idea.setProblemOpportunity(request.getProblemOpportunity());
                 idea.setWantsHelp(request.getWantsHelp());

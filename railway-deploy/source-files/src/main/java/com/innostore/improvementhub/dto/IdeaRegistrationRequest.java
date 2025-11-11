@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 
 public class IdeaRegistrationRequest {
 
+    private String title;
+
     @NotBlank(message = "Core concept is required")
     private String coreConcept;
 
@@ -30,6 +32,14 @@ public class IdeaRegistrationRequest {
     }
 
     // Getters and Setters
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getCoreConcept() {
         return coreConcept;
     }

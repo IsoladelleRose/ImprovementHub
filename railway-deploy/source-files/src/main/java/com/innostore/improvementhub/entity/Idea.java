@@ -15,6 +15,9 @@ public class Idea {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "title")
+    private String title;
+
     @NotBlank(message = "Core concept is required")
     @Column(name = "core_concept", columnDefinition = "TEXT")
     private String coreConcept;
@@ -54,6 +57,14 @@ public class Idea {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getCoreConcept() {

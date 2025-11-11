@@ -300,6 +300,30 @@
     line-height: 1.4;
   }
 
+  .form-input {
+    width: 100%;
+    padding: 16px 20px;
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    font-size: 16px;
+    font-family: inherit;
+    color: #333;
+    background: #f8f9fa;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+
+    &::placeholder {
+      color: #999;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: #28a745;
+      background: white;
+      box-shadow: 0 0 0 4px rgba(40, 167, 69, 0.1);
+    }
+  }
+
   .form-textarea {
     width: 100%;
     min-height: 120px;

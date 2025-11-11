@@ -22,6 +22,7 @@ export class RoleRegistration implements OnInit {
   successMessage = '';
 
   // Data from previous step
+  title = '';
   coreConcept = '';
   problemOpportunity = '';
 
@@ -34,6 +35,7 @@ export class RoleRegistration implements OnInit {
     const ideaData = localStorage.getItem('ideaData');
     if (ideaData) {
       const data = JSON.parse(ideaData);
+      this.title = data.title;
       this.coreConcept = data.coreConcept;
       this.problemOpportunity = data.problemOpportunity;
     }
@@ -83,6 +85,7 @@ export class RoleRegistration implements OnInit {
     this.successMessage = '';
 
     const ideaData = {
+      title: this.title,
       email: this.email,
       coreConcept: this.coreConcept,
       problemOpportunity: this.problemOpportunity,

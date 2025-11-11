@@ -92,6 +92,20 @@
       </div>
 
       <form class="registration-form">
+        <!-- Title -->
+        <div class="form-group">
+          <label class="question-label">
+            Idea Title *
+          </label>
+          <input
+            type="text"
+            class="form-input"
+            placeholder="Give your idea a short, descriptive title"
+            [(ngModel)]="title"
+            name="title"
+            required>
+        </div>
+
         <!-- Question 1 -->
         <div class="form-group">
           <label class="question-label">

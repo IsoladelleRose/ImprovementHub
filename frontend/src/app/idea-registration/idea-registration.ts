@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
   styleUrl: './idea-registration.scss'
 })
 export class IdeaRegistration {
+  title = '';
   coreConcept = '';
   problemOpportunity = '';
 
@@ -18,6 +19,11 @@ export class IdeaRegistration {
 
   navigateToRoleRegistration() {
     // Validate required fields
+    if (!this.title.trim()) {
+      alert('Please enter a title for your idea.');
+      return;
+    }
+
     if (!this.coreConcept.trim()) {
       alert('Please enter the core concept of your idea.');
       return;
@@ -30,6 +36,7 @@ export class IdeaRegistration {
 
     // Store the idea data in localStorage to pass to the next step
     const ideaData = {
+      title: this.title,
       coreConcept: this.coreConcept,
       problemOpportunity: this.problemOpportunity
     };
