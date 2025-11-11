@@ -291,12 +291,7 @@
       </div>
 
       <!-- Password Section -->
-      <div *ngIf="activeSection === 'passwords'" class="section-content">
-        <div class="section-header">
-          <h1>Password Management</h1>
-          <div class="decorative-arrow">🔒</div>
-        </div>
-
+      <div *ngIf="activeSection === 'password'" class="section-content">
         <!-- Success Message -->
         <div *ngIf="passwordChangeSuccess" class="success-message">
           {{ passwordChangeSuccess }}
