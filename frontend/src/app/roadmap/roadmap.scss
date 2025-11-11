@@ -13,6 +13,10 @@
   position: sticky;
   top: 0;
   z-index: 100;
+
+  &.ideas-active {
+    background-color: #ffc107;
+  }
 }
 
 .nav-left .logo {
@@ -23,6 +27,10 @@
   border: 2px solid #000;
   border-radius: 8px;
   background-color: #28a745;
+
+  .navbar.ideas-active & {
+    background-color: #ffc107;
+  }
 
   svg {
     color: #000;
@@ -277,6 +285,14 @@
 .section-content .ideas-section {
   .idea-card {
     .idea-icon {
+      background-color: #ffc107;
+    }
+  }
+}
+
+.section-content .progress-section {
+  .step.active {
+    .step-number {
       background-color: #ffc107;
     }
   }
