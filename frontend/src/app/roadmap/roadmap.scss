@@ -273,6 +273,15 @@
   }
 }
 
+// Ideas section specific styling (when viewing Ideas tab)
+.section-content .ideas-section {
+  .idea-card {
+    .idea-icon {
+      background-color: #ffc107;
+    }
+  }
+}
+
 // Responsive Design
 @media (max-width: 1024px) {
   .page-layout {
