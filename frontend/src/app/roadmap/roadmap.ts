@@ -5,12 +5,12 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: 'app-roadmap',
+  selector: 'app-profile',
   imports: [CommonModule, FormsModule],
   templateUrl: './roadmap.html',
   styleUrl: './roadmap.scss'
 })
-export class Roadmap implements OnInit {
+export class ProfileComponent implements OnInit {
   activeSection: any = 'profile';
   
   // User data
