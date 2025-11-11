@@ -37,7 +37,6 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this.loadUserProfile();
-    this.loadUserIdeas();
   }
 
   loadUserProfile() {
@@ -46,6 +45,10 @@ export class ProfileComponent implements OnInit {
       try {
         this.user = JSON.parse(userData);
         this.fetchUserProfile();
+        // Load ideas immediately if we have the user data
+        if (this.user?.email || this.user?.emailAddress) {
+          this.loadUserIdeas();
+        }
       } catch (error) {
         console.error('Error parsing user data:', error);
       }
@@ -53,12 +56,15 @@ export class ProfileComponent implements OnInit {
   }
 
   fetchUserProfile() {
-    if (!this.user?.emailAddress) return;
+    const email = this.user?.email || this.user?.emailAddress;
+    if (!email) return;
 
-    this.http.get<any>(`${this.apiUrl}/auth/profile/${this.user.emailAddress}`).subscribe({
+    this.http.get<any>(`${this.apiUrl}/auth/profile/${email}`).subscribe({
       next: (response) => {
         this.user = { ...this.user, ...response };
         localStorage.setItem('user', JSON.stringify(this.user));
+        // Reload ideas after profile is fetched to ensure we have latest data
+        this.loadUserIdeas();
       },
       error: (error) => {
         console.error('Error fetching user profile:', error);
@@ -68,27 +74,22 @@ export class ProfileComponent implements OnInit {
   }
 
   loadUserIdeas() {
-    const userData = localStorage.getItem('user');
-    if (!userData) return;
+    if (!this.user) return;
 
-    try {
-      const user = JSON.parse(userData);
-      if (!user.emailAddress) return;
+    const email = this.user.email || this.user.emailAddress;
+    if (!email) return;
 
-      this.isLoadingIdeas = true;
-      this.http.get<any[]>(`${this.apiUrl}/ideas/by-email/${user.emailAddress}`).subscribe({
-        next: (ideas) => {
-          this.userIdeas = ideas;
-          this.isLoadingIdeas = false;
-        },
-        error: (error) => {
-          console.error('Error fetching user ideas:', error);
-          this.isLoadingIdeas = false;
-        }
-      });
-    } catch (error) {
-      console.error('Error parsing user data:', error);
-    }
+    this.isLoadingIdeas = true;
+    this.http.get<any[]>(`${this.apiUrl}/ideas/by-email/${email}`).subscribe({
+      next: (ideas) => {
+        this.userIdeas = ideas;
+        this.isLoadingIdeas = false;
+      },
+      error: (error) => {
+        console.error('Error fetching user ideas:', error);
+        this.isLoadingIdeas = false;
+      }
+    });
   }
 
   onChangePassword() {
