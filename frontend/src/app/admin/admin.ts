@@ -21,6 +21,10 @@ export class AdminComponent implements OnInit {
   ideasWantingHelp: any[] = [];
   isLoadingIdeas = false;
 
+  // Matching data
+  matchingResults: Map<number, any> = new Map();
+  isMatching: Map<number, boolean> = new Map();
+
   // General error handling
   errorMessage = '';
 
@@ -73,6 +77,30 @@ export class AdminComponent implements OnInit {
   setActiveSection(section: any) {
     this.activeSection = section;
     this.errorMessage = '';
+  }
+
+  matchPartners(ideaId: number) {
+    this.isMatching.set(ideaId, true);
+    this.http.get<any>(`${this.apiUrl}/matching/partners/${ideaId}`).subscribe({
+      next: (response) => {
+        this.matchingResults.set(ideaId, response);
+        this.isMatching.set(ideaId, false);
+        console.log('Matching results:', response);
+      },
+      error: (error) => {
+        console.error('Error matching partners:', error);
+        this.isMatching.set(ideaId, false);
+        alert('Failed to match partners. Please try again.');
+      }
+    });
+  }
+
+  getMatchingResults(ideaId: number) {
+    return this.matchingResults.get(ideaId);
+  }
+
+  isMatchingInProgress(ideaId: number): boolean {
+    return this.isMatching.get(ideaId) || false;
   }
 
   logout() {

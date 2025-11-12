@@ -122,6 +122,35 @@
               <span class="idea-email">{{ idea.email }}</span>
               <span class="idea-date">{{ idea.createdAt | date:'short' }}</span>
             </div>
+            <div class="match-section">
+              <button
+                class="match-btn"
+                (click)="matchPartners(idea.id)"
+                [disabled]="isMatchingInProgress(idea.id)">
+                {{ isMatchingInProgress(idea.id) ? 'Matching...' : 'Match!' }}
+              </button>
+            </div>
+
+            <!-- Display Matching Results -->
+            <div *ngIf="getMatchingResults(idea.id)" class="matches-container">
+              <h4>Partner Matches ({{ getMatchingResults(idea.id).totalMatches }})</h4>
+              <div *ngIf="getMatchingResults(idea.id).totalMatches === 0" class="no-matches">
+                No matching partners found
+              </div>
+              <div *ngFor="let match of getMatchingResults(idea.id).matches; let i = index" class="match-card">
+                <div class="match-rank">#{{ i + 1 }}</div>
+                <div class="match-info">
+                  <h5>{{ match.partner.companyName }}</h5>
+                  <p><strong>Contact:</strong> {{ match.partner.contactPerson }}</p>
+                  <p><strong>Email:</strong> {{ match.partner.email }}</p>
+                  <p><strong>Skills:</strong> {{ match.partner.interestsSkills }}</p>
+                  <div class="match-score">
+                    <span class="score-badge">{{ match.matchPercentage }}% Match</span>
+                    <span class="score-text">{{ match.matchScore }} skills matched</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
