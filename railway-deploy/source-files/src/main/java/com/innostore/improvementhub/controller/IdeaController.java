@@ -3,7 +3,9 @@ package com.innostore.improvementhub.controller;
 import com.innostore.improvementhub.dto.IdeaRegistrationRequest;
 import com.innostore.improvementhub.dto.IdeaRegistrationResponse;
 import com.innostore.improvementhub.entity.Idea;
+import com.innostore.improvementhub.entity.IdeaAnalysis;
 import com.innostore.improvementhub.repository.IdeaRepository;
+import com.innostore.improvementhub.repository.IdeaAnalysisRepository;
 import com.innostore.improvementhub.repository.UserRepository;
 import com.innostore.improvementhub.service.EmailService;
 import com.innostore.improvementhub.service.UserService;
@@ -26,6 +28,9 @@ public class IdeaController {
 
     @Autowired
     private IdeaRepository ideaRepository;
+
+    @Autowired
+    private IdeaAnalysisRepository ideaAnalysisRepository;
 
     @Autowired
     private EmailService emailService;
@@ -180,7 +185,11 @@ public class IdeaController {
                 idea.setUserRole(request.getUserRole());
                 idea.setEmail(request.getEmail());
 
-                ideaRepository.save(idea);
+                Idea savedIdea = ideaRepository.save(idea);
+
+                // Save AI analysis for partner matching
+                IdeaAnalysis ideaAnalysis = new IdeaAnalysis(savedIdea.getId(), analysis);
+                ideaAnalysisRepository.save(ideaAnalysis);
 
                 // Send email with PDF - include credentials only for new users
                 if (userExists) {
