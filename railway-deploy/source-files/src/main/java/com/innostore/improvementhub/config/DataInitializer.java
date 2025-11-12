@@ -26,7 +26,7 @@ public class DataInitializer implements CommandLineRunner {
     private void createAdminUser() {
         try {
             String adminEmail = "admin";
-            Optional<User> existingAdmin = userRepository.findByEmailAddress(adminEmail);
+            Optional<User> existingAdmin = userRepository.findByEmail(adminEmail);
 
             if (existingAdmin.isEmpty()) {
                 User admin = new User();
