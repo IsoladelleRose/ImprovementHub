@@ -1,0 +1,131 @@
+<div class="admin-container">
+<header class="navbar">
+  <div class="nav-left">
+    <div class="logo">
+      <svg width="24" height="24" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round">
+        <path d="M60 25 C42 25, 30 37, 30 55 C30 68, 37 75, 42 80 L42 90 L78 90 L78 80 C83 75, 90 68, 90 55 C90 37, 78 25, 60 25 Z"/>
+        <line x1="42" y1="95" x2="78" y2="95"/>
+        <line x1="47" y1="100" x2="73" y2="100"/>
+        <path d="M60 10 L57 18 M60 10 L63 18 M40 30 L47 33 M80 30 L73 33"/>
+      </svg>
+      <span>ADMIN DASHBOARD</span>
+    </div>
+  </div>
+  <div class="nav-right">
+    <button class="logout-btn" (click)="logout()">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+        <polyline points="16 17 21 12 16 7"/>
+        <line x1="21" y1="12" x2="9" y2="12"/>
+      </svg>
+      Logout
+    </button>
+  </div>
+</header>
+
+<div class="page-layout">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="menu-section">
+      <div class="menu-item" [class.active]="activeSection === 'ideas'" (click)="setActiveSection('ideas')">
+        <svg class="menu-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M10 3 C7 3, 5 5, 5 8 C5 10, 6 11, 7 12 L7 14 L13 14 L13 12 C14 11, 15 10, 15 8 C15 5, 13 3, 10 3 Z" stroke="currentColor" stroke-width="1.5"/>
+          <line x1="7" y1="15" x2="13" y2="15" stroke="currentColor" stroke-width="1.5"/>
+        </svg>
+        <span>All Ideas</span>
+      </div>
+      <div class="menu-item" [class.active]="activeSection === 'matching'" (click)="setActiveSection('matching')">
+        <svg class="menu-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M17 18v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="10" cy="5" r="3" stroke="currentColor" stroke-width="1.5"/>
+        </svg>
+        <span>Partner Matching</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- All Ideas Section -->
+    <div *ngIf="activeSection === 'ideas'" class="section-content">
+      <h2 class="page-title">All Ideas ({{ allIdeas.length }})</h2>
+
+      <!-- Loading State -->
+      <div *ngIf="isLoadingIdeas" class="loading-message">
+        <p>Loading ideas...</p>
+      </div>
+
+      <!-- No Ideas State -->
+      <div *ngIf="!isLoadingIdeas && allIdeas.length === 0" class="no-ideas-message">
+        <h3>No ideas yet</h3>
+        <p>No ideas have been submitted to the platform.</p>
+      </div>
+
+      <!-- Ideas Table -->
+      <div *ngIf="!isLoadingIdeas && allIdeas.length > 0" class="ideas-table-container">
+        <table class="ideas-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Title</th>
+              <th>Core Concept</th>
+              <th>Email</th>
+              <th>Wants Help</th>
+              <th>Created At</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let idea of allIdeas">
+              <td>{{ idea.id }}</td>
+              <td>{{ idea.title || 'Untitled' }}</td>
+              <td>{{ idea.coreConcept.substring(0, 50) }}{{ idea.coreConcept.length > 50 ? '...' : '' }}</td>
+              <td>{{ idea.email }}</td>
+              <td>
+                <span class="badge" [class.badge-success]="idea.wantsHelp" [class.badge-default]="!idea.wantsHelp">
+                  {{ idea.wantsHelp ? 'Yes' : 'No' }}
+                </span>
+              </td>
+              <td>{{ idea.createdAt | date:'short' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Partner Matching Section -->
+    <div *ngIf="activeSection === 'matching'" class="section-content">
+      <h2 class="page-title">Ideas Wanting Help ({{ ideasWantingHelp.length }})</h2>
+
+      <!-- No Ideas State -->
+      <div *ngIf="ideasWantingHelp.length === 0" class="no-ideas-message">
+        <h3>No ideas wanting help</h3>
+        <p>No users have requested help with their ideas yet.</p>
+      </div>
+
+      <!-- Ideas Cards -->
+      <div *ngIf="ideasWantingHelp.length > 0" class="ideas-grid">
+        <div *ngFor="let idea of ideasWantingHelp" class="idea-card-admin">
+          <div class="idea-header">
+            <h3>{{ idea.title || 'Untitled Idea' }}</h3>
+            <span class="idea-id">#{{ idea.id }}</span>
+          </div>
+          <div class="idea-body">
+            <div class="idea-section">
+              <strong>Core Concept:</strong>
+              <p>{{ idea.coreConcept }}</p>
+            </div>
+            <div class="idea-section">
+              <strong>Problem/Opportunity:</strong>
+              <p>{{ idea.problemOpportunity }}</p>
+            </div>
+            <div class="idea-footer">
+              <span class="idea-email">{{ idea.email }}</span>
+              <span class="idea-date">{{ idea.createdAt | date:'short' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+</div>

@@ -7,6 +7,7 @@ import { IdeaRegistration } from './idea-registration/idea-registration';
 import { RoleRegistration } from './role-registration/role-registration';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './roadmap/roadmap';
+import { AdminComponent } from './admin/admin';
 import { RagComponent } from './rag/rag.component';
 import { IdeasStatus } from './ideas-status/ideas-status';
 
@@ -20,6 +21,7 @@ export const routes: Routes = [
   { path: 'role-registration', component: RoleRegistration },
   { path: 'login', component: LoginComponent },
   { path: 'profile', component: ProfileComponent },
+  { path: 'admin', component: AdminComponent },
   { path: 'ideas-status', component: IdeasStatus },
   { path: 'roadmap', redirectTo: '/profile' },
   { path: 'rag', component: RagComponent },

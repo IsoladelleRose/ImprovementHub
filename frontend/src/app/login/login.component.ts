@@ -41,8 +41,12 @@ export class LoginComponent {
         this.isLoading = false;
         // Store user data in localStorage
         localStorage.setItem('user', JSON.stringify(response));
-        // Redirect to profile page
-        this.router.navigate(['/profile']);
+        // Redirect to admin page if user is admin, otherwise to profile page
+        if (this.emailAddress === 'admin') {
+          this.router.navigate(['/admin']);
+        } else {
+          this.router.navigate(['/profile']);
+        }
       },
       error: (error) => {
         this.isLoading = false;
