@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -17,6 +18,8 @@ public class DataInitializer implements CommandLineRunner {
 
     @Autowired
     private UserRepository userRepository;
+
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Override
     public void run(String... args) throws Exception {
@@ -31,7 +34,7 @@ public class DataInitializer implements CommandLineRunner {
             if (existingAdmin.isEmpty()) {
                 User admin = new User();
                 admin.setEmail(adminEmail);
-                admin.setPassword("admin"); // In production, this should be hashed
+                admin.setPassword(passwordEncoder.encode("admin")); // BCrypt encoded password
                 admin.setInnovator(false);
                 admin.setInventor(false);
                 admin.setLanguage("en");
