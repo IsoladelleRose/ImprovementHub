@@ -16,6 +16,9 @@ public class IdeaRegistrationRequest {
     @NotBlank(message = "Target group or market is required")
     private String targetGroup;
 
+    @NotBlank(message = "Current stage is required")
+    private String currentStage;
+
     private Boolean wantsHelp;
 
     private String userRole;
@@ -65,6 +68,14 @@ public class IdeaRegistrationRequest {
 
     public void setTargetGroup(String targetGroup) {
         this.targetGroup = targetGroup;
+    }
+
+    public String getCurrentStage() {
+        return currentStage;
+    }
+
+    public void setCurrentStage(String currentStage) {
+        this.currentStage = currentStage;
     }
 
     public Boolean getWantsHelp() {

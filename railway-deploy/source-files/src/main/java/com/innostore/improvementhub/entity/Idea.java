@@ -30,6 +30,10 @@ public class Idea {
     @Column(name = "target_group", columnDefinition = "TEXT")
     private String targetGroup;
 
+    @NotBlank(message = "Current stage is required")
+    @Column(name = "current_stage")
+    private String currentStage;
+
     @Column(name = "wants_help")
     private Boolean wantsHelp;
 
@@ -93,6 +97,14 @@ public class Idea {
 
     public void setTargetGroup(String targetGroup) {
         this.targetGroup = targetGroup;
+    }
+
+    public String getCurrentStage() {
+        return currentStage;
+    }
+
+    public void setCurrentStage(String currentStage) {
+        this.currentStage = currentStage;
     }
 
     public Boolean getWantsHelp() {

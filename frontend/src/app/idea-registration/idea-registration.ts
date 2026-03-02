@@ -15,6 +15,7 @@ export class IdeaRegistration {
   coreConcept = '';
   problemOpportunity = '';
   targetGroup = '';
+  currentStage = '';
 
   constructor(private router: Router) {}
 
@@ -40,12 +41,18 @@ export class IdeaRegistration {
       return;
     }
 
+    if (!this.currentStage) {
+      alert('Please select the current stage of your idea.');
+      return;
+    }
+
     // Store the idea data in localStorage to pass to the next step
     const ideaData = {
       title: this.title,
       coreConcept: this.coreConcept,
       problemOpportunity: this.problemOpportunity,
-      targetGroup: this.targetGroup
+      targetGroup: this.targetGroup,
+      currentStage: this.currentStage
     };
     localStorage.setItem('ideaData', JSON.stringify(ideaData));
     this.router.navigate(['/role-registration']);

@@ -151,6 +151,60 @@
           </textarea>
         </div>
 
+        <!-- Question 4 -->
+        <div class="form-group">
+          <label class="question-label">
+            Current stage? *
+          </label>
+          <div class="radio-group">
+            <label class="radio-option">
+              <input
+                type="radio"
+                name="currentStage"
+                value="Concept only"
+                [(ngModel)]="currentStage"
+                required>
+              <span>Concept only</span>
+            </label>
+            <label class="radio-option">
+              <input
+                type="radio"
+                name="currentStage"
+                value="Research phase"
+                [(ngModel)]="currentStage"
+                required>
+              <span>Research phase</span>
+            </label>
+            <label class="radio-option">
+              <input
+                type="radio"
+                name="currentStage"
+                value="Prototype"
+                [(ngModel)]="currentStage"
+                required>
+              <span>Prototype</span>
+            </label>
+            <label class="radio-option">
+              <input
+                type="radio"
+                name="currentStage"
+                value="Tested prototype"
+                [(ngModel)]="currentStage"
+                required>
+              <span>Tested prototype</span>
+            </label>
+            <label class="radio-option">
+              <input
+                type="radio"
+                name="currentStage"
+                value="Market ready"
+                [(ngModel)]="currentStage"
+                required>
+              <span>Market ready</span>
+            </label>
+          </div>
+        </div>
+
         <!-- Continue Button -->
         <div class="form-actions">
           <button type="button" class="btn-continue" (click)="navigateToRoleRegistration()">Continue</button>
