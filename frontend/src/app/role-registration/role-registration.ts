@@ -25,6 +25,7 @@ export class RoleRegistration implements OnInit {
   title = '';
   coreConcept = '';
   problemOpportunity = '';
+  targetGroup = '';
 
   private apiUrl = 'https://improvementhub-production.up.railway.app/api';
 
@@ -38,6 +39,7 @@ export class RoleRegistration implements OnInit {
       this.title = data.title;
       this.coreConcept = data.coreConcept;
       this.problemOpportunity = data.problemOpportunity;
+      this.targetGroup = data.targetGroup;
     }
   }
 
@@ -89,6 +91,7 @@ export class RoleRegistration implements OnInit {
       email: this.email,
       coreConcept: this.coreConcept,
       problemOpportunity: this.problemOpportunity,
+      targetGroup: this.targetGroup,
       wantsHelp: this.showRoleQuestion,
       userRole: this.userRole
     };

@@ -71,6 +71,7 @@ public class IdeaController {
                 idea.setTitle(request.getTitle());
                 idea.setCoreConcept(request.getCoreConcept());
                 idea.setProblemOpportunity(request.getProblemOpportunity());
+                idea.setTargetGroup(request.getTargetGroup());
                 idea.setWantsHelp(request.getWantsHelp());
                 idea.setUserRole(request.getUserRole());
                 idea.setEmail(request.getEmail());
@@ -181,6 +182,7 @@ public class IdeaController {
                 idea.setTitle(request.getTitle());
                 idea.setCoreConcept(request.getCoreConcept());
                 idea.setProblemOpportunity(request.getProblemOpportunity());
+                idea.setTargetGroup(request.getTargetGroup());
                 idea.setWantsHelp(request.getWantsHelp());
                 idea.setUserRole(request.getUserRole());
                 idea.setEmail(request.getEmail());

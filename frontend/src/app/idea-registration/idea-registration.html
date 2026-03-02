@@ -136,6 +136,21 @@
           </textarea>
         </div>
 
+        <!-- Question 3 -->
+        <div class="form-group">
+          <label class="question-label">
+            What is your target group or market? *
+          </label>
+          <textarea
+            class="form-textarea"
+            placeholder="Describe who would benefit from or use your idea."
+            rows="4"
+            [(ngModel)]="targetGroup"
+            name="targetGroup"
+            required>
+          </textarea>
+        </div>
+
         <!-- Continue Button -->
         <div class="form-actions">
           <button type="button" class="btn-continue" (click)="navigateToRoleRegistration()">Continue</button>

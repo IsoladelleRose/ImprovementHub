@@ -26,6 +26,10 @@ public class Idea {
     @Column(name = "problem_opportunity", columnDefinition = "TEXT")
     private String problemOpportunity;
 
+    @NotBlank(message = "Target group or market is required")
+    @Column(name = "target_group", columnDefinition = "TEXT")
+    private String targetGroup;
+
     @Column(name = "wants_help")
     private Boolean wantsHelp;
 
@@ -81,6 +85,14 @@ public class Idea {
 
     public void setProblemOpportunity(String problemOpportunity) {
         this.problemOpportunity = problemOpportunity;
+    }
+
+    public String getTargetGroup() {
+        return targetGroup;
+    }
+
+    public void setTargetGroup(String targetGroup) {
+        this.targetGroup = targetGroup;
     }
 
     public Boolean getWantsHelp() {

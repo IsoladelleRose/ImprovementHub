@@ -14,6 +14,7 @@ export class IdeaRegistration {
   title = '';
   coreConcept = '';
   problemOpportunity = '';
+  targetGroup = '';
 
   constructor(private router: Router) {}
 
@@ -34,11 +35,17 @@ export class IdeaRegistration {
       return;
     }
 
+    if (!this.targetGroup.trim()) {
+      alert('Please describe your target group or market.');
+      return;
+    }
+
     // Store the idea data in localStorage to pass to the next step
     const ideaData = {
       title: this.title,
       coreConcept: this.coreConcept,
-      problemOpportunity: this.problemOpportunity
+      problemOpportunity: this.problemOpportunity,
+      targetGroup: this.targetGroup
     };
     localStorage.setItem('ideaData', JSON.stringify(ideaData));
     this.router.navigate(['/role-registration']);

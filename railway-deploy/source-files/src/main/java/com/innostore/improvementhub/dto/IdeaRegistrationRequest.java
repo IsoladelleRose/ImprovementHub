@@ -13,6 +13,9 @@ public class IdeaRegistrationRequest {
     @NotBlank(message = "Problem or opportunity description is required")
     private String problemOpportunity;
 
+    @NotBlank(message = "Target group or market is required")
+    private String targetGroup;
+
     private Boolean wantsHelp;
 
     private String userRole;
@@ -54,6 +57,14 @@ public class IdeaRegistrationRequest {
 
     public void setProblemOpportunity(String problemOpportunity) {
         this.problemOpportunity = problemOpportunity;
+    }
+
+    public String getTargetGroup() {
+        return targetGroup;
+    }
+
+    public void setTargetGroup(String targetGroup) {
+        this.targetGroup = targetGroup;
     }
 
     public Boolean getWantsHelp() {
