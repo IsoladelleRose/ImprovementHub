@@ -351,13 +351,14 @@
   }
 
   .radio-group {
-    display: flex;
-    flex-direction: column;
+    display: flex !important;
+    flex-direction: column !important;
     gap: 12px;
+    width: 100%;
   }
 
   .radio-option {
-    display: flex;
+    display: flex !important;
     align-items: center;
     padding: 14px 20px;
     background: #f8f9fa;
@@ -365,6 +366,7 @@
     border-radius: 10px;
     cursor: pointer;
     transition: all 0.3s ease;
+    width: 100%;
 
     &:hover {
       background: #e9ecef;
