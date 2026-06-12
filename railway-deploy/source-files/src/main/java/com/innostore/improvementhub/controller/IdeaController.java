@@ -3,14 +3,11 @@ package com.innostore.improvementhub.controller;
 import com.innostore.improvementhub.dto.IdeaRegistrationRequest;
 import com.innostore.improvementhub.dto.IdeaRegistrationResponse;
 import com.innostore.improvementhub.entity.Idea;
-import com.innostore.improvementhub.entity.IdeaAnalysis;
 import com.innostore.improvementhub.repository.IdeaRepository;
-import com.innostore.improvementhub.repository.IdeaAnalysisRepository;
 import com.innostore.improvementhub.repository.UserRepository;
 import com.innostore.improvementhub.service.EmailService;
+import com.innostore.improvementhub.service.N8nWorkflowService;
 import com.innostore.improvementhub.service.UserService;
-import com.innostore.improvementhub.service.RagService;
-import com.innostore.improvementhub.service.PdfGenerationService;
 import com.innostore.improvementhub.entity.User;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +27,6 @@ public class IdeaController {
     private IdeaRepository ideaRepository;
 
     @Autowired
-    private IdeaAnalysisRepository ideaAnalysisRepository;
-
-    @Autowired
     private EmailService emailService;
 
     @Autowired
@@ -42,10 +36,7 @@ public class IdeaController {
     private UserRepository userRepository;
 
     @Autowired
-    private RagService ragService;
-
-    @Autowired
-    private PdfGenerationService pdfGenerationService;
+    private N8nWorkflowService n8nWorkflowService;
 
     @PostMapping("/register")
     public ResponseEntity<?> registerIdea(@Valid @RequestBody IdeaRegistrationRequest request) {
@@ -138,7 +129,6 @@ public class IdeaController {
     @PostMapping("/analyze")
     public ResponseEntity<?> analyzeAndSubmitIdea(@Valid @RequestBody IdeaRegistrationRequest request) {
         try {
-            // Validate input
             if (request.getCoreConcept() == null || request.getCoreConcept().trim().isEmpty()) {
                 return ResponseEntity.badRequest().body("Core concept is required");
             }
@@ -149,34 +139,16 @@ public class IdeaController {
                 return ResponseEntity.badRequest().body("Email is required");
             }
 
-            // Step 1: Analyze the idea with RAG
-            String analysis = ragService.analyzeIdea(
-                request.getCoreConcept(),
-                request.getProblemOpportunity()
-            );
+            boolean savedToDatabase = false;
 
-            // Step 2: Generate PDF with the analysis
-            byte[] pdfBytes = pdfGenerationService.generateIdeaAnalysisPdf(
-                request.getCoreConcept(),
-                request.getProblemOpportunity(),
-                analysis
-            );
-
-            // Step 3: Handle based on whether user wants help
             if (request.getWantsHelp() != null && request.getWantsHelp()) {
-                // Check if user already exists
                 Optional<User> existingUser = userService.findByEmail(request.getEmail());
-                boolean userExists = existingUser.isPresent();
-                User user;
-
-                if (userExists) {
-                    // Update existing user - set inventor to true
-                    user = existingUser.get();
+                if (existingUser.isPresent()) {
+                    User user = existingUser.get();
                     user.setInventor(true);
                     userRepository.save(user);
                 } else {
-                    // Create new user account and set inventor to true
-                    user = userService.createUserAccount(request.getEmail());
+                    userService.createUserAccount(request.getEmail());
                 }
 
                 Idea idea = new Idea();
@@ -188,71 +160,28 @@ public class IdeaController {
                 idea.setWantsHelp(request.getWantsHelp());
                 idea.setUserRole(request.getUserRole());
                 idea.setEmail(request.getEmail());
+                ideaRepository.save(idea);
 
-                Idea savedIdea = ideaRepository.save(idea);
-
-                // Save AI analysis for partner matching
-                IdeaAnalysis ideaAnalysis = new IdeaAnalysis(savedIdea.getId(), analysis);
-                ideaAnalysisRepository.save(ideaAnalysis);
-
-                // Send email with PDF - include credentials only for new users
-                if (userExists) {
-                    // Existing user - send email without credentials
-                    emailService.sendAnalysisEmailWithPdf(
-                        request.getEmail(),
-                        request.getCoreConcept(),
-                        request.getProblemOpportunity(),
-                        request.getUserRole(),
-                        null,
-                        null,
-                        null,
-                        pdfBytes,
-                        true
-                    );
-                } else {
-                    // New user - send email with credentials
-                    emailService.sendAnalysisEmailWithPdf(
-                        request.getEmail(),
-                        request.getCoreConcept(),
-                        request.getProblemOpportunity(),
-                        request.getUserRole(),
-                        user.getEmail(),
-                        user.getPassword(),
-                        "https://collaborationhub-frontend-production.up.railway.app/login",
-                        pdfBytes,
-                        true
-                    );
-                }
-
-                return ResponseEntity.ok(new IdeaRegistrationResponse(
-                    "Idea analyzed and registered successfully! Check your email for the analysis report" +
-                    (userExists ? "." : " and login credentials."),
-                    true
-                ));
-            } else {
-                // User doesn't want help - just send analysis email with PDF
-                emailService.sendAnalysisEmailWithPdf(
-                    request.getEmail(),
-                    request.getCoreConcept(),
-                    request.getProblemOpportunity(),
-                    null,
-                    null,
-                    null,
-                    null,
-                    pdfBytes,
-                    false
-                );
-
-                return ResponseEntity.ok(new IdeaRegistrationResponse(
-                    "Thank you for your submission! The analysis report has been sent to your email.",
-                    false
-                ));
+                savedToDatabase = true;
             }
+
+            n8nWorkflowService.triggerIdeaAnalysis(
+                request.getTitle(),
+                request.getCoreConcept(),
+                request.getProblemOpportunity(),
+                request.getTargetGroup(),
+                request.getCurrentStage()
+            );
+
+            return ResponseEntity.ok(new IdeaRegistrationResponse(
+                "OK - your idea has been received and is being analyzed.",
+                savedToDatabase
+            ));
 
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("Error analyzing idea: " + e.getMessage() + " | Cause: " + (e.getCause() != null ? e.getCause().getMessage() : "none"));
+                .body("Error submitting idea: " + e.getMessage() + " | Cause: " + (e.getCause() != null ? e.getCause().getMessage() : "none"));
         }
     }
 }

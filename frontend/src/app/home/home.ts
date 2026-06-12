@@ -111,8 +111,4 @@ export class Home implements AfterViewInit, OnDestroy {
   navigateToLogin() {
     this.router.navigate(['/login']);
   }
-
-  navigateToRag() {
-    this.router.navigate(['/rag']);
-  }
 }
